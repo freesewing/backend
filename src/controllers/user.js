@@ -8,6 +8,8 @@ import formidable from "formidable";
 import sharp from "sharp";
 import path from "path";
 import fs from "fs";
+import Zip from "jszip";
+import rimraf from "rimraf";
 
 function UserController() { }
 
@@ -24,6 +26,7 @@ UserController.prototype.login = function (req, res) {
     user.verifyPassword(req.body.password, (err, valid) => {
       if (err) return res.sendStatus(400);
       else if (valid) {
+        if(user.status !== "active") res.sendStatus(403);
         log.info('login', { user, req });
         let account = user.account();
         let token = getToken(account);
@@ -111,6 +114,12 @@ UserController.prototype.update = (req, res) => {
       if(typeof data.social.twitter === 'string') user.social.twitter = data.social.twitter;
       if(typeof data.social.instagram === 'string') user.social.instagram = data.social.instagram;
     }
+    if(typeof data.consent === 'object') {
+      user.consent = {
+        ...user.consent,
+        ...data.consent
+      }
+    }
 
     // Below are async ops, need to watch out when to save
 
@@ -183,7 +192,6 @@ function saveAndReturnAccount(res,user) {
 }
 
 function saveAvatar(picture, handle) {
-    console.log('saving avatar');
     let type = imageType(picture.type);
     let file = avatarPath("l", handle, type);
     fs.mkdir(userStoragePath(handle), {recursive: true}, (err) => {
@@ -204,6 +212,13 @@ function userStoragePath(handle) {
       config.storage,
       handle.substring(0,1),
       handle);
+}
+
+function temporaryStoragePath(dir) {
+  return path.join(
+      config.storage,
+      "tmp",
+      dir);
 }
 
 function avatarPath(size, handle, ext, type="user") {
@@ -278,7 +293,10 @@ UserController.prototype.resetPassword = (req, res) => {
       { ehash: ehash(req.body.username) }
     ]
   }, (err, user) => {
-    if (err) return res.sendStatus(400);
+    if (err) {
+      console.log(err);
+      return res.sendStatus(400);
+    }
     if(user === null) return res.sendStatus(401);
     let confirmation = new Confirmation({
       type: "passwordreset",
@@ -323,7 +341,68 @@ UserController.prototype.setPassword = (req, res) => {
 
  // // Other
  // userController.patronList = (req, res) => { }
- // userController.exportData = (req, res) => { }
+
+UserController.prototype.export = (req, res) => {
+  if (!req.user._id) return res.sendStatus(400);
+  User.findById(req.user._id, (err, user) => {
+    if(user === null) return res.sendStatus(400);
+    let dir = createTempDir();
+    if(!dir) return res.sendStatus(500);
+    let avatar = fs.readFile(path.join(user.storagePath(), user.picture), (err, data) => {
+      let zip = new Zip();
+      zip.file("account.json", JSON.stringify(user.export(), null, 2));
+      zip.file(user.picture, data);
+      zip.generateAsync({
+        type: "uint8array",
+        comment: "freesewing.org",
+        streamFiles: true
+		  }).then(function(data) {
+        let file = path.join(dir, "export.zip");
+        fs.writeFile(file, data, (err) => {
+          log.info('dataExport', { user, req });
+          return res.send({export: uri(file)});
+        });
+      });
+    });
+  });
+}
+
+/** restrict processing of data, aka freeze account */
+UserController.prototype.restrict = (req, res) => {
+  if (!req.user._id) return res.sendStatus(400);
+  User.findById(req.user._id, (err, user) => {
+    if(user === null) return res.sendStatus(400);
+      user.status = "frozen";
+      user.save(function (err) {
+        if (err) {
+          log.error('accountFreezeFailed', user);
+          return res.sendStatus(500);
+        }
+        return res.sendStatus(200);
+    });
+  });
+}
+
+/** Remove account */
+UserController.prototype.remove = (req, res) => {
+  if (!req.user._id) return res.sendStatus(400);
+  User.findById(req.user._id, (err, user) => {
+    if(user === null) return res.sendStatus(400);
+    rimraf(user.storagePath(), (err) => {
+      if(err) {
+        console.log('rimraf', err);
+        log.error('accountRemovalFailed', {err, user, req});
+        return res.sendStatus(500);
+      }
+      user.remove((err, usr) => {
+        if(err !== null) {
+          log.error('accountRemovalFailed', {err, user, req});
+          return res.sendStatus(500);
+        } else return res.sendStatus(200);
+      });
+    });
+  });
+}
 
 const getToken = (account) => {
   return jwt.sign({
@@ -348,10 +427,10 @@ const passwordMatches = async (password, hash) => {
   return match;
 }
 
-const newHandle = () => {
+const newHandle = (length = 5) => {
 	let handle = "";
   let possible = "abcdefghijklmnopqrstuvwxyz";
-  for (let i = 0; i < 5; i++)
+  for (let i = 0; i < length; i++)
     handle += possible.charAt(Math.floor(Math.random() * possible.length));
 
   return handle;
@@ -369,5 +448,19 @@ const uniqueHandle = () => {
 
   return handle;
 }
+
+const createTempDir = () => {
+  let path = temporaryStoragePath(newHandle(10));
+  fs.mkdir(path, {recursive: true}, (err) => {
+    if(err) {
+      log.error("mkdirFailed", err);
+      path = false;
+    }
+  });
+
+  return path;
+}
+
+const uri = path => config.static+path.substring(config.storage.length);
 
 export default UserController;

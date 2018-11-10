@@ -11,6 +11,7 @@ const logWorthy = (msg, data) => {
     case 'login':
     case 'wrongPassword':
     case 'passwordSet':
+    case 'dataExport':
       d.user = data.user.handle;
       d.from = data.req.ip;
       d.with = data.req.headers['user-agent'];
@@ -18,6 +19,12 @@ const logWorthy = (msg, data) => {
     case 'signupRequest':
       d.email = data.email;
       d.confirmation = data.confirmation;
+      break;
+    case 'accountRemovalFailed':
+      d.err = data.err;
+      d.user = data.user.handle;
+      d.from = data.req.ip;
+      d.with = data.req.headers['user-agent'];
       break;
     default:
       d.data = data;
