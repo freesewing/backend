@@ -1,6 +1,6 @@
 {
   "name": "@freesewing/backend",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "The freesewing.org backend",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -39,6 +39,7 @@
     ]
   },
   "dependencies": {
+    "@freesewing/i18n": "0.1.0",
     "body-parser": "1.18.3",
     "chalk": "2.4.1",
     "cors": "2.8.4",
@@ -57,6 +58,7 @@
     "sharp": "0.21.0"
   },
   "devDependencies": {
-    "backpack-core": "0.7.0"
+    "backpack-core": "0.7.0",
+    "nodemon": "1.18.6"
   }
 }
