@@ -5,5 +5,6 @@ import model from "./model";
 import referral from "./referral";
 import user from "./user";
 import auth from "./auth";
+import github from "./github";
 
-export default { comment, user, draft, model, referral, confirmation, auth }
+export default { comment, user, draft, model, referral, confirmation, auth, github }

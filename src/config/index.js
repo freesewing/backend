@@ -47,5 +47,16 @@ export default {
       tokenUri: "https://oauth2.googleapis.com/token",
       dataUri: " https://people.googleapis.com/v1/people/me?personFields=emailAddresses,names,photos"
     }
+  },
+  editor: {
+    token: "d7e5592d81addf6c20835dc5aaae66b3342b9181",
+    repos: ["website", "i18n"],
+    owner: "freesewing-bot",
+    branch: "develop",
+    branchPrefix: "editor_",
+    bot: {
+      name: "Freesewing bot",
+      email: "bot@freesewing.org"
+    }
   }
 }
