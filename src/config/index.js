@@ -49,7 +49,7 @@ export default {
     }
   },
   editor: {
-    token: "d7e5592d81addf6c20835dc5aaae66b3342b9181",
+    token: process.env.EDITOR_TOKEN,
     repos: ["website", "i18n"],
     owner: "freesewing-bot",
     branch: "develop",
