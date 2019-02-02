@@ -155,7 +155,6 @@ UserSchema.methods.profile = function() {
   delete account.initial;
   delete account.role;
   delete account.status;
-  delete account.handle;
   delete account.time.login;
   delete account.picture;
   delete account.__v;

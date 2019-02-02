@@ -48,9 +48,8 @@ export default (app, passport) => {
   //app.get('/confirm/changed/email:handle/:token', userController.confirmChangedEmail);
 
 
-  /* Email confirmation endpoints */
   // Load patron list
-  //app.get('/patrons/list', userController.patronList);
+  app.get('/patrons', User.patronList);
 
 
 /**********************************************

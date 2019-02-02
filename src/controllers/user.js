@@ -364,7 +364,27 @@ UserController.prototype.setPassword = (req, res) => {
 // userController.confirmChangedEmail = (req, res) => { }
 
  // // Other
- // userController.patronList = (req, res) => { }
+UserController.prototype.patronList = (req, res) => {
+  User.find({ patron: { $gte: 2 }}).sort('username').exec((err, users) => {
+    if(err || users === null) return res.sendStatus(400);
+    let patrons = {
+      2: [],
+      4: [],
+      8: []
+    }
+    for (let key of Object.keys(users)) {
+      let user = users[key].profile();
+      patrons[user.patron].push({
+        handle: user.handle,
+        username: user.username,
+        bio: user.bio,
+        social: user.social,
+        pic: user.pictureUris.l
+      });
+    }
+    return res.send(patrons);
+  });
+}
 
 UserController.prototype.export = (req, res) => {
   if (!req.user._id) return res.sendStatus(400);
