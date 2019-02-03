@@ -203,7 +203,7 @@ UserSchema.methods.avatarUri = function(size = "l") {
 
   let prefix = (size === "l") ? "" : size+"-";
   return config.static
-    +"/"
+    +"/users/"
     +this.handle.substring(0,1)
     +"/"
     +this.handle

@@ -234,6 +234,7 @@ function saveAvatar(picture, handle, type) {
 function userStoragePath(handle) {
   return path.join(
       config.storage,
+      "users",
       handle.substring(0,1),
       handle);
 }
@@ -379,7 +380,7 @@ UserController.prototype.patronList = (req, res) => {
         username: user.username,
         bio: user.bio,
         social: user.social,
-        pic: user.pictureUris.l
+        pic: user.pictureUris.m
       });
     }
     return res.send(patrons);

@@ -72,9 +72,18 @@ function imageType(uri) {
   return type;
 }
 
+function modelStoragePath(handle) {
+  return path.join(
+      config.storage,
+      "users",
+      handle.substring(0,1),
+      handle);
+}
+
+
 function saveAvatar(picture, handle, type) {
   let b64 = picture.split(';base64,').pop();
-  fs.mkdir(userStoragePath(handle)+"/models", {recursive: true}, (err) => {
+  fs.mkdir(modelStoragePath(handle), {recursive: true}, (err) => {
       if(err) log.error("mkdirFailed", err);
       let imgBuffer =  Buffer.from(b64, 'base64');
       for(let size of Object.keys(config.avatar.sizes)) {
@@ -98,13 +107,12 @@ function saveAndReturnModel(res,model) {
 }
 
 function avatarPath(size, handle, ext, type="user") {
- let dir = userStoragePath(handle);
- if(type === "model") dir += "/models";
+ let dir = modelStoragePath(handle);
  if(size === "l") return path.join(dir, handle+"."+ext);
  else return path.join(dir, size+"-"+handle+"."+ext);
 }
 
-function userStoragePath(handle) {
+function modelStoragePath(handle) {
   return path.join(
       config.storage,
       handle.substring(0,1),
