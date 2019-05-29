@@ -72,7 +72,7 @@ function imageType(uri) {
   return type;
 }
 
-function modelStoragePath(handle) {
+function REMOVEMEmodelStoragePath(handle) {
   return path.join(
       config.storage,
       "users",
