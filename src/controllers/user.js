@@ -4,7 +4,6 @@ import bcrypt from "bcryptjs";
 import { log, email } from "../utils";
 import jwt from "jsonwebtoken";
 import config from "../config";
-import formidable from "formidable";
 import sharp from "sharp";
 import path from "path";
 import fs from "fs";
@@ -252,14 +251,6 @@ function avatarPath(size, handle, ext, type="user") {
  else return path.join(dir, size+"-"+handle+"."+ext);
 }
 
-function imageType(contentType) {
-  if (contentType === "image/png") return "png";
-  if (contentType === "image/jpeg") return "jpg";
-  if (contentType === "image/gif") return "gif";
-  if (contentType === "image/bmp") return "bmp";
-  if (contentType === "image/webp") return "webp";
-}
-
 UserController.prototype.isUsernameAvailable = (req, res) => {
   if (!req.user._id) return res.sendStatus(400);
   let username = req.body.username.toLowerCase().trim();
@@ -471,12 +462,6 @@ const ehash = (email) => {
   return hash.digest("hex");
 }
 
-const passwordMatches = async (password, hash) => {
-  let match = await bcrypt.compare(password, hash);
-
-  return match;
-}
-
 const newHandle = (length = 5) => {
 	let handle = "";
   let possible = "abcdefghijklmnopqrstuvwxyz";
@@ -512,14 +497,5 @@ const createTempDir = () => {
 }
 
 const uri = path => config.static+path.substring(config.storage.length);
-
-const loadModels = user => {
-  const models ={};
-  Model.find({user: user.handle}, (err, modelList) => {
-    if(err) console.log('models err', err, models);
-    for ( let model of modelList ) models[model.user] = model;
-    return models;
-  });
-}
 
 export default UserController;

@@ -1,4 +1,3 @@
-import mongoose from "mongoose";
 import ConfirmationModel from "./confirmation";
 import ModelModel from "./model";
 import UserModel from "./user";

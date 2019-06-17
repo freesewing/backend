@@ -4,7 +4,6 @@ import jwt from "jsonwebtoken";
 import mailer from "./email";
 import logger from "./log";
 import config from "../config";
-import axios from "axios";
 import path from "path";
 import fs from "fs";
 import sharp from "sharp";

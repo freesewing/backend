@@ -112,15 +112,6 @@ function avatarPath(size, handle, ext, type="user") {
  else return path.join(dir, size+"-"+handle+"."+ext);
 }
 
-function REMOVEMEmodelStoragePath(handle) {
-  return path.join(
-      config.storage,
-      handle.substring(0,1),
-      handle);
-}
-
-
-
 // Delete multiple
 ModelController.prototype.deleteMultiple = function (req, res) {
   if (!req.body) return res.sendStatus(400);

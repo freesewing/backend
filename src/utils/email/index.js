@@ -1,10 +1,6 @@
 import nodemailer from "nodemailer";
-import fs from "fs";
-import path from "path";
-import { log } from "../../utils";
 import config from "../../config";
 import { email as i18n } from "@freesewing/i18n";
-import fo from "@freesewing/i18n";
 import templates from "../../templates";
 
 const email = {};
@@ -31,7 +27,7 @@ const loadTemplate = (type, format, language) => {
     from.push(`__${key}__`);
     to.push(i18n[language][key] || key);
   }
-  for(let id in from) template = template.replace(from[id], to[id]);
+  for(let i=0;i<from.length;i++) template = template.replace(from[i], to[i]);
 
   return template;
 }

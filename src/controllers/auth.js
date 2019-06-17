@@ -3,7 +3,6 @@ import { getHash, getToken, getHandle, createHandle, imageType, saveAvatarFromBa
 import config from "../config";
 import queryString from "query-string";
 import axios from "axios";
-import { log } from "../utils";
 
 /** This is essentially part of the user controller, but
  *  it seemed best to keep all this authentication stuff

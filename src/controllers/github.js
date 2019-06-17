@@ -1,4 +1,3 @@
-import jwt from "jsonwebtoken";
 import config from "../config";
 import octokitConstructor from "@octokit/rest";
 import { User } from "../models";
