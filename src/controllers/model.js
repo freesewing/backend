@@ -75,7 +75,7 @@ function imageType(uri) {
 function REMOVEMEmodelStoragePath(handle) {
   return path.join(
       config.storage,
-      "users",
+      "models",
       handle.substring(0,1),
       handle);
 }
@@ -112,7 +112,7 @@ function avatarPath(size, handle, ext, type="user") {
  else return path.join(dir, size+"-"+handle+"."+ext);
 }
 
-function modelStoragePath(handle) {
+function REMOVEMEmodelStoragePath(handle) {
   return path.join(
       config.storage,
       handle.substring(0,1),

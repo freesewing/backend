@@ -84,14 +84,15 @@ ModelSchema.methods.info = function() {
 }
 
 ModelSchema.methods.avatarUri = function(size = "l") {
+  if (this.picture === "") return config.static + "/avatar.svg";
+
   let prefix = (size === "l") ? "" : size+"-";
   return config.static
-    +"/"
+    +"/models/"
     +this.handle.substring(0,1)
     +"/"
     +this.handle
     +"/"
-    +"models/"
     +prefix
     +this.picture;
 }
