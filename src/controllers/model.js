@@ -72,15 +72,6 @@ function imageType(uri) {
   return type;
 }
 
-function REMOVEMEmodelStoragePath(handle) {
-  return path.join(
-      config.storage,
-      "models",
-      handle.substring(0,1),
-      handle);
-}
-
-
 function saveAvatar(picture, handle, type) {
   let b64 = picture.split(';base64,').pop();
   fs.mkdir(modelStoragePath(handle), {recursive: true}, (err) => {
