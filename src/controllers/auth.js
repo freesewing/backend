@@ -1,4 +1,4 @@
-import { User, Model, Draft, Confirmation } from "../models";
+import { User, Model, Recipe, Confirmation } from "../models";
 import { getHash, getToken, getHandle, createHandle, imageType, saveAvatarFromBase64 } from "../utils";
 import config from "../config";
 import queryString from "query-string";
@@ -45,10 +45,10 @@ AuthController.prototype.loginOauth = function (req, res) {
       Model.find({user: user.handle}, (err, modelList) => {
         if(err) return res.sendStatus(400);
         for ( let model of modelList ) models[model.handle] = model;
-        let drafts = {};
-        Draft.find({user: user.handle}, (err, draftList) => {
+        let recipes = {};
+        Recipe.find({user: user.handle}, (err, recipeList) => {
           if(err) return res.sendStatus(400);
-          for ( let draft of draftList ) drafts[draft.handle] = draft;
+          for ( let recipe of recipeList ) recipes[recipe.handle] = recipe;
           confirmation.remove((err) => {
             if(err !== null) return res.sendStatus(500);
             user.updateLoginTime(() => res.send({account, models, token, signup}));

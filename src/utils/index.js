@@ -1,4 +1,4 @@
-import { User, Model, Draft } from "../models";
+import { User, Model, Recipe } from "../models";
 import crypto from "crypto";
 import jwt from "jsonwebtoken";
 import mailer from "./email";
@@ -31,7 +31,7 @@ export const getToken = (account) => {
 export const getHandle = type => {
   let go, handle, exists;
   if (type === "model") go = Model;
-  else if (type === "draft") go = Draft;
+  else if (type === "recipe") go = Recipe;
   else go = User;
   do {
     exists = false;

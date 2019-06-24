@@ -1,4 +1,4 @@
-import { User, Confirmation, Model, Draft } from "../models";
+import { User, Confirmation, Model, Recipe } from "../models";
 import crypto from "crypto";
 import { log, email } from "../utils";
 import jwt from "jsonwebtoken";
@@ -32,11 +32,11 @@ UserController.prototype.login = function (req, res) {
         Model.find({user: user.handle}, (err, modelList) => {
           if(err) return res.sendStatus(400);
           for ( let model of modelList ) models[model.handle] = model.info();
-          let drafts = {};
-          Draft.find({user: user.handle}, (err, draftList) => {
+          let recipes = {};
+          Recipe.find({user: user.handle}, (err, recipeList) => {
             if(err) return res.sendStatus(400);
-            for ( let draft of draftList ) drafts[draft.handle] = draft;
-            user.updateLoginTime(() => res.send({account, models, recipes: drafts, token}));
+            for ( let recipe of recipeList ) recipes[recipe.handle] = recipe;
+            user.updateLoginTime(() => res.send({account, models, recipes: recipes, token}));
           });
         });
       } else {
@@ -84,11 +84,11 @@ UserController.prototype.readAccount = (req, res) => {
       Model.find({user: user.handle}, (err, modelList) => {
         if(err) return res.sendStatus(400);
         for ( let model of modelList ) models[model.handle] = model.info();
-        const drafts ={};
-        Draft.find({user: user.handle}, (err, draftList) => {
+        const recipes ={};
+        Recipe.find({user: user.handle}, (err, recipeList) => {
           if(err) return res.sendStatus(400);
-          for ( let draft of draftList ) drafts[draft.handle] = draft;
-          res.send({account: user.account(), models, drafts});
+          for ( let recipe of recipeList ) recipes[recipe.handle] = recipe;
+          res.send({account: user.account(), models, recipes});
         });
       });
     } else {

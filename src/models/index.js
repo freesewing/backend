@@ -1,9 +1,9 @@
 import ConfirmationModel from "./confirmation";
 import ModelModel from "./model";
 import UserModel from "./user";
-import DraftModel from "./draft";
+import RecipeModel from "./recipe";
 
 export const Confirmation = ConfirmationModel;
 export const Model = ModelModel;
 export const User = UserModel;
-export const Draft = DraftModel;
+export const Recipe = RecipeModel;
