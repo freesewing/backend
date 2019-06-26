@@ -15,7 +15,8 @@ RecipeController.prototype.create = (req, res) => {
     let recipe = new Recipe({
       handle,
       user: user.handle,
-      name: handle,
+      name: req.body.name,
+      notes: req.body.notes,
       recipe: req.body.recipe,
       created: new Date(),
     });
@@ -26,12 +27,7 @@ RecipeController.prototype.create = (req, res) => {
         return res.sendStatus(500);
       }
       log.info('recipeCreated', { handle: recipe.handle });
-      const recipes ={};
-      Recipe.find({user: user.handle}, (err, recipeList) => {
-        if(err) return res.sendStatus(400);
-        for ( let recipe of recipeList ) recipes[recipe.handle] = recipe;
-        return res.send({ handle, recipes });
-      });
+      return res.send({ handle });
     });
   });
 }

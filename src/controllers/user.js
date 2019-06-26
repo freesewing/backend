@@ -87,7 +87,7 @@ UserController.prototype.readAccount = (req, res) => {
         const recipes ={};
         Recipe.find({user: user.handle}, (err, recipeList) => {
           if(err) return res.sendStatus(400);
-          for ( let recipe of recipeList ) recipes[recipe.handle] = recipe;
+          for ( let recipe of recipeList ) recipes[recipe.handle] = recipe.asRecipe();
           res.send({account: user.account(), models, recipes});
         });
       });
