@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
-const DraftSchema = new Schema({
+const RecipeSchema = new Schema({
   handle: {
     type: String,
     required: true,
@@ -26,21 +26,21 @@ const DraftSchema = new Schema({
     type: String,
     trim: true
   },
-  gist: {},
+  recipe: {},
 },{ timestamps: true });
 
-DraftSchema.index({ user: 1 , handle: 1});
+RecipeSchema.index({ user: 1 , handle: 1});
 
-DraftSchema.methods.info = function() {
+RecipeSchema.methods.info = function() {
   return this.toObject();
 }
 
-DraftSchema.methods.asGist = function() {
-  let draft = this.toObject();
+RecipeSchema.methods.asRecipe = function() {
+  let recipe = this.toObject();
   for(let field of ["_id", "user", "createdAt", "updatedAt", "_v"])
-    delete draft[field];
+    delete recipe[field];
 
-  return draft;
+  return recipe;
 }
 
-export default mongoose.model('Draft', DraftSchema);
+export default mongoose.model('Recipe', RecipeSchema);

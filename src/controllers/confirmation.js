@@ -1,9 +1,4 @@
-import { User, Confirmation } from "../models";
-import crypto from "crypto";
-import bcrypt from "bcryptjs";
-import { log, email } from "../utils";
-import jwt from "jsonwebtoken";
-import config from "../config";
+import { Confirmation } from "../models";
 
 function ConfirmationController() { }
 

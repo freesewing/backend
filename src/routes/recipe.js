@@ -1,6 +1,6 @@
-import Controller from "../controllers/draft";
+import Controller from "../controllers/recipe";
 
-const Draft = new Controller();
+const Recipe = new Controller();
 
 export default (app, passport) => {
 
@@ -10,8 +10,8 @@ export default (app, passport) => {
  *                                            *
  *********************************************/
 
-  // Load shared draft/gist
-  app.get('/gist/:handle', Draft.readGist);
+  // Load shared recipe
+  app.get('/recipe/:handle', Recipe.readRecipe);
 
 
 /**********************************************
@@ -22,16 +22,16 @@ export default (app, passport) => {
 
   /* CRUD endpoints */
 
-  app.post('/draft', passport.authenticate('jwt', { session: false }), Draft.create); // Create
-  app.get('/draft/:handle', passport.authenticate('jwt', { session: false }), Draft.read); // Read
-  app.put('/draft/:handle', passport.authenticate('jwt', { session: false }), Draft.update); // Update
-  app.delete('/draft/:handle', passport.authenticate('jwt', { session: false }), Draft.delete); // Delete
+  app.post('/recipe', passport.authenticate('jwt', { session: false }), Recipe.create); // Create
+  app.get('/recipe/:handle', passport.authenticate('jwt', { session: false }), Recipe.read); // Read
+  app.put('/recipe/:handle', passport.authenticate('jwt', { session: false }), Recipe.update); // Update
+  app.delete('/recipe/:handle', passport.authenticate('jwt', { session: false }), Recipe.delete); // Delete
 
   // Delete multiple
   app.post(
-    '/remove/drafts',
+    '/remove/recipes',
     passport.authenticate('jwt', {session: false }),
-    Draft.deleteMultiple
+    Recipe.deleteMultiple
   );
 }
 

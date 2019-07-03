@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 import bcrypt from 'mongoose-bcrypt';
-import { email, log } from "../utils";
+import { email } from "../utils";
 import encrypt from 'mongoose-encryption';
 import config from "../config";
 import path from "path";
@@ -56,8 +56,8 @@ const UserSchema = new Schema({
   },
   status: {
     type: String,
-    enum: ["active", "blocked", "frozen"],
-    default: "active",
+    enum: ["pending", "active", "blocked", "frozen"],
+    default: "pending",
     required: true
   },
   password: {

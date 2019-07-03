@@ -1,6 +1,5 @@
 import mongoose, { Schema } from "mongoose";
 import config from "../config";
-import path from "path";
 
 const ModelSchema = new Schema({
   handle: {

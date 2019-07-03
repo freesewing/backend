@@ -1,10 +1,8 @@
-import { User, Confirmation, Model, Draft } from "../models";
+import { User, Confirmation, Model, Recipe } from "../models";
 import crypto from "crypto";
-import bcrypt from "bcryptjs";
 import { log, email } from "../utils";
 import jwt from "jsonwebtoken";
 import config from "../config";
-import formidable from "formidable";
 import sharp from "sharp";
 import path from "path";
 import fs from "fs";
@@ -33,12 +31,12 @@ UserController.prototype.login = function (req, res) {
         let models = {};
         Model.find({user: user.handle}, (err, modelList) => {
           if(err) return res.sendStatus(400);
-          for ( let model of modelList ) models[model.handle] = model;
-          let drafts = {};
-          Draft.find({user: user.handle}, (err, draftList) => {
+          for ( let model of modelList ) models[model.handle] = model.info();
+          let recipes = {};
+          Recipe.find({user: user.handle}, (err, recipeList) => {
             if(err) return res.sendStatus(400);
-            for ( let draft of draftList ) drafts[draft.handle] = draft;
-            user.updateLoginTime(() => res.send({account, models, recipes: drafts, token}));
+            for ( let recipe of recipeList ) recipes[recipe.handle] = recipe;
+            user.updateLoginTime(() => res.send({account, models, recipes: recipes, token}));
           });
         });
       } else {
@@ -51,38 +49,27 @@ UserController.prototype.login = function (req, res) {
 
 // CRUD basics
 
+// Note that the user is already crearted (in signup)
+// we just need to active the account
 UserController.prototype.create = (req, res) => {
   if (!req.body) return res.sendStatus(400);
   Confirmation.findById(req.body.id, (err, confirmation) => {
     if (err) return res.sendStatus(400);
     if(confirmation === null) return res.sendStatus(401);
-    let handle = uniqueHandle();
-    let username = "user-"+handle;
-    let user = new User({
-      email: confirmation.data.email,
-      initial: confirmation.data.email,
-      ehash: ehash(confirmation.data.email),
-      handle,
-      username,
-      password: confirmation.data.password,
-      consent: req.body.consent,
-      settings: { language: confirmation.data.language },
-      time: {
-        created: new Date(),
-        login: new Date(),
-      }
-    });
-    user.save(function (err) {
-      if (err) {
-        log.error('accountCreationFailed', user);
-        console.log(err);
-        return res.sendStatus(500);
-      }
+    User.findOne({ handle: confirmation.data.handle }, (err, user) => {
+      if (err) return res.sendStatus(400);
+      if(user === null) return res.sendStatus(401);
+      user.status = "active";
+      user.consent = req.body.consent;
+      user.time.login = new Date();
+      log.info('accountActivated', { handle: user.handle });
       let account = user.account();
-      log.info('accountCreated', { handle: user.handle });
       let token = getToken(account);
-      Confirmation.findByIdAndDelete(req.body.id, (err, confirmation) => {
-        return res.send({account,token});
+      user.save(function (err) {
+        if (err) return res.sendStatus(400);
+        Confirmation.findByIdAndDelete(req.body.id, (err, confirmation) => {
+          return res.send({account,token});
+        });
       });
     });
   });
@@ -97,11 +84,11 @@ UserController.prototype.readAccount = (req, res) => {
       Model.find({user: user.handle}, (err, modelList) => {
         if(err) return res.sendStatus(400);
         for ( let model of modelList ) models[model.handle] = model.info();
-        const drafts ={};
-        Draft.find({user: user.handle}, (err, draftList) => {
+        const recipes ={};
+        Recipe.find({user: user.handle}, (err, recipeList) => {
           if(err) return res.sendStatus(400);
-          for ( let draft of draftList ) drafts[draft.handle] = draft;
-          res.send({account: user.account(), models, drafts});
+          for ( let recipe of recipeList ) recipes[recipe.handle] = recipe.asRecipe();
+          res.send({account: user.account(), models, recipes});
         });
       });
     } else {
@@ -252,14 +239,6 @@ function avatarPath(size, handle, ext, type="user") {
  else return path.join(dir, size+"-"+handle+"."+ext);
 }
 
-function imageType(contentType) {
-  if (contentType === "image/png") return "png";
-  if (contentType === "image/jpeg") return "jpg";
-  if (contentType === "image/gif") return "gif";
-  if (contentType === "image/bmp") return "bmp";
-  if (contentType === "image/webp") return "webp";
-}
-
 UserController.prototype.isUsernameAvailable = (req, res) => {
   if (!req.user._id) return res.sendStatus(400);
   let username = req.body.username.toLowerCase().trim();
@@ -287,19 +266,44 @@ UserController.prototype.signup = (req, res) => {
     if (err) return res.sendStatus(500);
     if(user !== null) return res.status(400).send('userExists');
     else {
-      let confirmation = new Confirmation({
-        type: "signup",
-        data: {
-          language: req.body.language,
-          email: req.body.email,
-          password: req.body.password
+      // FROM HERE
+      let handle = uniqueHandle();
+      let username = "user-"+handle;
+      let user = new User({
+        email: req.body.email,
+        initial: req.body.email,
+        ehash: ehash(req.body.email),
+        handle,
+        username,
+        password: req.body.password,
+        settings: { language: req.body.language },
+        status: "pending",
+        time: {
+          created: new Date(),
         }
       });
-      confirmation.save(function (err) {
-        if (err) return res.sendStatus(500);
-        log.info('signupRequest', { email: req.body.email, confirmation: confirmation._id });
-        email.signup(req.body.email, req.body.language, confirmation._id);
-        return res.sendStatus(200);
+      user.save(function (err) {
+        if (err) {
+          log.error('accountCreationFailed', user);
+          console.log(err);
+          return res.sendStatus(500);
+        }
+        log.info('accountCreated', { handle: user.handle });
+        let confirmation = new Confirmation({
+          type: "signup",
+          data: {
+            language: req.body.language,
+            email: req.body.email,
+            password: req.body.password,
+            handle
+          }
+        });
+        confirmation.save(function (err) {
+          if (err) return res.sendStatus(500);
+          log.info('signupRequest', { email: req.body.email, confirmation: confirmation._id });
+          email.signup(req.body.email, req.body.language, confirmation._id);
+          return res.sendStatus(200);
+        });
       });
     }
   });
@@ -471,12 +475,6 @@ const ehash = (email) => {
   return hash.digest("hex");
 }
 
-const passwordMatches = async (password, hash) => {
-  let match = await bcrypt.compare(password, hash);
-
-  return match;
-}
-
 const newHandle = (length = 5) => {
 	let handle = "";
   let possible = "abcdefghijklmnopqrstuvwxyz";
@@ -512,14 +510,5 @@ const createTempDir = () => {
 }
 
 const uri = path => config.static+path.substring(config.storage.length);
-
-const loadModels = user => {
-  const models ={};
-  Model.find({user: user.handle}, (err, modelList) => {
-    if(err) console.log('models err', err, models);
-    for ( let model of modelList ) models[model.user] = model;
-    return models;
-  });
-}
 
 export default UserController;
