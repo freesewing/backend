@@ -61,7 +61,7 @@ const ModelSchema = new Schema({
     shoulderToElbow: Number,
     shoulderToShoulder: Number,
     shoulderToWrist: Number,
-    underBust: Number,
+    underbust: Number,
     upperLegCircumference: Number,
     wristCircumference: Number
   }
