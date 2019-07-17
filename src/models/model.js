@@ -48,6 +48,7 @@ const ModelSchema = new Schema({
     hipsCircumference: Number,
     hipsToUpperLeg: Number,
     inseam: Number,
+    kneeCircumference: Number,
     naturalWaist: Number,
     naturalWaistToFloor: Number,
     naturalWaistToHip: Number,
@@ -61,7 +62,7 @@ const ModelSchema = new Schema({
     shoulderToElbow: Number,
     shoulderToShoulder: Number,
     shoulderToWrist: Number,
-    underBust: Number,
+    underbust: Number,
     upperLegCircumference: Number,
     wristCircumference: Number
   }

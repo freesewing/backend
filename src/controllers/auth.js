@@ -127,7 +127,7 @@ AuthController.prototype.callbackFromGithub = function (req, res) {
                 confirmation.data.signup = true;
                 confirmation.save(function (err) {
                   if (err) return res.sendStatus(500);
-                  return res.redirect(config.website+"/"+language+"/login/callback/"+confirmation._id+"/"+validation);
+                  return res.redirect(config.website+"/login/callback/"+confirmation._id+"/"+validation);
                 });
               });
             });
@@ -143,7 +143,7 @@ AuthController.prototype.callbackFromGithub = function (req, res) {
               confirmation.data.signup = false;
               confirmation.save(function (err) {
                 if (err) return res.sendStatus(500);
-                return res.redirect(config.website+"/"+language+"/login/callback/"+confirmation._id+"/"+validation);
+                return res.redirect(config.website+"/login/callback/"+confirmation._id+"/"+validation);
               });
             });
           }
@@ -235,7 +235,7 @@ AuthController.prototype.providerCallback = function (req, res) {
                 confirmation.data.signup = true;
                 confirmation.save(function (err) {
                   if (err) return res.sendStatus(500);
-                  return res.redirect(config.website+"/"+language+"/login/callback/"+confirmation._id+"/"+validation);
+                  return res.redirect(config.website+"/login/callback/"+confirmation._id+"/"+validation);
                 });
               });
             });
@@ -253,7 +253,7 @@ AuthController.prototype.providerCallback = function (req, res) {
               confirmation.data.signup = false;
               confirmation.save(function (err) {
                 if (err) return res.sendStatus(500);
-                return res.redirect(config.website+"/"+language+"/login/callback/"+confirmation._id+"/"+validation);
+                return res.redirect(config.website+"/login/callback/"+confirmation._id+"/"+validation);
               });
             });
           }
