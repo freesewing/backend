@@ -11,6 +11,8 @@ import sharp from "sharp";
 export const email = mailer;
 export const log = logger;
 
+export const createUrl = (language, path) => config.website.scheme+"://"+language+"."+config.website.domain+path;
+
 export const getHash = (email) => {
   let hash = crypto.createHash("sha256");
   hash.update(clean(email));

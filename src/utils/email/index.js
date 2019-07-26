@@ -2,6 +2,7 @@ import nodemailer from "nodemailer";
 import config from "../../config";
 import { email as i18n } from "@freesewing/i18n";
 import templates from "../../templates";
+import { createUrl } from "../";
 
 const email = {};
 
@@ -49,7 +50,7 @@ email.signup = (recipient, language, id) => {
     '__footerWhy__',
   ];
   let to = [
-    `${config.website}/confirm/signup/${id}`,
+    createUrl(language, `/confirm/signup/${id}`),
     i18n[language].signupHeaderOpeningLine,
     i18n[language].signupHiddenIntro,
     i18n[language].signupWhy,
@@ -80,7 +81,7 @@ email.emailchange = (newAddress, currentAddress, language, id) => {
     '__footerWhy__',
   ];
   let to = [
-    `${config.website}/confirm/email/${id}`,
+    createUrl(language, `/confirm/email/${id}`),
     i18n[language].emailchangeHeaderOpeningLine,
     i18n[language].emailchangeHiddenIntro,
     i18n[language].emailchangeWhy,
@@ -112,7 +113,7 @@ email.passwordreset = (recipient, language, id) => {
     '__footerWhy__',
   ];
   let to = [
-    `${config.website}/confirm/reset/${id}`,
+    createUrl(language, `/confirm/reset/${id}`),
     i18n[language].passwordresetHeaderOpeningLine,
     i18n[language].passwordresetHiddenIntro,
     i18n[language].passwordresetWhy,

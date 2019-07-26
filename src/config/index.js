@@ -1,7 +1,9 @@
 export default {
   api: process.env.FS_BACKEND,
-  website: process.env.FS_SITE,
-  static: process.env.FS_STATIC,
+  website: {
+    domain: 'freesewing.org',
+    scheme: 'https'
+  },
   storage: process.env.FS_STORAGE,
   avatar: {
     sizes: {
