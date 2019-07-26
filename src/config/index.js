@@ -4,6 +4,7 @@ export default {
     domain: 'freesewing.org',
     scheme: 'https'
   },
+  static: process.env.FS_STATIC,
   storage: process.env.FS_STORAGE,
   avatar: {
     sizes: {
