@@ -384,7 +384,7 @@ UserController.prototype.patronList = (req, res) => {
         username: user.username,
         bio: user.bio,
         social: user.social,
-        pic: user.pictureUris.m
+        pic: user.pictureUris,
       });
     }
     return res.send(patrons);
