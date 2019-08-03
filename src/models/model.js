@@ -1,100 +1,104 @@
-import mongoose, { Schema } from "mongoose";
-import config from "../config";
+import mongoose, { Schema } from 'mongoose'
+import config from '../config'
 
-const ModelSchema = new Schema({
-  handle: {
-    type: String,
-    required: true,
-    lowercase: true,
-    unique: true,
-    trim: true,
-    index: true
+const ModelSchema = new Schema(
+  {
+    handle: {
+      type: String,
+      required: true,
+      lowercase: true,
+      unique: true,
+      trim: true,
+      index: true
+    },
+    user: {
+      type: String,
+      required: true,
+      lowercase: true,
+      trim: true,
+      index: true
+    },
+    name: {
+      type: String,
+      required: true,
+      trim: true
+    },
+    breasts: {
+      type: Boolean,
+      default: false
+    },
+    picture: String,
+    units: {
+      type: String,
+      enum: ['metric', 'imperial'],
+      default: 'metric'
+    },
+    created: Date,
+    notes: {
+      type: String,
+      trim: true
+    },
+    measurements: {
+      bicepsCircumference: Number,
+      bustSpan: Number,
+      centerBackNeckToWaist: Number,
+      chestCircumference: Number,
+      headCircumference: Number,
+      highBust: Number,
+      highPointShoulderToBust: Number,
+      hipsCircumference: Number,
+      hipsToUpperLeg: Number,
+      inseam: Number,
+      kneeCircumference: Number,
+      naturalWaist: Number,
+      naturalWaistToFloor: Number,
+      naturalWaistToHip: Number,
+      naturalWaistToKnee: Number,
+      naturalWaistToSeat: Number,
+      naturalWaistToUnderbust: Number,
+      neckCircumference: Number,
+      seatCircumference: Number,
+      seatDepth: Number,
+      shoulderSlope: Number,
+      shoulderToElbow: Number,
+      shoulderToShoulder: Number,
+      shoulderToWrist: Number,
+      underbust: Number,
+      upperLegCircumference: Number,
+      wristCircumference: Number
+    }
   },
-  user: {
-    type: String,
-    required: true,
-    lowercase: true,
-    trim: true,
-    index: true
-  },
-  name: {
-    type: String,
-    required: true,
-    trim: true
-  },
-  breasts: {
-    type: Boolean,
-    default: false
-  },
-  picture: String,
-  units: {
-    type: String,
-    enum: ["metric", "imperial"],
-    default: "metric"
-  },
-  created: Date,
-  notes: {
-    type: String,
-    trim: true
-  },
-  measurements: {
-    bicepsCircumference: Number,
-    bustSpan: Number,
-    centerBackNeckToWaist: Number,
-    chestCircumference: Number,
-    headCircumference: Number,
-    highBust: Number,
-    highPointShoulderToBust: Number,
-    hipsCircumference: Number,
-    hipsToUpperLeg: Number,
-    inseam: Number,
-    kneeCircumference: Number,
-    naturalWaist: Number,
-    naturalWaistToFloor: Number,
-    naturalWaistToHip: Number,
-    naturalWaistToKnee: Number,
-    naturalWaistToSeat: Number,
-    naturalWaistToUnderbust: Number,
-    neckCircumference: Number,
-    seatCircumference: Number,
-    seatDepth: Number,
-    shoulderSlope: Number,
-    shoulderToElbow: Number,
-    shoulderToShoulder: Number,
-    shoulderToWrist: Number,
-    underbust: Number,
-    upperLegCircumference: Number,
-    wristCircumference: Number
-  }
-},{ timestamps: true });
+  { timestamps: true }
+)
 
-ModelSchema.index({ user: 1 , handle: 1});
+ModelSchema.index({ user: 1, handle: 1 })
 
 ModelSchema.methods.info = function() {
-  let model = this.toObject();
+  let model = this.toObject()
   model.pictureUris = {
     l: this.avatarUri(),
-    m: this.avatarUri("m"),
-    s: this.avatarUri("s"),
-    xs: this.avatarUri("xs"),
+    m: this.avatarUri('m'),
+    s: this.avatarUri('s'),
+    xs: this.avatarUri('xs')
   }
 
-  return model;
+  return model
 }
 
-ModelSchema.methods.avatarUri = function(size = "l") {
-  if (this.picture === "") return config.static + "/avatar.svg";
+ModelSchema.methods.avatarUri = function(size = 'l') {
+  if (this.picture === '') return config.static + '/avatar.svg'
 
-  let prefix = (size === "l") ? "" : size+"-";
-  return config.static
-    +"/models/"
-    +this.handle.substring(0,1)
-    +"/"
-    +this.handle
-    +"/"
-    +prefix
-    +this.picture;
+  let prefix = size === 'l' ? '' : size + '-'
+  return (
+    config.static +
+    '/models/' +
+    this.handle.substring(0, 1) +
+    '/' +
+    this.handle +
+    '/' +
+    prefix +
+    this.picture
+  )
 }
 
-
-export default mongoose.model('Model', ModelSchema);
+export default mongoose.model('Model', ModelSchema)

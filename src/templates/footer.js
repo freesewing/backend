@@ -1,9 +1,5 @@
 const footer = {
-  i18n: [
-    "chatWithUs",
-    "footerSlogan",
-    "footerCredits"
-  ],
+  i18n: ['chatWithUs', 'footerSlogan', 'footerCredits'],
   html: `<table border="0" cellpadding="0" cellspacing="0" width="100%">
     <!-- FOOTER -->
     <tr>
@@ -47,7 +43,7 @@ const footer = {
 </table>
 </body>
 </html>`,
-  text: ""
-};
+  text: ''
+}
 
-export default footer;
+export default footer
