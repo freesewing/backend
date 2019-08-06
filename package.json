@@ -11,7 +11,7 @@
     "major": "npm version major -m ':bookmark: v%s' && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rimraf dist",
-    "prettier": "npx prettier --write 'src/*'",
+    "prettier": "npx prettier --write 'src/**'",
     "lint": "eslint --fix \"src/*.js\"",
     "dev": "backpack",
     "build": "backpack build",
