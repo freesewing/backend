@@ -27,20 +27,22 @@ UserController.prototype.login = function(req, res) {
         if (err) return res.sendStatus(400)
         else if (valid) {
           if (user.status !== 'active') res.sendStatus(403)
-          log.info('login', { user, req })
-          let account = user.account()
-          let token = getToken(account)
-          let models = {}
-          Model.find({ user: user.handle }, (err, modelList) => {
-            if (err) return res.sendStatus(400)
-            for (let model of modelList) models[model.handle] = model.info()
-            let recipes = {}
-            Recipe.find({ user: user.handle }, (err, recipeList) => {
+          else {
+            log.info('login', { user, req })
+            let account = user.account()
+            let token = getToken(account)
+            let models = {}
+            Model.find({ user: user.handle }, (err, modelList) => {
               if (err) return res.sendStatus(400)
-              for (let recipe of recipeList) recipes[recipe.handle] = recipe
-              user.updateLoginTime(() => res.send({ account, models, recipes: recipes, token }))
+              for (let model of modelList) models[model.handle] = model.info()
+              let recipes = {}
+              Recipe.find({ user: user.handle }, (err, recipeList) => {
+                if (err) return res.sendStatus(400)
+                for (let recipe of recipeList) recipes[recipe.handle] = recipe
+                user.updateLoginTime(() => res.send({ account, models, recipes: recipes, token }))
+              })
             })
-          })
+          }
         } else {
           log.warning('wrongPassword', { user, req })
           return res.sendStatus(401)
