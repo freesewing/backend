@@ -1,20 +1,11 @@
-import nodemailer from 'nodemailer'
 import config from '../../config'
-import { email as i18n } from '@freesewing/i18n'
+import { strings as i18n } from '@freesewing/i18n'
 import templates from '../../templates'
 import { createUrl } from '../'
+import sendEmailWith from './relays'
 
+const deliver = sendEmailWith(config.sendEmailWith)
 const email = {}
-
-const transporter = nodemailer.createTransport({
-  host: config.smtp.host,
-  port: 587,
-  secure: false, // Only needed or SSL, not for TLS
-  auth: {
-    user: config.smtp.user,
-    pass: config.smtp.pass
-  }
-})
 
 const loadTemplate = (type, format, language) => {
   let template = templates.header[format] + templates[type][format] + templates.footer[format]
@@ -40,23 +31,26 @@ email.signup = (recipient, language, id) => {
   let html = loadTemplate('signup', 'html', language)
   let text = loadTemplate('signup', 'text', language)
   let from = ['__signupActionLink__', '__headerOpeningLine__', '__hiddenIntro__', '__footerWhy__']
+  let link = createUrl(language, `/confirm/signup/${id}`)
   let to = [
-    createUrl(language, `/confirm/signup/${id}`),
-    i18n[language].signupHeaderOpeningLine,
-    i18n[language].signupHiddenIntro,
-    i18n[language].signupWhy
+    link,
+    i18n[language]['email.signupHeaderOpeningLine'],
+    i18n[language]['email.signupHiddenIntro'],
+    i18n[language]['email.signupWhy']
   ]
   html = replace(html, from, to)
   text = replace(text, from, to)
-
   let options = {
-    from: `"${i18n[language].joostFromFreesewing}" <info@freesewing.org>`,
+    from: `"${i18n[language]['email.joostFromFreesewing']}" <info@freesewing.org>`,
     to: recipient,
-    subject: i18n[language].signupSubject,
+    subject: i18n[language]['email.signupSubject'],
+    headers: {
+      'X-Freesewing-Confirmation-ID': '' + id
+    },
     text,
     html
   }
-  transporter.sendMail(options, (error, info) => {
+  deliver(options, (error, info) => {
     if (error) return console.log(error)
     console.log('Message sent', info)
   })
@@ -73,22 +67,25 @@ email.emailchange = (newAddress, currentAddress, language, id) => {
   ]
   let to = [
     createUrl(language, `/confirm/email/${id}`),
-    i18n[language].emailchangeHeaderOpeningLine,
-    i18n[language].emailchangeHiddenIntro,
-    i18n[language].emailchangeWhy
+    i18n[language]['email.emailchangeHeaderOpeningLine'],
+    i18n[language]['email.emailchangeHiddenIntro'],
+    i18n[language]['email.emailchangeWhy']
   ]
   html = replace(html, from, to)
   text = replace(text, from, to)
 
   let options = {
-    from: `"${i18n[language].joostFromFreesewing}" <info@freesewing.org>`,
+    from: `"${i18n[language]['email.joostFromFreesewing']}" <info@freesewing.org>`,
     to: newAddress,
     cc: currentAddress,
-    subject: i18n[language].emailchangeSubject,
+    subject: i18n[language]['email.emailchangeSubject'],
+    headers: {
+      'X-Freesewing-Confirmation-ID': '' + id
+    },
     text,
     html
   }
-  transporter.sendMail(options, (error, info) => {
+  deliver(options, (error, info) => {
     if (error) return console.log(error)
     console.log('Message sent', info)
   })
@@ -105,21 +102,24 @@ email.passwordreset = (recipient, language, id) => {
   ]
   let to = [
     createUrl(language, `/confirm/reset/${id}`),
-    i18n[language].passwordresetHeaderOpeningLine,
-    i18n[language].passwordresetHiddenIntro,
-    i18n[language].passwordresetWhy
+    i18n[language]['email.passwordresetHeaderOpeningLine'],
+    i18n[language]['email.passwordresetHiddenIntro'],
+    i18n[language]['email.passwordresetWhy']
   ]
   html = replace(html, from, to)
   text = replace(text, from, to)
 
   let options = {
-    from: `"${i18n[language].joostFromFreesewing}" <info@freesewing.org>`,
+    from: `"${i18n[language]['email.joostFromFreesewing']}" <info@freesewing.org>`,
     to: recipient,
-    subject: i18n[language].passwordresetSubject,
+    subject: i18n[language].emailpasswordresetSubject,
+    headers: {
+      'X-Freesewing-Confirmation-ID': '' + id
+    },
     text,
     html
   }
-  transporter.sendMail(options, (error, info) => {
+  deliver(options, (error, info) => {
     if (error) return console.log(error)
     console.log('Message sent', info)
   })
@@ -130,24 +130,23 @@ email.goodbye = async (recipient, language) => {
   let text = loadTemplate('goodbye', 'text', language)
   let from = ['__headerOpeningLine__', '__hiddenIntro__', '__footerWhy__']
   let to = [
-    i18n[language].goodbyeHeaderOpeningLine,
-    i18n[language].goodbyeHiddenIntro,
-    i18n[language].goodbyeWhy
+    i18n[language]['email.goodbyeHeaderOpeningLine'],
+    i18n[language]['email.goodbyeHiddenIntro'],
+    i18n[language]['email.goodbyeWhy']
   ]
   html = replace(html, from, to)
   text = replace(text, from, to)
 
   let options = {
-    from: `"${i18n[language].joostFromFreesewing}" <info@freesewing.org>`,
+    from: `"${i18n[language]['email.joostFromFreesewing']}" <info@freesewing.org>`,
     to: recipient,
-    subject: i18n[language].goodbyeSubject,
+    subject: i18n[language]['email.goodbyeSubject'],
     text,
     html
   }
-  await transporter.sendMail(options, (error, info) => {
+  deliver(options, (error, info) => {
     if (error) return console.log(error)
     console.log('Message sent', info)
-    return true
   })
 }
 

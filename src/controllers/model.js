@@ -1,9 +1,8 @@
 import { User, Model } from '../models'
-import { log } from '../utils'
+import { log, randomAvatar } from '../utils'
 import fs from 'fs'
 import path from 'path'
 import config from '../config'
-import sharp from 'sharp'
 
 function ModelController() {}
 
@@ -20,21 +19,27 @@ ModelController.prototype.create = function(req, res) {
       name: req.body.name,
       units: req.body.units,
       breasts: req.body.breasts,
+      picture: handle + '.svg',
       created: new Date()
     })
-    model.save(function(err) {
-      if (err) {
-        log.error('modelCreationFailed', user)
-        console.log(err)
-        return res.sendStatus(500)
-      }
-      log.info('modelCreated', { handle: model.handle })
-      return res.send({ model })
-    })
+    model.createAvatar()
+    log.info('modelCreated', { handle: model.handle })
+    return saveAndReturnModel(res, model, user.handle)
   })
 }
 
-ModelController.prototype.read = function(req, res) {}
+ModelController.prototype.read = function(req, res) {
+  if (!req.body) return res.sendStatus(400)
+  if (!req.user._id) return res.sendStatus(400)
+  User.findById(req.user._id, (err, user) => {
+    if (err || user === null) return res.sendStatus(400)
+    Model.findOne({ handle: req.params.handle }, (err, model) => {
+      if (err) return res.sendStatus(400);
+      if (model === null) return res.sendStatus(404)
+      return res.send({ model: model.info() })
+    })
+  })
+}
 
 ModelController.prototype.update = (req, res) => {
   var async = 0
@@ -53,13 +58,9 @@ ModelController.prototype.update = (req, res) => {
           ...model.measurements,
           ...data.measurements
         }
-      if (typeof data.picture !== 'undefined') {
-        let type = imageType(data.picture)
-        saveAvatar(data.picture, model.handle, type)
-        model.picture = model.handle + '.' + type
-      }
+      if (typeof data.picture !== 'undefined') model.saveAvatar(data.picture)
 
-      return saveAndReturnModel(res, model)
+      return saveAndReturnModel(res, model, user.handle)
     })
   })
 }
@@ -73,44 +74,6 @@ ModelController.prototype.delete = (req, res) => {
       else return res.sendStatus(204)
     })
   })
-}
-
-function imageType(uri) {
-  let type = uri.split(';').shift()
-  type = type.split('/').pop()
-
-  return type
-}
-
-function saveAvatar(picture, handle, type) {
-  let b64 = picture.split(';base64,').pop()
-  fs.mkdir(modelStoragePath(handle), { recursive: true }, err => {
-    if (err) log.error('mkdirFailed', err)
-    let imgBuffer = Buffer.from(b64, 'base64')
-    for (let size of Object.keys(config.avatar.sizes)) {
-      sharp(imgBuffer)
-        .resize(config.avatar.sizes[size], config.avatar.sizes[size])
-        .toFile(avatarPath(size, handle, type), (err, info) => {
-          if (err) log.error('avatarNotSaved', err)
-        })
-    }
-  })
-}
-
-function saveAndReturnModel(res, model) {
-  model.save(function(err, updatedModel) {
-    if (err) {
-      log.error('modelUpdateFailed', updatedModel)
-      return res.sendStatus(500)
-    }
-    return res.send({ model: updatedModel.info() })
-  })
-}
-
-function avatarPath(size, handle, ext, type = 'user') {
-  let dir = modelStoragePath(handle)
-  if (size === 'l') return path.join(dir, handle + '.' + ext)
-  else return path.join(dir, size + '-' + handle + '.' + ext)
 }
 
 // Delete multiple
@@ -144,6 +107,18 @@ ModelController.prototype.deleteMultiple = function(req, res) {
 
 // Clone
 ModelController.prototype.clone = function(req, res) {}
+
+function saveAndReturnModel(res, model) {
+  model.save(function(err, updatedModel) {
+    if (err) {
+      log.error('modelUpdateFailed', updatedModel)
+      return res.sendStatus(500)
+    }
+
+    return res.send({ model: updatedModel.info() })
+  })
+}
+
 
 const newHandle = (length = 5) => {
   let handle = ''

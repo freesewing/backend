@@ -1,6 +1,6 @@
 import { User, Confirmation, Model, Recipe } from '../models'
 import crypto from 'crypto'
-import { log, email } from '../utils'
+import { log, email, randomAvatar } from '../utils'
 import jwt from 'jsonwebtoken'
 import config from '../config'
 import sharp from 'sharp'
@@ -12,7 +12,7 @@ import rimraf from 'rimraf'
 function UserController() {}
 
 UserController.prototype.login = function(req, res) {
-  if (!req.body) return res.sendStatus(400)
+  if (!req.body || !req.body.username) return res.sendStatus(400)
   User.findOne(
     {
       $or: [
@@ -26,7 +26,7 @@ UserController.prototype.login = function(req, res) {
       user.verifyPassword(req.body.password, (err, valid) => {
         if (err) return res.sendStatus(400)
         else if (valid) {
-          if (user.status !== 'active') res.sendStatus(403)
+          if (user.status !== 'active') return res.sendStatus(403)
           else {
             log.info('login', { user, req })
             let account = user.account()
@@ -39,7 +39,9 @@ UserController.prototype.login = function(req, res) {
               Recipe.find({ user: user.handle }, (err, recipeList) => {
                 if (err) return res.sendStatus(400)
                 for (let recipe of recipeList) recipes[recipe.handle] = recipe
-                user.updateLoginTime(() => res.send({ account, models, recipes: recipes, token }))
+                return user.updateLoginTime(() =>
+                  res.send({ account, models, recipes: recipes, token })
+                )
               })
             })
           }
@@ -52,12 +54,48 @@ UserController.prototype.login = function(req, res) {
   )
 }
 
+// For people who have forgotten their password, or password-less logins
+UserController.prototype.confirmationLogin = function(req, res) {
+  if (!req.body || !req.body.id) return res.sendStatus(400)
+  Confirmation.findById(req.body.id, (err, confirmation) => {
+    if (err) return res.sendStatus(400)
+    if (confirmation === null) return res.sendStatus(401)
+    User.findOne({ handle: confirmation.data.handle }, (err, user) => {
+      if (err) return res.sendStatus(400)
+      if (user === null) {
+        console.log('user null', confirmation)
+        return res.sendStatus(401)
+      }
+      if (user.status !== 'active') return res.sendStatus(403)
+      else {
+        log.info('confirmationLogin', { user, req })
+        let account = user.account()
+        let token = getToken(account)
+        let models = {}
+        Model.find({ user: user.handle }, (err, modelList) => {
+          if (err) return res.sendStatus(400)
+          for (let model of modelList) models[model.handle] = model.info()
+          let recipes = {}
+          Recipe.find({ user: user.handle }, (err, recipeList) => {
+            if (err) return res.sendStatus(400)
+            for (let recipe of recipeList) recipes[recipe.handle] = recipe
+            return user.updateLoginTime(() =>
+              res.send({ account, models, recipes: recipes, token })
+            )
+          })
+        })
+      }
+    })
+  })
+}
+
 // CRUD basics
 
 // Note that the user is already crearted (in signup)
 // we just need to active the account
 UserController.prototype.create = (req, res) => {
   if (!req.body) return res.sendStatus(400)
+  if (!req.body.consent || !req.body.consent.profile) return res.status(400).send('consentRequired')
   Confirmation.findById(req.body.id, (err, confirmation) => {
     if (err) return res.sendStatus(400)
     if (confirmation === null) return res.sendStatus(401)
@@ -93,7 +131,7 @@ UserController.prototype.readAccount = (req, res) => {
         Recipe.find({ user: user.handle }, (err, recipeList) => {
           if (err) return res.sendStatus(400)
           for (let recipe of recipeList) recipes[recipe.handle] = recipe.asRecipe()
-          res.send({ account: user.account(), models, recipes })
+          return res.send({ account: user.account(), models, recipes })
         })
       })
     } else {
@@ -121,39 +159,39 @@ UserController.prototype.update = (req, res) => {
         ...user.settings,
         ...data.settings
       }
-    }
-    if (typeof data.username === 'string') user.username = data.username
-    if (typeof data.bio === 'string') user.bio = data.bio
-    if (typeof data.social === 'object') {
+      return saveAndReturnAccount(res, user)
+    } else if (typeof data.bio === 'string') {
+      user.bio = data.bio
+      return saveAndReturnAccount(res, user)
+    } else if (typeof data.social === 'object') {
       if (typeof data.social.github === 'string') user.social.github = data.social.github
       if (typeof data.social.twitter === 'string') user.social.twitter = data.social.twitter
       if (typeof data.social.instagram === 'string') user.social.instagram = data.social.instagram
-    }
-    if (typeof data.consent === 'object') {
+      return saveAndReturnAccount(res, user)
+    } else if (typeof data.consent === 'object') {
       user.consent = {
         ...user.consent,
         ...data.consent
       }
-    }
-    if (typeof data.avatar !== 'undefined' && data.avatar) {
+      return saveAndReturnAccount(res, user)
+    } else if (typeof data.avatar !== 'undefined' && data.avatar) {
       let type = imageTypeFromDataUri(data.avatar)
       saveAvatar(data.avatar, user.handle, type)
-      user.avatar = user.handle + '.' + type
-    }
-
-    // Below are async ops, need to watch out when to save
-
-    if (typeof data.newPassword === 'string' && typeof data.currentPassword === 'string') {
-      user.verifyPassword(data.currentPassword, (err, valid) => {
-        if (err) return res.sendStatus(400)
+      user.picture = user.handle + '.' + type
+      return saveAndReturnAccount(res, user)
+    } else if (typeof data.newPassword === 'string') {
+      user.password = data.newPassword
+      return saveAndReturnAccount(res, user)
+    } else if (typeof data.username === 'string') {
+      User.findOne({ username: data.username }, (err, userExists) => {
+        if (userExists !== null && data.username !== user.username)
+          return res.status(400).send('usernameTaken')
         else {
-          if (!valid) return res.sendStatus(403)
-          user.password = data.newPassword
+          user.username = data.username
           return saveAndReturnAccount(res, user)
         }
       })
     }
-
     // Email change requires confirmation
     else if (typeof data.email === 'string' && data.email !== user.email) {
       if (typeof data.confirmation === 'string') {
@@ -170,6 +208,7 @@ UserController.prototype.update = (req, res) => {
         let confirmation = new Confirmation({
           type: 'emailchange',
           data: {
+            handle: user.handle,
             language: user.settings.language,
             email: {
               new: req.body.email,
@@ -187,7 +226,7 @@ UserController.prototype.update = (req, res) => {
           return saveAndReturnAccount(res, user)
         })
       }
-    } else return saveAndReturnAccount(res, user)
+    }
   })
 }
 
@@ -201,24 +240,39 @@ function imageTypeFromDataUri(uri) {
 function saveAndReturnAccount(res, user) {
   user.save(function(err, updatedUser) {
     if (err) {
-      log.error('accountUpdateFailed', updatedUser)
+      log.error('accountUpdateFailed', err)
       return res.sendStatus(500)
-    }
-    return res.send({ account: updatedUser.account() })
+    } else return res.send({ account: updatedUser.account() })
+  })
+}
+
+function createAvatar(handle) {
+  let dir = userStoragePath(handle)
+  fs.mkdir(dir, { recursive: true }, err => {
+    if (err) console.log('mkdirFailed', dir, err)
+    fs.writeFile(path.join(dir, handle) + '.svg', randomAvatar(), err => {
+      if (err) console.log('writeFileFailed', dir, err)
+    })
   })
 }
 
 function saveAvatar(picture, handle, type) {
+  return true
   let b64 = picture.split(';base64,').pop()
   fs.mkdir(userStoragePath(handle), { recursive: true }, err => {
     if (err) log.error('mkdirFailed', err)
     let imgBuffer = Buffer.from(b64, 'base64')
     for (let size of Object.keys(config.avatar.sizes)) {
-      sharp(imgBuffer)
-        .resize(config.avatar.sizes[size], config.avatar.sizes[size])
-        .toFile(avatarPath(size, handle, type), (err, info) => {
-          if (err) log.error('avatarNotSaved', err)
-        })
+      try {
+        sharp(imgBuffer)
+          .resize(config.avatar.sizes[size], config.avatar.sizes[size])
+          .toFile(avatarPath(size, handle, type), (err, info) => {
+            if (err) console.log('avatarNotSaved', err)
+            else console.log('avatar size', size, 'saved', info)
+          })
+      } catch (error) {
+        console.log('Sharp problem:', err)
+      }
     }
   })
 }
@@ -254,6 +308,9 @@ UserController.prototype.isUsernameAvailable = (req, res) => {
 // // Signup flow
 UserController.prototype.signup = (req, res) => {
   if (!req.body) return res.sendStatus(400)
+  if (!req.body.email) return res.status(400).send('emailMissing')
+  if (!req.body.password) return res.status(400).send('passwordMissing')
+  if (!req.body.language) return res.status(400).send('languageMissing')
   User.findOne(
     {
       ehash: ehash(req.body.email)
@@ -262,7 +319,7 @@ UserController.prototype.signup = (req, res) => {
       if (err) return res.sendStatus(500)
       if (user !== null) return res.status(400).send('userExists')
       else {
-        // FROM HERE
+        console.log(req.body)
         let handle = uniqueHandle()
         let username = 'user-' + handle
         let user = new User({
@@ -274,6 +331,7 @@ UserController.prototype.signup = (req, res) => {
           password: req.body.password,
           settings: { language: req.body.language },
           status: 'pending',
+          picture: handle + '.svg',
           time: {
             created: new Date()
           }
@@ -285,6 +343,7 @@ UserController.prototype.signup = (req, res) => {
             return res.sendStatus(500)
           }
           log.info('accountCreated', { handle: user.handle })
+          createAvatar(handle)
           let confirmation = new Confirmation({
             type: 'signup',
             data: {
@@ -356,7 +415,7 @@ UserController.prototype.setPassword = (req, res) => {
           log.info('passwordSet', { user, req })
           let account = user.account()
           let token = getToken(account)
-          user.updateLoginTime(() => res.send({ account, token }))
+          return user.updateLoginTime(() => res.send({ account, token }))
         })
       } else return res.sendStatus(401)
     })
@@ -365,7 +424,19 @@ UserController.prototype.setPassword = (req, res) => {
   return
 }
 
-// userController.confirmChangedEmail = (req, res) => { }
+UserController.prototype.confirmChangedEmail = (req, res) => {
+  if (!req.body || !req.body.id || !req.user._id) return res.sendStatus(400)
+  if (!req.user._id) return res.sendStatus(400)
+  Confirmation.findById(req.body.id, (err, confirmation) => {
+    if (err || confirmation === null) return res.sendStatus(401)
+    User.findById(req.user._id, async (err, user) => {
+      if (err || confirmation.data.handle !== user.handle) return res.sendStatus(401)
+      user.ehash = ehash(confirmation.data.email.new)
+      user.email = confirmation.data.email.new
+      return saveAndReturnAccount(res, user)
+    })
+  })
+}
 
 // // Other
 UserController.prototype.patronList = (req, res) => {

@@ -91,6 +91,28 @@ This backend can be configured with environment variables. They are detailed bel
 | `FS_GOOGLE_CLIENT_ID`     | `clientIdForOathViaGoogle`     | Google client ID for signup/login via Google     |
 | `FS_GOOGLE_CLIENT_SECRET` | `clientSecretForOathViaGoogle` | Google client ID for signup/login via Google     |
 
+## Tests
+
+There's two ways to run tests:
+
+ - `npm run test` will run tests that don't depend on emails
+ - `npm run testall` will runn all tests, including the ones that depend on email
+
+ To run the email tests, spin up a mailhog container:
+
+ ```
+ sudo docker run -p 8025:8025 -p 1025:1025 mailhog/mailhog
+ ```
+
+Then, configure your backend as such:
+
+`FS_SMTP_USER` : `user` (doesn't matter what you use)
+`FS_SMTP_PASS` : `password` (doesn't matter what you use
+`FS_SMTP_HOST` : `localhost` (this makes sure emails go to mailhog)
+`FS_SMTP_PORT` : `1025` (the mailhog port)
+
+This allows complete end-to-end testing of signup flow and other things the depend on email sent to the user.
+
 ## Links
 
 - 💻 Maker site: [freesewing.org](https://freesewing.org)

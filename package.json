@@ -9,9 +9,10 @@
     "patch": "npm version patch -m ':bookmark: v%s' && npm run build",
     "minor": "npm version minor -m ':bookmark: v%s' && npm run build",
     "major": "npm version major -m ':bookmark: v%s' && npm run build",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "SEND_TEST_EMAILS=0 ./node_modules/.bin/mocha tests/index.js",
+    "testall": "SEND_TEST_EMAILS=1 ./node_modules/.bin/mocha tests/index.js",
     "clean": "rimraf dist",
-    "prettier": "npx prettier --write 'src/**'",
+    "prettier": "npx prettier --write 'src/**' 'tests/**'",
     "lint": "eslint --fix \"src/*.js\"",
     "dev": "backpack",
     "build": "backpack build",
@@ -42,6 +43,7 @@
   "dependencies": {
     "@freesewing/i18n": "0.1.0",
     "@octokit/rest": "^16.10.0",
+    "@sendgrid/mail": "6.4.0",
     "axios": "^0.18.1",
     "body-parser": "1.18.3",
     "chalk": "2.4.1",
@@ -64,6 +66,9 @@
   "devDependencies": {
     "@freesewing/prettier-config": "2.0.0-beta.37",
     "backpack-core": "0.7.0",
+    "chai": "4.2.0",
+    "chai-http": "4.3.0",
+    "mocha": "6.2.0",
     "nodemon": "1.18.6"
   }
 }

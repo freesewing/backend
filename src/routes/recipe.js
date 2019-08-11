@@ -3,20 +3,9 @@ import Controller from '../controllers/recipe'
 const Recipe = new Controller()
 
 export default (app, passport) => {
-  /**********************************************
-   *                                            *
-   *             ANONYMOUS ROUTES               *
-   *                                            *
-   *********************************************/
 
-  // Load shared recipe
+  // Load recipe
   app.get('/recipe/:handle', Recipe.readRecipe)
-
-  /**********************************************
-   *                                            *
-   *           AUTHENTICATED ROUTES             *
-   *                                            *
-   *********************************************/
 
   /* CRUD endpoints */
 

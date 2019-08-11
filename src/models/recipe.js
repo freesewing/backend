@@ -40,7 +40,7 @@ RecipeSchema.methods.info = function() {
 
 RecipeSchema.methods.asRecipe = function() {
   let recipe = this.toObject()
-  for (let field of ['_id', 'user', 'createdAt', 'updatedAt', '_v']) delete recipe[field]
+  for (let field of ['__v', '_id', 'user', 'createdAt', 'updatedAt', '_v']) delete recipe[field]
 
   return recipe
 }

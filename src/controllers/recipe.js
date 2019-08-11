@@ -27,14 +27,15 @@ RecipeController.prototype.create = (req, res) => {
         return res.sendStatus(500)
       }
       log.info('recipeCreated', { handle: recipe.handle })
-      return res.send({ handle })
+      return res.send(recipe.asRecipe())
     })
   })
 }
 
 RecipeController.prototype.readRecipe = (req, res) => {
   Recipe.findOne({ handle: req.params.handle }, (err, recipe) => {
-    if (err || recipe === null) return res.sendStatus(400)
+    if (err) return res.sendStatus(400)
+    if (recipe === null) return res.sendStatus(404)
     return res.send(recipe.asRecipe())
   })
 }
@@ -98,7 +99,7 @@ function saveAndReturnRecipe(res, recipe) {
       log.error('recipeUpdateFailed', updatedRecipe)
       return res.sendStatus(500)
     }
-    return res.send({ recipe: updatedRecipe.info() })
+    return res.send(updatedRecipe.info())
   })
 }
 

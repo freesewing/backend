@@ -7,12 +7,16 @@ import config from '../config'
 import path from 'path'
 import fs from 'fs'
 import sharp from 'sharp'
+import avatar from '../templates/avatar'
 
 export const email = mailer
 export const log = logger
 
-export const createUrl = (language, path) =>
-  config.website.scheme + '://' + language + '.' + config.website.domain + path
+export const createUrl = (language, path) => {
+  // Handle development mode
+  if (config.api.indexOf('localhost') !== -1) return 'http://localhost:8000' + path
+  else config.website.scheme + '://' + language + '.' + config.website.domain + path
+}
 
 export const getHash = email => {
   let hash = crypto.createHash('sha256')
@@ -90,3 +94,8 @@ export const avatarPath = (size, handle, ext, type = 'user') => {
   if (size === 'l') return path.join(dir, handle + '.' + ext)
   else return path.join(dir, size + '-' + handle + '.' + ext)
 }
+
+export const randomColor = () => (0x1000000 + Math.random() * 0xffffff).toString(16).substr(1, 6)
+
+export const randomAvatar = () =>
+  avatar.replace('000000', randomColor()).replace('FFFFFF', randomColor())

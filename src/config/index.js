@@ -1,4 +1,4 @@
-export default {
+module.exports = {
   api: process.env.FS_BACKEND,
   website: {
     domain: 'freesewing.org',
@@ -30,8 +30,11 @@ export default {
     expiresIn: '36 days'
   },
   languages: ['en', 'de', 'es', 'fr', 'nl'],
+  sendEmailWith: 'smtp',
+  sendgrid: process.env.FS_SENDGRID_API_KEY,
   smtp: {
     host: process.env.FS_SMTP_HOST,
+    port: process.env.FS_SMTP_PORT,
     user: process.env.FS_SMTP_USER,
     pass: process.env.FS_SMTP_PASS
   },

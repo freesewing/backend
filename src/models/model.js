@@ -1,5 +1,9 @@
 import mongoose, { Schema } from 'mongoose'
 import config from '../config'
+import fs from "fs";
+import { log, randomAvatar } from '../utils'
+import path from 'path';
+import sharp from 'sharp'
 
 const ModelSchema = new Schema(
   {
@@ -27,13 +31,16 @@ const ModelSchema = new Schema(
       type: Boolean,
       default: false
     },
-    picture: String,
+    picture: {
+      type: String,
+      trim: true,
+      default: ''
+    },
     units: {
       type: String,
       enum: ['metric', 'imperial'],
       default: 'metric'
     },
-    created: Date,
     notes: {
       type: String,
       trim: true
@@ -75,6 +82,9 @@ ModelSchema.index({ user: 1, handle: 1 })
 
 ModelSchema.methods.info = function() {
   let model = this.toObject()
+  delete model.picture
+  delete model.__v
+  delete model._id
   model.pictureUris = {
     l: this.avatarUri(),
     m: this.avatarUri('m'),
@@ -85,20 +95,74 @@ ModelSchema.methods.info = function() {
   return model
 }
 
-ModelSchema.methods.avatarUri = function(size = 'l') {
-  if (this.picture === '') return config.static + '/avatar.svg'
-
+ModelSchema.methods.avatarName = function(size = 'l') {
   let prefix = size === 'l' ? '' : size + '-'
+  if (this.picture.slice(-4).toLowerCase() === '.svg') prefix = ''
+
+  return prefix + this.picture;
+}
+
+ModelSchema.methods.avatarUri = function(size = 'l') {
+
   return (
     config.static +
-    '/models/' +
-    this.handle.substring(0, 1) +
+    '/users/' +
+    this.user.substring(0, 1) +
     '/' +
+    this.user +
+    '/models/' +
     this.handle +
     '/' +
-    prefix +
-    this.picture
+    this.avatarName(size)
   )
 }
+
+ModelSchema.methods.storagePath = function() {
+
+  return (
+    config.storage +
+    '/users/' +
+    this.user.substring(0, 1) +
+    '/' +
+    this.user +
+    '/models/' +
+    this.handle +
+    '/'
+  )
+}
+
+ModelSchema.methods.createAvatar = function() {
+  let dir = this.storagePath();
+  fs.mkdir(dir, { recursive: true }, err => {
+    if (err) console.log('mkdirFailed', dir, err)
+    fs.writeFile(path.join(dir, this.handle) + '.svg', randomAvatar(), err => {
+      if (err) console.log('writeFileFailed', dir, err)
+    })
+  })
+}
+
+ModelSchema.methods.saveAvatar = function(picture) {
+  let type = picture.split(';').shift()
+  type = type.split('/').pop()
+  this.picture = this.handle+'.'+type;
+
+  let dir = this.storagePath();
+  let b64 = picture.split(';base64,').pop()
+  fs.mkdir(dir, { recursive: true }, err => {
+    if (err) log.error('mkdirFailed', err)
+    let imgBuffer = Buffer.from(b64, 'base64')
+    for (let size of Object.keys(config.avatar.sizes)) {
+      let prefix = size === 'l' ? '' : size + '-'
+      sharp(imgBuffer)
+        .resize(config.avatar.sizes[size], config.avatar.sizes[size])
+        .toFile(path.join(dir, this.avatarName(size)), (err, info) => {
+          if (err) log.error('avatarNotSaved', err)
+        })
+    }
+  })
+
+}
+
+
 
 export default mongoose.model('Model', ModelSchema)

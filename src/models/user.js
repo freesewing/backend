@@ -53,7 +53,8 @@ const UserSchema = new Schema(
     },
     picture: {
       type: String,
-      trim: true
+      trim: true,
+      default: ''
     },
     status: {
       type: String,
@@ -92,7 +93,6 @@ const UserSchema = new Schema(
       }
     },
     time: {
-      created: Date,
       migrated: Date,
       login: Date,
       patron: Date
@@ -198,6 +198,8 @@ UserSchema.methods.avatarUri = function(size = 'l') {
   if (this.picture === '') return config.static + '/avatar.svg'
 
   let prefix = size === 'l' ? '' : size + '-'
+  if (this.picture.slice(-4).toLowerCase() === '.svg') prefix = ''
+
   return (
     config.static +
     '/users/' +
