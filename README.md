@@ -725,7 +725,12 @@ This is the last step of the Oauth process. It logs a user in.
 There's two ways to run tests:
 
  - `npm run test` will run tests that don't depend on emails
+ 
+![npm run test](https://raw.githubusercontent.com/freesewing/backend/develop/test.svg)
+ 
  - `npm run testall` will runn all tests, including the ones that depend on email
+
+![npm run testall](https://raw.githubusercontent.com/freesewing/backend/develop/testall.svg)
 
 To run the email tests, spin up a mailhog container with Docker:
 
