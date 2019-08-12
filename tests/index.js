@@ -1,3 +1,4 @@
+require('dotenv').config()
 const config = require('./config.js')
 const chai = require('chai')
 
@@ -12,6 +13,7 @@ const userTests = require('./user.test.js')
 const userTestsEmail = require('./user.all.test.js')
 const modelTests = require('./model.test.js')
 const recipeTests = require('./recipe.test.js')
+const oauthTests = require('./oauth.test.js')
 
 if (!EMAIL) {
   // Set credentials to run the tests
@@ -26,3 +28,4 @@ if (EMAIL) userTestsEmail(store, config, chai)
 userTests(store, config, chai)
 modelTests(store, config, chai)
 recipeTests(store, config, chai)
+oauthTests(store, config, chai)
