@@ -3,7 +3,6 @@ import crypto from 'crypto'
 import { log, email, randomAvatar } from '../utils'
 import jwt from 'jsonwebtoken'
 import config from '../config'
-import sharp from 'sharp'
 import path from 'path'
 import fs from 'fs'
 import Zip from 'jszip'
@@ -229,13 +228,6 @@ UserController.prototype.update = (req, res) => {
   })
 }
 
-function imageTypeFromDataUri(uri) {
-  let type = uri.split(';').shift()
-  type = type.split('/').pop()
-
-  return type
-}
-
 function saveAndReturnAccount(res, user) {
   user.save(function(err, updatedUser) {
     if (err) {
@@ -261,12 +253,6 @@ function userStoragePath(handle) {
 
 function temporaryStoragePath(dir) {
   return path.join(config.storage, 'tmp', dir)
-}
-
-function avatarPath(size, handle, ext, type = 'user') {
-  let dir = userStoragePath(handle)
-  if (size === 'l') return path.join(dir, handle + '.' + ext)
-  else return path.join(dir, size + '-' + handle + '.' + ext)
 }
 
 UserController.prototype.isUsernameAvailable = (req, res) => {
