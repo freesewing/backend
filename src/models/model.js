@@ -152,7 +152,6 @@ ModelSchema.methods.saveAvatar = function(picture) {
     if (err) log.error('mkdirFailed', err)
     let imgBuffer = Buffer.from(b64, 'base64')
     for (let size of Object.keys(config.avatar.sizes)) {
-      let prefix = size === 'l' ? '' : size + '-'
       sharp(imgBuffer)
         .resize(config.avatar.sizes[size], config.avatar.sizes[size])
         .toFile(path.join(dir, this.avatarName(size)), (err, info) => {

@@ -1,4 +1,5 @@
 module.exports = function tests(store, config, chai) {
+  const should = chai.should();
 
   describe('Model endpoints', () => {
 

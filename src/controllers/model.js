@@ -1,8 +1,5 @@
 import { User, Model } from '../models'
-import { log, randomAvatar } from '../utils'
-import fs from 'fs'
-import path from 'path'
-import config from '../config'
+import { log } from '../utils'
 
 function ModelController() {}
 
@@ -24,7 +21,7 @@ ModelController.prototype.create = function(req, res) {
     })
     model.createAvatar()
     log.info('modelCreated', { handle: model.handle })
-    return saveAndReturnModel(res, model, user.handle)
+    return saveAndReturnModel(res, model)
   })
 }
 
@@ -60,7 +57,7 @@ ModelController.prototype.update = (req, res) => {
         }
       if (typeof data.picture !== 'undefined') model.saveAvatar(data.picture)
 
-      return saveAndReturnModel(res, model, user.handle)
+      return saveAndReturnModel(res, model)
     })
   })
 }

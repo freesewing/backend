@@ -3,7 +3,7 @@ const strings = require('@freesewing/i18n').strings
 module.exports = {
   backend: process.env.FS_BACKEND,
   mailhog: 'http://localhost:8025',
-  sleep: 1,
+  sleep: 0,
   languages: {
     en: '🇬🇧',
     de: '🇩🇪',

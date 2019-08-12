@@ -4,6 +4,9 @@ import { email } from '../utils'
 import encrypt from 'mongoose-encryption'
 import config from '../config'
 import path from 'path'
+import fs from "fs";
+import { log, randomAvatar } from '../utils'
+import sharp from 'sharp'
 
 const UserSchema = new Schema(
   {
@@ -195,16 +198,18 @@ UserSchema.methods.updateLoginTime = function(callback) {
   })
 }
 
+UserSchema.methods.avatarName = function(size = 'l') {
+  let prefix = size === 'l' ? '' : size + '-'
+  if (this.picture.slice(-4).toLowerCase() === '.svg') prefix = ''
+
+  return prefix + this.picture;
+}
+
 UserSchema.methods.storagePath = function() {
   return path.join(config.storage, this.handle.substring(0, 1), this.handle)
 }
 
 UserSchema.methods.avatarUri = function(size = 'l') {
-  if (this.picture === '') return config.static + '/avatar.svg'
-
-  let prefix = size === 'l' ? '' : size + '-'
-  if (this.picture.slice(-4).toLowerCase() === '.svg') prefix = ''
-
   return (
     config.static +
     '/users/' +
@@ -212,9 +217,29 @@ UserSchema.methods.avatarUri = function(size = 'l') {
     '/' +
     this.handle +
     '/' +
-    prefix +
-    this.picture
+    this.avatarName(size)
   )
+}
+
+UserSchema.methods.saveAvatar = function(picture) {
+  let type = picture.split(';').shift()
+  type = type.split('/').pop()
+  this.picture = this.handle+'.'+type;
+
+  let dir = this.storagePath();
+  let b64 = picture.split(';base64,').pop()
+  fs.mkdir(dir, { recursive: true }, err => {
+    if (err) log.error('mkdirFailed', err)
+    let imgBuffer = Buffer.from(b64, 'base64')
+    for (let size of Object.keys(config.avatar.sizes)) {
+      sharp(imgBuffer)
+        .resize(config.avatar.sizes[size], config.avatar.sizes[size])
+        .toFile(path.join(dir, this.avatarName(size)), (err, info) => {
+          if (err) log.error('avatarNotSaved', err)
+        })
+    }
+  })
+
 }
 
 export default mongoose.model('User', UserSchema)

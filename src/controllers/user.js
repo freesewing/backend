@@ -177,8 +177,7 @@ UserController.prototype.update = (req, res) => {
       return saveAndReturnAccount(res, user)
     } else if (typeof data.avatar !== 'undefined' && data.avatar) {
       let type = imageTypeFromDataUri(data.avatar)
-      saveAvatar(data.avatar, user.handle, type)
-      user.picture = user.handle + '.' + type
+      user.saveAvatar(data.avatar)
       return saveAndReturnAccount(res, user)
     } else if (typeof data.password === 'string') {
       user.password = data.password
@@ -427,7 +426,6 @@ UserController.prototype.setPassword = (req, res) => {
 
 UserController.prototype.confirmChangedEmail = (req, res) => {
   if (!req.body || !req.body.id || !req.user._id) return res.sendStatus(400)
-  if (!req.user._id) return res.sendStatus(400)
   Confirmation.findById(req.body.id, (err, confirmation) => {
     if (err || confirmation === null) return res.sendStatus(401)
     User.findById(req.user._id, async (err, user) => {
