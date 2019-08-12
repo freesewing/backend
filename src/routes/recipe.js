@@ -3,21 +3,8 @@ import Controller from '../controllers/recipe'
 const Recipe = new Controller()
 
 export default (app, passport) => {
-
-  // Load recipe
-  app.get('/recipe/:handle', Recipe.readRecipe)
-
-  /* CRUD endpoints */
-
-  app.post('/recipe', passport.authenticate('jwt', { session: false }), Recipe.create) // Create
-  app.get('/recipe/:handle', passport.authenticate('jwt', { session: false }), Recipe.read) // Read
-  app.put('/recipe/:handle', passport.authenticate('jwt', { session: false }), Recipe.update) // Update
-  app.delete('/recipe/:handle', passport.authenticate('jwt', { session: false }), Recipe.delete) // Delete
-
-  // Delete multiple
-  app.post(
-    '/remove/recipes',
-    passport.authenticate('jwt', { session: false }),
-    Recipe.deleteMultiple
-  )
+  app.get('/recipes/:handle', Recipe.read) // Anomymous read
+  app.post('/recipes', passport.authenticate('jwt', { session: false }), Recipe.create) // Create
+  app.put('/recipes/:handle', passport.authenticate('jwt', { session: false }), Recipe.update) // Update
+  app.delete('/recipes/:handle', passport.authenticate('jwt', { session: false }), Recipe.delete) // Delete
 }

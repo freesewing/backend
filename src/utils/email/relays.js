@@ -1,8 +1,11 @@
 import smtp from './smtp'
-import sendgrid from './sendgrid'
+//import sendgrid from './sendgrid'
 
 const sendEmailWith = type => {
-  const types = { smtp, sendgrid }
+  const types = {
+    smtp,
+    //sendgrid,
+  }
   return types[type]
 }
 

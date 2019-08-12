@@ -3,66 +3,28 @@ import Controller from '../controllers/user'
 const User = new Controller()
 
 export default (app, passport) => {
-  /**********************************************
-   *                                            *
-   *             ANONYMOUS ROUTES               *
-   *                                            *
-   *********************************************/
-
-  /*  Sign-up flow */
-
-  // Sign up user
-  app.post('/signup', User.signup)
-
-  // Create account from confirmation / Consent for data processing given
-  app.post('/user', User.create)
-
-  /* Login flow */
-
-  // User login
-  app.post('/login', User.login)
-
-  // Confirmation login
-  app.post('/confirm/login', User.confirmationLogin)
-
-  // Reset user password
-  app.post('/reset/password', User.resetPassword)
-
-  // Set user password after reset
-  app.post('/set/password', User.setPassword)
-
-  /* Email confirmation endpoints */
-  // (these are always GET because they are links in an email)
-
-  // Load patron list
-  app.get('/patrons', User.patronList)
-
-  /**********************************************
-   *                                            *
-   *           AUTHENTICATED ROUTES             *
-   *                                            *
-   *********************************************/
-
-  /* CRUD endpoints */
+  // account
+  app.post('/account', User.create)
   app.get('/account', passport.authenticate('jwt', { session: false }), User.readAccount) // Read account (own data)
-  app.get('/users/:username', User.readProfile) // Read profile (other user's data)
-  app.put('/user', passport.authenticate('jwt', { session: false }), User.update) // Update
+  app.put('/account', passport.authenticate('jwt', { session: false }), User.update) // Update
   app.delete('/account', passport.authenticate('jwt', { session: false }), User.remove)
-
-  // Confirm email change
+  app.get('/account/export', passport.authenticate('jwt', { session: false }), User.export)
+  app.get('/account/restrict', passport.authenticate('jwt', { session: false }), User.restrict)
+  app.post('/account/recover', User.resetPassword)
   app.post(
-    '/confirm/changed/email',
+    '/account/change/email',
     passport.authenticate('jwt', { session: false }),
     User.confirmChangedEmail
   )
 
-  // Export data
-  app.get('/export', passport.authenticate('jwt', { session: false }), User.export)
+  // Sign up & log in
+  app.post('/signup', User.signup)
+  app.post('/login', User.login)
+  app.post('/confirm/login', User.confirmationLogin)
 
-  // Restrict processing (freeze account)
-  app.get('/restrict', passport.authenticate('jwt', { session: false }), User.restrict)
-
-  // Check whether username is available
+  // Users
+  app.get('/patrons', User.patronList)
+  app.get('/users/:username', User.readProfile) // Read profile (other user's data)
   app.post(
     '/available/username',
     passport.authenticate('jwt', { session: false }),

@@ -15,7 +15,7 @@ export const log = logger
 export const createUrl = (language, path) => {
   // Handle development mode
   if (config.api.indexOf('localhost') !== -1) return 'http://localhost:8000' + path
-  else config.website.scheme + '://' + language + '.' + config.website.domain + path
+  else return config.website.scheme + '://' + language + '.' + config.website.domain + path
 }
 
 export const getHash = email => {

@@ -4,8 +4,6 @@ import { log } from '../utils'
 function RecipeController() {}
 
 // CRUD basics
-RecipeController.prototype.read = (req, res) => {}
-
 RecipeController.prototype.create = (req, res) => {
   if (!req.body) return res.sendStatus(400)
   if (!req.user._id) return res.sendStatus(400)
@@ -32,7 +30,7 @@ RecipeController.prototype.create = (req, res) => {
   })
 }
 
-RecipeController.prototype.readRecipe = (req, res) => {
+RecipeController.prototype.read = (req, res) => {
   Recipe.findOne({ handle: req.params.handle }, (err, recipe) => {
     if (err) return res.sendStatus(400)
     if (recipe === null) return res.sendStatus(404)

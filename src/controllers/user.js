@@ -111,7 +111,7 @@ UserController.prototype.create = (req, res) => {
       user.save(function(err) {
         if (err) return res.sendStatus(400)
         Confirmation.findByIdAndDelete(req.body.id, (err, confirmation) => {
-          return res.send({ account, token })
+          return res.send({ account, models: {}, recipes: {}, token })
         })
       })
     })
@@ -119,6 +119,7 @@ UserController.prototype.create = (req, res) => {
 }
 
 UserController.prototype.readAccount = (req, res) => {
+  console.log('user', req.user)
   if (!req.user._id) return res.sendStatus(400)
   User.findById(req.user._id, (err, user) => {
     if (user !== null) {
@@ -144,7 +145,7 @@ UserController.prototype.readProfile = (req, res) => {
   User.findOne({ username: req.params.username }, (err, user) => {
     if (err) return res.sendStatus(404)
     if (user === null) return res.sendStatus(404)
-    else res.send({ profile: user.profile() })
+    else res.send(user.profile())
   })
 }
 
@@ -179,8 +180,8 @@ UserController.prototype.update = (req, res) => {
       saveAvatar(data.avatar, user.handle, type)
       user.picture = user.handle + '.' + type
       return saveAndReturnAccount(res, user)
-    } else if (typeof data.newPassword === 'string') {
-      user.password = data.newPassword
+    } else if (typeof data.password === 'string') {
+      user.password = data.password
       return saveAndReturnAccount(res, user)
     } else if (typeof data.username === 'string') {
       User.findOne({ username: data.username }, (err, userExists) => {
@@ -456,7 +457,7 @@ UserController.prototype.patronList = (req, res) => {
           username: user.username,
           bio: user.bio,
           social: user.social,
-          pic: user.pictureUris
+          pictureUris: user.pictureUris
         })
       }
       return res.send(patrons)

@@ -1,6 +1,4 @@
 module.exports = function tests(store, config, chai) {
-  const should = chai.should()
-  const backend = config.backend
 
   describe('Non language-specific User controller signup routes', () => {
     it('should not create signup without email address', done => {
@@ -91,8 +89,9 @@ module.exports = function tests(store, config, chai) {
         .get('/account')
         .set('Authorization', 'Bearer ' + config.user.token)
         .end((err, res) => {
-          res.should.have.status(200)
+          if (err) console.log(err)
           let data = JSON.parse(res.text)
+          res.should.have.status(200)
           data.account.username.should.equal(config.user.username)
           // Enable this once cleanup is implemented
           //Object.keys(data.recipes).length.should.equal(0)
@@ -106,7 +105,7 @@ module.exports = function tests(store, config, chai) {
     it('should update the account avatar', done => {
       chai
         .request(config.backend)
-        .put('/user')
+        .put('/account')
         .set('Authorization', 'Bearer ' + config.user.token)
         .send({
           avatar: config.avatar
@@ -121,7 +120,7 @@ module.exports = function tests(store, config, chai) {
     it('should update the account username', done => {
       chai
         .request(config.backend)
-        .put('/user')
+        .put('/account')
         .set('Authorization', 'Bearer ' + config.user.token)
         .send({
           username: config.user.username + '_updated'
@@ -137,7 +136,7 @@ module.exports = function tests(store, config, chai) {
     it('should restore the account username', done => {
       chai
         .request(config.backend)
-        .put('/user')
+        .put('/account')
         .set('Authorization', 'Bearer ' + config.user.token)
         .send({
           username: config.user.username
@@ -153,7 +152,7 @@ module.exports = function tests(store, config, chai) {
     it('should not update the account username if that username is taken', done => {
       chai
         .request(config.backend)
-        .put('/user')
+        .put('/account')
         .set('Authorization', 'Bearer ' + config.user.token)
         .send({
           username: 'admin'
@@ -169,7 +168,7 @@ module.exports = function tests(store, config, chai) {
       let bio = 'This is the test bio '
       chai
         .request(config.backend)
-        .put('/user')
+        .put('/account')
         .set('Authorization', 'Bearer ' + config.user.token)
         .send({
           bio: bio
@@ -185,7 +184,7 @@ module.exports = function tests(store, config, chai) {
     it('should update the account language', done => {
       chai
         .request(config.backend)
-        .put('/user')
+        .put('/account')
         .set('Authorization', 'Bearer ' + config.user.token)
         .send({
           settings: {
@@ -203,7 +202,7 @@ module.exports = function tests(store, config, chai) {
     it('should update the account units', done => {
       chai
         .request(config.backend)
-        .put('/user')
+        .put('/account')
         .set('Authorization', 'Bearer ' + config.user.token)
         .send({
           settings: {
@@ -224,7 +223,7 @@ module.exports = function tests(store, config, chai) {
         data.social[network] = network
         chai
           .request(config.backend)
-          .put('/user')
+          .put('/account')
           .set('Authorization', 'Bearer ' + config.user.token)
           .send(data)
           .end((err, res) => {
@@ -238,10 +237,10 @@ module.exports = function tests(store, config, chai) {
     it('should update the account password', done => {
       chai
         .request(config.backend)
-        .put('/user')
+        .put('/account')
         .set('Authorization', 'Bearer ' + config.user.token)
         .send({
-          newPassword: 'changeme'
+          password: 'changeme'
         })
         .end((err, res) => {
           res.should.have.status(200)
@@ -266,10 +265,10 @@ module.exports = function tests(store, config, chai) {
     it('should restore the account password', done => {
       chai
         .request(config.backend)
-        .put('/user')
+        .put('/account')
         .set('Authorization', 'Bearer ' + config.user.token)
         .send({
-          newPassword: config.user.password
+          password: config.user.password
         })
         .end((err, res) => {
           res.should.have.status(200)
@@ -288,7 +287,7 @@ module.exports = function tests(store, config, chai) {
         .end((err, res) => {
           res.should.have.status(200)
           let data = JSON.parse(res.text)
-          data.profile.handle.should.equal('admin')
+          data.username.should.equal('admin')
           done()
         })
     })
@@ -328,9 +327,9 @@ module.exports = function tests(store, config, chai) {
         .end((err, res) => {
           res.should.have.status(200)
           let data = JSON.parse(res.text)
-          typeof data['2'].should.be.an('array')
-          typeof data['4'].should.be.an('array')
-          typeof data['8'].should.be.an('array')
+          data['2'].should.be.an('array')
+          data['4'].should.be.an('array')
+          data['8'].should.be.an('array')
           done()
         })
     })
@@ -338,7 +337,7 @@ module.exports = function tests(store, config, chai) {
     it("should export the user data", done => {
       chai
         .request(config.backend)
-        .get('/export')
+        .get('/account/export')
         .set('Authorization', 'Bearer ' + config.user.token)
         .end((err, res) => {
           res.should.have.status(200)

@@ -1,13 +1,11 @@
 module.exports = function tests(store, config, chai) {
-  const should = chai.should()
-  const backend = config.backend
 
   describe('Model endpoints', () => {
 
     it('should create a model', done => {
       chai
         .request(config.backend)
-        .post('/model')
+        .post('/models')
         .set('Authorization', 'Bearer ' + config.user.token)
         .send({
           name: 'Test model',
@@ -32,7 +30,7 @@ module.exports = function tests(store, config, chai) {
     it('should update the model name', done => {
       chai
         .request(config.backend)
-        .put('/model/'+config.user.model)
+        .put('/models/'+config.user.model)
         .set('Authorization', 'Bearer ' + config.user.token)
         .send({
           name: 'New model name',
@@ -49,7 +47,7 @@ module.exports = function tests(store, config, chai) {
     it('should update the model chest', done => {
       chai
         .request(config.backend)
-        .put('/model/'+config.user.model)
+        .put('/models/'+config.user.model)
         .set('Authorization', 'Bearer ' + config.user.token)
         .send({
           breasts: 'false'
@@ -66,7 +64,7 @@ module.exports = function tests(store, config, chai) {
     it('should update the model units', done => {
       chai
         .request(config.backend)
-        .put('/model/'+config.user.model)
+        .put('/models/'+config.user.model)
         .set('Authorization', 'Bearer ' + config.user.token)
         .send({
           units: 'metric'
@@ -83,7 +81,7 @@ module.exports = function tests(store, config, chai) {
     it('should update the model notes', done => {
       chai
         .request(config.backend)
-        .put('/model/'+config.user.model)
+        .put('/models/'+config.user.model)
         .set('Authorization', 'Bearer ' + config.user.token)
         .send({
           notes: 'These are the notes'
@@ -100,7 +98,7 @@ module.exports = function tests(store, config, chai) {
     it('should update the model measurements', done => {
       chai
         .request(config.backend)
-        .put('/model/'+config.user.model)
+        .put('/models/'+config.user.model)
         .set('Authorization', 'Bearer ' + config.user.token)
         .send({
           measurements: {
@@ -121,7 +119,7 @@ module.exports = function tests(store, config, chai) {
     it('should not set a non-existing measurement', done => {
       chai
         .request(config.backend)
-        .put('/model/'+config.user.model)
+        .put('/models/'+config.user.model)
         .set('Authorization', 'Bearer ' + config.user.token)
         .send({
           measurements: {
@@ -142,7 +140,7 @@ module.exports = function tests(store, config, chai) {
     it('should update the model avatar', done => {
       chai
         .request(config.backend)
-        .put('/model/'+config.user.model)
+        .put('/models/'+config.user.model)
         .set('Authorization', 'Bearer ' + config.user.token)
         .send({
           picture: config.avatar
@@ -160,7 +158,7 @@ module.exports = function tests(store, config, chai) {
     it('should load the model data', done => {
       chai
         .request(config.backend)
-        .get('/model/'+config.user.model)
+        .get('/models/'+config.user.model)
         .set('Authorization', 'Bearer ' + config.user.token)
         .end((err, res) => {
           res.should.have.status(200)
@@ -175,7 +173,7 @@ module.exports = function tests(store, config, chai) {
     it('should delete the model', done => {
       chai
         .request(config.backend)
-        .delete('/model/'+config.user.model)
+        .delete('/models/'+config.user.model)
         .set('Authorization', 'Bearer ' + config.user.token)
         .end((err, res) => {
           res.should.have.status(204)
@@ -186,7 +184,7 @@ module.exports = function tests(store, config, chai) {
     it('should no longer have this model', done => {
       chai
         .request(config.backend)
-        .get('/model/'+config.user.model)
+        .get('/models/'+config.user.model)
         .set('Authorization', 'Bearer ' + config.user.token)
         .end((err, res) => {
           res.should.have.status(404)

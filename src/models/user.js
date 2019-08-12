@@ -135,6 +135,11 @@ UserSchema.methods.account = function() {
   delete account.initial
   delete account._ac
   delete account._ct
+  //delete account._id
+  //delete account.createdAt
+  //delete account.updatedAt
+  //delete account.__v
+
   account.pictureUris = {
     l: this.avatarUri(),
     m: this.avatarUri('m'),
@@ -155,7 +160,7 @@ UserSchema.methods.profile = function() {
   delete account.initial
   delete account.role
   delete account.status
-  delete account.time.login
+  delete account.time
   delete account.picture
   delete account.__v
   delete account._id

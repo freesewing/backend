@@ -1,13 +1,11 @@
 module.exports = function tests(store, config, chai) {
-  const should = chai.should()
-  const backend = config.backend
 
   describe('Recipe endpoints', () => {
 
     it('should create a recipe', done => {
       chai
         .request(config.backend)
-        .post('/recipe')
+        .post('/recipes')
         .set('Authorization', 'Bearer ' + config.user.token)
         .send({
           name: 'Test recipe',
@@ -30,7 +28,7 @@ module.exports = function tests(store, config, chai) {
     it('should update the recipe name', done => {
       chai
         .request(config.backend)
-        .put('/recipe/'+config.user.recipe)
+        .put('/recipes/'+config.user.recipe)
         .set('Authorization', 'Bearer ' + config.user.token)
         .send({
           name: 'New name',
@@ -47,7 +45,7 @@ module.exports = function tests(store, config, chai) {
     it('should update the recipe notes', done => {
       chai
         .request(config.backend)
-        .put('/recipe/'+config.user.recipe)
+        .put('/recipes/'+config.user.recipe)
         .set('Authorization', 'Bearer ' + config.user.token)
         .send({
           notes: 'These are the notes'
@@ -65,7 +63,7 @@ module.exports = function tests(store, config, chai) {
     it('should load the recipe data without authentication', done => {
       chai
         .request(config.backend)
-        .get('/recipe/'+config.user.recipe)
+        .get('/recipes/'+config.user.recipe)
         .end((err, res) => {
           res.should.have.status(200)
           let data = JSON.parse(res.text);
@@ -78,7 +76,7 @@ module.exports = function tests(store, config, chai) {
     it('should delete the recipe', done => {
       chai
         .request(config.backend)
-        .delete('/recipe/'+config.user.recipe)
+        .delete('/recipes/'+config.user.recipe)
         .set('Authorization', 'Bearer ' + config.user.token)
         .end((err, res) => {
           res.should.have.status(204)
@@ -89,7 +87,7 @@ module.exports = function tests(store, config, chai) {
     it('should no longer have this recipe', done => {
       chai
         .request(config.backend)
-        .get('/recipe/'+config.user.recipe)
+        .get('/recipes/'+config.user.recipe)
         .set('Authorization', 'Bearer ' + config.user.token)
         .end((err, res) => {
           res.should.have.status(404)

@@ -1,13 +1,5 @@
 module.exports = function tests(store, config, chai) {
-  const should = chai.should()
-  const backend = config.backend
-
   const email = Date.now() + config.user.email
-
-  // We need to wait for the signup email to arrive
-  const sleep = async function(seconds) {
-    return new Promise(resolve => setTimeout(resolve, seconds * 1000))
-  }
 
   describe(`Language-specific User controller signup routes`, () => {
     for (let lang in config.languages) {
@@ -70,7 +62,7 @@ module.exports = function tests(store, config, chai) {
     it('should trigger the email change confirmation email', done => {
       chai
         .request(config.backend)
-        .put('/user')
+        .put('/account')
         .set('Authorization', 'Bearer ' + store.emailChange.token)
         .send({
           email: config.user.changedEmail
@@ -82,8 +74,8 @@ module.exports = function tests(store, config, chai) {
     })
   })
 
-  describe(`Take a ${config.sleep} second power nap while we wait for the signup emails to be delivered`, () => {
-    it(`should sleep for ${config.sleep} seconds to allow the signup email to arrive`, done => {
+  describe(`Take a ${config.sleep} second power nap while we wait for the emails to be delivered`, () => {
+    it(`should sleep for ${config.sleep} seconds to allow the emails to arrive`, done => {
       console.log('\n    😴  \n')
       setTimeout(() => {
         done()
@@ -122,7 +114,7 @@ module.exports = function tests(store, config, chai) {
         done => {
           chai
             .request(config.backend)
-            .post('/user')
+            .post('/account')
             .send({
               id: store[lang].confirmation
             })
@@ -137,7 +129,7 @@ module.exports = function tests(store, config, chai) {
       it(config.languages[lang] + '  => should activate the pending confirmation', done => {
         chai
           .request(config.backend)
-          .post('/user')
+          .post('/account')
           .send({
             id: store[lang].confirmation,
             consent: {
