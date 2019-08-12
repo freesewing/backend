@@ -7,6 +7,18 @@ This is the backend for [FreeSewing.org](https://freesewing.org/), our maker sit
 Our backend is a REST API built with [Express](https://expressjs.com/),
 using [MongoDB](https://www.mongodb.com/) as our database.
 
+Since this README is kinda long, here's a table of contents:
+
+- [About](#about)
+- [Getting started](#getting-started)
+- [Configuration](#configuration)
+- [Authentication](#authentication)
+- [API Cheat sheet](#api-cheat-sheet)
+- [API reference](#api-reference)
+- [Tests](#tests)
+- [Links](#links)
+- [License](#license)
+
 ## About
 
 This backend handles the storage and retrieval of user data. Including:
@@ -108,6 +120,16 @@ We provide an `example.env` file that you can edit and rename to `.env`.
 
 Our [example.env]() file has more details.
 
+## Authentication
+
+This API uses [JWT](https://jwt.io/) for authentication. Authenticated calls to this API should include a `Authorization` header as such:
+
+```
+Authorization: Bearer <token>
+```
+
+The `token` is returned from the `/login`, `/oauth/login`, and `/confirm/login` endpoints.
+
 ## API Cheat sheet
 With authentication:
 
@@ -143,16 +165,6 @@ Without authentication:
 |🔓|`GET`|`/oauth/callback/from/:provider`| [Oauth callback](#oauth-callback) |
 |🔓|`POST`|`/oauth/login`| [Oauth login](#oauth-login) |
 |🔓|`GET`|`/patrons`| [Paton list](#patron-list) |
-
-## Authentication
-
-This API uses [JWT](https://jwt.io/) for authentication. Authenticated calls to this API should include a `Authorization` header as such:
-
-```
-Authorization: Bearer <token>
-```
-
-The `token` is returned from the `/login`, `/oauth/login`, and `/confirm/login` endpoints.
 
 ## API Reference
 
