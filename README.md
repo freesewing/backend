@@ -113,35 +113,36 @@ With authentication:
 
 |🔐| Method | Endpoint | Description |
 |--- |--------|----------|-------------|
-|🔐|`POST`|`/models`| Creates a model |
-|🔐|`GET`|`/models/:handle`| Loads a model |
-|🔐|`PUT`|`/models/:handle`| Updates a model |
-|🔐|`DELETE`|`/models/:handle`| Removes a model |
-|🔐|`POST`|`/recipes`| Creates a recipe |
-|🔐|`GET`|`/recipes/:handle`| Loads a recipe |
-|🔐|`PUT`|`/recipes/:handle`| Updates a recipe |
-|🔐|`DELETE`|`/recipes/:handle`| Removes a recipe |
-|🔐|`GET`|`/account`| Loads (own) account data |
-|🔐|`PUT`|`/account`| Update account data |
-|🔐|`DELETE`|`/account`| Remove account |
-|🔐|`POST`|`/account/change/email`| Email change confirmation |
-|🔐|`GET`|`/account/export`| Export user data |
-|🔐|`GET`|`/account/restrict`| Restrict processing of user data |
-|🔐|`GET`|`/users/:username`| Loads (other) user's profile data |🔐|`POST`|`/available/username`| Checks whether a username is available |
+|🔐|`POST`|`/models`| [Creates model](#create-model) |
+|🔐|`GET`|`/models/:handle`| [Read model](#read-model) |
+|🔐|`PUT`|`/models/:handle`| [Update model](#update-model) |
+|🔐|`DELETE`|`/models/:handle`| [Remove model](#remove-model) |
+|🔐|`POST`|`/recipes`| [Create recipe](#create-recipe) |
+|🔐|`GET`|`/recipes/:handle`| [Read recipe](#read-recipe) |
+|🔐|`PUT`|`/recipes/:handle`| [Updates recipe](#update-recipe) |
+|🔐|`DELETE`|`/recipes/:handle`| [Remove recipe](#remove-recipe) |
+|🔐|`GET`|`/account`| [Load account](#load-account) |
+|🔐|`PUT`|`/account`| [Update account](#update-account) |
+|🔐|`DELETE`|`/account`| [Remove account](#remove-account) |
+|🔐|`POST`|`/account/change/email`| [Confirm email change](#confirm-email-change) |
+|🔐|`GET`|`/account/export`| [Export account](#export-account) |
+|🔐|`GET`|`/account/restrict`| [Restric account](#restrict-account) |
+|🔐|`GET`|`/users/:username`| [Read user profile](#read-user-profile)
+|🔐|`POST`|`/available/username`| [Is username available](#is-username-available) |
 
 Without authentication:
 
 |🔓| Method | Endpoint | Description |
 |--- |--------|----------|-------------|
-|🔓|`POST`|`/signup`| First half of sign up flow |
-|🔓|`POST`|`/signup`| Second half of sign up flow |
-|🔓|`POST`|`/login`| Log in |
-|🔓|`POST`|`/reset/password`| Trigger password recovery |
-|🔓|`POST`|`/confirm/login`| Password recovery / Passwordless login |
-|🔓|`POST`|`/oauth/init`| First step of Oauth flow: Init |
-|🔓|`GET`|`/oauth/callback/from/:provider`| Second step of Oauth flow: Provider callback |
-|🔓|`POST`|`/oauth/login`| Final step of Oauth flow: Login |
-|🔓|`GET`|`/patrons`| List of FreeSewing patrons |
+|🔓|`POST`|`/signup`| [Request account](#request-account) |
+|🔓|`POST`|`/signup`| [Create account](#create-account) |
+|🔓|`POST`|`/login`| [Log in](#log-in) |
+|🔓|`POST`|`/reset/password`| [Recover password](#recover-password) |
+|🔓|`POST`|`/confirm/login`| [Passwordless login](#passwordless-login) |
+|🔓|`POST`|`/oauth/init`| [Oauth initialisation](#oauth-initialisation) |
+|🔓|`GET`|`/oauth/callback/from/:provider`| [Oauth callback](#oauth-callback) |
+|🔓|`POST`|`/oauth/login`| [Oauth login](#oauth-login) |
+|🔓|`GET`|`/patrons`| [Paton list](#patron-list) |
 
 ## Authentication
 
@@ -206,7 +207,7 @@ On failure:
 
 Loads a model's data
 
-#### Models: Update model
+#### Update model
 
 ```
 PUT /models/:handle
@@ -319,7 +320,7 @@ On failure:
 Removes the recipe
 
 ### Account
-#### Load account (own data)
+#### Load account
 ```
 GET /account
 ```
@@ -392,7 +393,7 @@ On failure:
 
 Changing your email address requires confirmation, and this endpoint is for that.
 
-#### Export data
+#### Export account
 ```
 GET /account/export
 ```
@@ -410,7 +411,7 @@ On failure:
 
 Will export the user data and publish it for download. 
 
-#### Restrict processing of personal data
+#### Restrict account
 ```
 GET /account/restrict
 ```
@@ -423,10 +424,10 @@ On failure:
 400
 ```
 
-Will lock the user account.
+Will lock the user account, thereby restricting processing of their data.
 
 ### Users
-#### Load profile (other user's data)
+#### Read user profile
 ```
 GET /users/:username
 ```
@@ -459,9 +460,9 @@ Load the profile data of a user. It expects one parameter in the URL of the `GET
 |------------|-------------|                                 
 | `username` | The username of the user to load the profile data for |
 
-#### Check whether username is available
+#### Is username availbable
   
-````
+```
 POST /available/username
 {
   username: 'username to check'
@@ -512,8 +513,8 @@ On success:
 - Retrieves the list of [FreeSewing patrons](https://en.freesewing.org/patrons).
 - Returns an array per tier
 
-### Sign up and log in
-#### Sign up: Request account
+### Sign up
+#### Request account
 ```
 POST /signup
 {
@@ -536,7 +537,7 @@ On error:
  - This will create (but not activate) a user account
  - This will send out an email to the user to confirm their email address
 
-#### Sign up: Create account
+#### Create account
 ```
 POST /account
 {
@@ -603,7 +604,7 @@ For more details on user consent, please consult [FreeSewing's privacy notice](h
 > Note: Our frontend won't allow users to proceed without profile consent as
 > storing your data requires that consent. The backend enforces this too
 
-#### Login
+### Log in
 ```
 POST /login
 {
@@ -679,7 +680,7 @@ On failure:
  - `language` should be one of the [configured language codes](https://github.com/freesewing/backend/blob/develop/src/config/index.js#L32)
  - The frontend will use the state value to initialize an Oauth session. We'll check the state value when we receive the Oauth callback at the backend
 
-#### Oauth provider callback
+#### Oauth callback
 ```
 GET /oauth/callback/from/:provider
 ```
@@ -704,9 +705,6 @@ On failure:
 ```
 
 This is the last step of the Oauth process. It logs a user in.
-
-
-
 
 
 ## Tests
