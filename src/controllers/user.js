@@ -418,6 +418,7 @@ UserController.prototype.patronList = (req, res) => {
           handle: user.handle,
           username: user.username,
           bio: user.bio,
+          picture: user.picture,
           social: user.social,
           pictureUris: user.pictureUris
         })

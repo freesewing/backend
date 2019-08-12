@@ -138,10 +138,6 @@ UserSchema.methods.account = function() {
   delete account.initial
   delete account._ac
   delete account._ct
-  //delete account._id
-  //delete account.createdAt
-  //delete account.updatedAt
-  //delete account.__v
 
   account.pictureUris = {
     l: this.avatarUri(),
@@ -210,6 +206,8 @@ UserSchema.methods.storagePath = function() {
 }
 
 UserSchema.methods.avatarUri = function(size = 'l') {
+  if (this.picture === '') return config.static+'/avatar.svg';
+
   return (
     config.static +
     '/users/' +

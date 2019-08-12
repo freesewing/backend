@@ -99,26 +99,27 @@ Then use something like [PM2](http://pm2.keymetrics.io/) to run it and keep it r
 ## Configuration
 
 This backend can be configured with environment variables. 
-We provide an `example.env` file that you can edit and rename to `.env`.
+We provide an `example.env` file that you can edit and rename to `.env`. 
+This way they will be picked up automatically.
+
+The available variables are listed below, as we as in our [example.env](https://github.com/freesewing/backend/blob/develop/example.env) file.
 
 
 | Variable                  | Description                                      |
 | ------------------------- | ------------------------------------------------ |
 | `FS_BACKEND`              | URL on which the backend is hosted               |
-| `FS_SITE`                 | URL on which the frontend is hosted              |
+| `FS_STATIC`               | URL on which the static content is hosted        |
+| `FS_STORAGE`              | Location on disk where to store files            |
 | `FS_MONGO_URI`            | URL for the Mongo database                       |
 | `FS_ENC_KEY`              | Secret used for encryption of data at rest       |
-| `FS_JWT_ISSUER`           | The JSON Web Token issuer                        |
-| `FS_SMTP_HOST`            | SMTP relay through which to send outgoing emails |
+| `FS_SMTP_HOST`            | SMTP server through which to send outgoing emails |
+| `FS_SMTP_PORT`            | Port to use to connect to the SMTP server        |
 | `FS_SMTP_USER`            | SMTP relay username                              |
 | `FS_SMTP_PASS`            | SMTP relay password                              |
-| `FS_GITHUB_CLIENT_ID`     | Github client ID for signup/login via GitHub     |
-| `FS_GITHUB_CLIENT_SECRET` | Github client ID for signup/login via GitHub     |
-| `FS_GOOGLE_CLIENT_ID`     | Google client ID for signup/login via Google     |
-| `FS_GOOGLE_CLIENT_SECRET` | Google client ID for signup/login via Google     |
-
-
-Our [example.env]() file has more details.
+| `FS_GITHUB_CLIENT_ID`     | Github client ID for Oauth signup/login via GitHub     |
+| `FS_GITHUB_CLIENT_SECRET` | Github client ID for Oauth signup/login via GitHub     |
+| `FS_GOOGLE_CLIENT_ID`     | Google client ID for Oauth signup/login via Google     |
+| `FS_GOOGLE_CLIENT_SECRET` | Google client ID for Oauth signup/login via Google     |
 
 ## Authentication
 
@@ -157,7 +158,7 @@ Without authentication:
 |🔓| Method | Endpoint | Description |
 |--- |--------|----------|-------------|
 |🔓|`POST`|`/signup`| [Request account](#request-account) |
-|🔓|`POST`|`/signup`| [Create account](#create-account) |
+|🔓|`POST`|`/account`| [Create account](#create-account) |
 |🔓|`POST`|`/login`| [Log in](#log-in) |
 |🔓|`POST`|`/reset/password`| [Recover password](#recover-password) |
 |🔓|`POST`|`/confirm/login`| [Passwordless login](#passwordless-login) |

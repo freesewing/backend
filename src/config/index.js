@@ -25,8 +25,8 @@ module.exports = {
   },
   jwt: {
     secretOrKey: process.env.FS_ENC_KEY,
-    issuer: process.env.FS_JWT_ISSUER,
-    audience: process.env.FS_JWT_ISSUER,
+    issuer: 'freesewing.org',
+    audience: 'freesewing.org',
     expiresIn: '36 days'
   },
   languages: ['en', 'de', 'es', 'fr', 'nl'],

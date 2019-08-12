@@ -14,9 +14,6 @@ const verifyConfig = (config, chalk) => {
   // Encryption
   if (!nonEmptyString(config.encryption.key)) errors.push({ e: 'FS_ENC_KEY', i: 'encryption' })
 
-  // JWT
-  if (!nonEmptyString(config.jwt.issuer)) errors.push({ e: 'FS_JWT_ISSUER', i: 'jwt' })
-
   // Wanted (warning when missing)
   //
   // API

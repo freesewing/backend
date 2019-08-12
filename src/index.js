@@ -1,13 +1,15 @@
+import './env'
 import express from 'express'
 import mongoose from 'mongoose'
+import config from './config/index'
 import chalk from 'chalk'
 import passport from 'passport'
-import config from './config/index'
 import verifyConfig from './config/verify'
 import expressMiddleware from './middleware/express'
 import passportMiddleware from './middleware/passport'
 import routes from './routes'
 import path from 'path'
+
 
 // Verify configuration
 verifyConfig(config, chalk)
