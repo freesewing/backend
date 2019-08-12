@@ -14,7 +14,7 @@ const loadTemplate = (type, format, language) => {
   let to = []
   for (let key of toTranslate) {
     from.push(`__${key}__`)
-    to.push(i18n[language][key] || key)
+    to.push(i18n[language]['email.'+key] || key)
   }
   for (let i = 0; i < from.length; i++) template = template.replace(from[i], to[i])
 
