@@ -176,7 +176,6 @@ UserController.prototype.update = (req, res) => {
       }
       return saveAndReturnAccount(res, user)
     } else if (typeof data.avatar !== 'undefined' && data.avatar) {
-      let type = imageTypeFromDataUri(data.avatar)
       user.saveAvatar(data.avatar)
       return saveAndReturnAccount(res, user)
     } else if (typeof data.password === 'string') {
@@ -253,27 +252,6 @@ function createAvatar(handle) {
     fs.writeFile(path.join(dir, handle) + '.svg', randomAvatar(), err => {
       if (err) console.log('writeFileFailed', dir, err)
     })
-  })
-}
-
-function saveAvatar(picture, handle, type) {
-  return true
-  let b64 = picture.split(';base64,').pop()
-  fs.mkdir(userStoragePath(handle), { recursive: true }, err => {
-    if (err) log.error('mkdirFailed', err)
-    let imgBuffer = Buffer.from(b64, 'base64')
-    for (let size of Object.keys(config.avatar.sizes)) {
-      try {
-        sharp(imgBuffer)
-          .resize(config.avatar.sizes[size], config.avatar.sizes[size])
-          .toFile(avatarPath(size, handle, type), (err, info) => {
-            if (err) console.log('avatarNotSaved', err)
-            else console.log('avatar size', size, 'saved', info)
-          })
-      } catch (error) {
-        console.log('Sharp problem:', err)
-      }
-    }
   })
 }
 

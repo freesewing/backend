@@ -5,7 +5,7 @@ import encrypt from 'mongoose-encryption'
 import config from '../config'
 import path from 'path'
 import fs from 'fs'
-import { log, randomAvatar } from '../utils'
+import { log } from '../utils'
 import sharp from 'sharp'
 
 const UserSchema = new Schema(
