@@ -3,7 +3,7 @@ import smtp from './smtp'
 
 const sendEmailWith = type => {
   const types = {
-    smtp,
+    smtp
     //sendgrid,
   }
   return types[type]

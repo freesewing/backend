@@ -1,5 +1,4 @@
 module.exports = function tests(store, config, chai) {
-
   describe('Non language-specific User controller signup routes', () => {
     it('should not create signup without email address', done => {
       chai
@@ -278,7 +277,6 @@ module.exports = function tests(store, config, chai) {
   })
 
   describe('Other user endpoints', () => {
-
     it("should load a user's profile", done => {
       chai
         .request(config.backend)
@@ -292,13 +290,13 @@ module.exports = function tests(store, config, chai) {
         })
     })
 
-    it("should confirm that a username is available", done => {
+    it('should confirm that a username is available', done => {
       chai
         .request(config.backend)
         .post('/available/username')
         .set('Authorization', 'Bearer ' + config.user.token)
         .send({
-          username: Date.now()+'  '+Date.now()
+          username: Date.now() + '  ' + Date.now()
         })
         .end((err, res) => {
           res.should.have.status(200)
@@ -306,7 +304,7 @@ module.exports = function tests(store, config, chai) {
         })
     })
 
-    it("should confirm that a username is not available", done => {
+    it('should confirm that a username is not available', done => {
       chai
         .request(config.backend)
         .post('/available/username')
@@ -320,7 +318,7 @@ module.exports = function tests(store, config, chai) {
         })
     })
 
-    it("should load the patron list", done => {
+    it('should load the patron list', done => {
       chai
         .request(config.backend)
         .get('/patrons')
@@ -334,7 +332,7 @@ module.exports = function tests(store, config, chai) {
         })
     })
 
-    it("should export the user data", done => {
+    it('should export the user data', done => {
       chai
         .request(config.backend)
         .get('/account/export')
@@ -342,11 +340,10 @@ module.exports = function tests(store, config, chai) {
         .end((err, res) => {
           res.should.have.status(200)
           let data = JSON.parse(res.text)
-          data.export.should.be.a('string');
-          store.exportLink = data.export;
+          data.export.should.be.a('string')
+          store.exportLink = data.export
           done()
         })
     })
-
   })
 }

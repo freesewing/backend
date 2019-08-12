@@ -1,8 +1,8 @@
 import mongoose, { Schema } from 'mongoose'
 import config from '../config'
-import fs from "fs";
+import fs from 'fs'
 import { log, randomAvatar } from '../utils'
-import path from 'path';
+import path from 'path'
 import sharp from 'sharp'
 
 const ModelSchema = new Schema(
@@ -99,11 +99,10 @@ ModelSchema.methods.avatarName = function(size = 'l') {
   let prefix = size === 'l' ? '' : size + '-'
   if (this.picture.slice(-4).toLowerCase() === '.svg') prefix = ''
 
-  return prefix + this.picture;
+  return prefix + this.picture
 }
 
 ModelSchema.methods.avatarUri = function(size = 'l') {
-
   return (
     config.static +
     '/users/' +
@@ -118,7 +117,6 @@ ModelSchema.methods.avatarUri = function(size = 'l') {
 }
 
 ModelSchema.methods.storagePath = function() {
-
   return (
     config.storage +
     '/users/' +
@@ -132,7 +130,7 @@ ModelSchema.methods.storagePath = function() {
 }
 
 ModelSchema.methods.createAvatar = function() {
-  let dir = this.storagePath();
+  let dir = this.storagePath()
   fs.mkdir(dir, { recursive: true }, err => {
     if (err) console.log('mkdirFailed', dir, err)
     fs.writeFile(path.join(dir, this.handle) + '.svg', randomAvatar(), err => {
@@ -144,9 +142,9 @@ ModelSchema.methods.createAvatar = function() {
 ModelSchema.methods.saveAvatar = function(picture) {
   let type = picture.split(';').shift()
   type = type.split('/').pop()
-  this.picture = this.handle+'.'+type;
+  this.picture = this.handle + '.' + type
 
-  let dir = this.storagePath();
+  let dir = this.storagePath()
   let b64 = picture.split(';base64,').pop()
   fs.mkdir(dir, { recursive: true }, err => {
     if (err) log.error('mkdirFailed', err)
@@ -159,9 +157,6 @@ ModelSchema.methods.saveAvatar = function(picture) {
         })
     }
   })
-
 }
-
-
 
 export default mongoose.model('Model', ModelSchema)

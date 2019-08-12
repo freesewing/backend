@@ -31,7 +31,7 @@ ModelController.prototype.read = function(req, res) {
   User.findById(req.user._id, (err, user) => {
     if (err || user === null) return res.sendStatus(400)
     Model.findOne({ handle: req.params.handle }, (err, model) => {
-      if (err) return res.sendStatus(400);
+      if (err) return res.sendStatus(400)
       if (model === null) return res.sendStatus(404)
       return res.send({ model: model.info() })
     })
@@ -115,7 +115,6 @@ function saveAndReturnModel(res, model) {
     return res.send({ model: updatedModel.info() })
   })
 }
-
 
 const newHandle = (length = 5) => {
   let handle = ''

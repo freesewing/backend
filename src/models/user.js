@@ -4,7 +4,7 @@ import { email } from '../utils'
 import encrypt from 'mongoose-encryption'
 import config from '../config'
 import path from 'path'
-import fs from "fs";
+import fs from 'fs'
 import { log, randomAvatar } from '../utils'
 import sharp from 'sharp'
 
@@ -202,7 +202,7 @@ UserSchema.methods.avatarName = function(size = 'l') {
   let prefix = size === 'l' ? '' : size + '-'
   if (this.picture.slice(-4).toLowerCase() === '.svg') prefix = ''
 
-  return prefix + this.picture;
+  return prefix + this.picture
 }
 
 UserSchema.methods.storagePath = function() {
@@ -224,9 +224,9 @@ UserSchema.methods.avatarUri = function(size = 'l') {
 UserSchema.methods.saveAvatar = function(picture) {
   let type = picture.split(';').shift()
   type = type.split('/').pop()
-  this.picture = this.handle+'.'+type;
+  this.picture = this.handle + '.' + type
 
-  let dir = this.storagePath();
+  let dir = this.storagePath()
   let b64 = picture.split(';base64,').pop()
   fs.mkdir(dir, { recursive: true }, err => {
     if (err) log.error('mkdirFailed', err)
@@ -239,7 +239,6 @@ UserSchema.methods.saveAvatar = function(picture) {
         })
     }
   })
-
 }
 
 export default mongoose.model('User', UserSchema)
