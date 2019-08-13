@@ -237,20 +237,6 @@ function saveAndReturnAccount(res, user) {
   })
 }
 
-//function createAvatar(handle) {
-//  let dir = userStoragePath(handle)
-//  fs.mkdir(dir, { recursive: true }, err => {
-//    if (err) console.log('mkdirFailed', dir, err)
-//    fs.writeFile(path.join(dir, handle) + '.svg', randomAvatar(), err => {
-//      if (err) console.log('writeFileFailed', dir, err)
-//    })
-//  })
-//}
-//
-//function userStoragePath(handle) {
-//  return path.join(config.storage, 'users', handle.substring(0, 1), handle)
-//}
-
 function temporaryStoragePath(dir) {
   return path.join(config.storage, 'tmp', dir)
 }
@@ -266,8 +252,6 @@ UserController.prototype.isUsernameAvailable = (req, res) => {
     else return res.sendStatus(400)
   })
 }
-
-// userController.delete = (req, res) => { }
 
 // // Signup flow
 UserController.prototype.signup = (req, res) => {
@@ -327,12 +311,7 @@ UserController.prototype.signup = (req, res) => {
     }
   )
 }
-// userController.confirmSignupEmail = (req, res) => { }
-// userController.removeConfirmation = (req, res) => { }
-// userController.resendActivationEmail = (req, res) => { }
 
-// // Reset/recover/change email
-// userController.recoverPassword = (req, res) => { }
 UserController.prototype.resetPassword = (req, res) => {
   if (!req.body) return res.sendStatus(400)
   User.findOne(
@@ -509,36 +488,6 @@ const getToken = account => {
   )
 }
 
-//const clean = email => email.toLowerCase().trim()
-//
-//const ehash = email => {
-//  let hash = crypto.createHash('sha256')
-//  hash.update(clean(email))
-//  return hash.digest('hex')
-//}
-//
-//const newHandle = (length = 5) => {
-//  let handle = ''
-//  let possible = 'abcdefghijklmnopqrstuvwxyz'
-//  for (let i = 0; i < length; i++)
-//    handle += possible.charAt(Math.floor(Math.random() * possible.length))
-//
-//  return handle
-//}
-//
-//const uniqueHandle = () => {
-//  let handle, exists
-//  do {
-//    exists = false
-//    handle = newHandle()
-//    User.findOne({ handle: handle }, (err, user) => {
-//      if (user !== null) exists = true
-//    })
-//  } while (exists !== false)
-//
-//  return handle
-//}
-//
 const createTempDir = () => {
   let path = temporaryStoragePath(newHandle(10))
   fs.mkdir(path, { recursive: true }, err => {
