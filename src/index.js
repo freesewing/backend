@@ -10,7 +10,6 @@ import passportMiddleware from './middleware/passport'
 import routes from './routes'
 import path from 'path'
 
-
 // Verify configuration
 verifyConfig(config, chalk)
 

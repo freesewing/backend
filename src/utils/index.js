@@ -124,7 +124,8 @@ export const uniqueHandle = () => {
   return handle
 }
 
-export const userStoragePath = handle =>  path.join(config.storage, 'users', handle.substring(0, 1), handle)
+export const userStoragePath = handle =>
+  path.join(config.storage, 'users', handle.substring(0, 1), handle)
 
 export const createAvatar = handle => {
   let dir = userStoragePath(handle)
@@ -135,4 +136,3 @@ export const createAvatar = handle => {
     })
   })
 }
-

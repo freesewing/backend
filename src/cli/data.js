@@ -9,7 +9,7 @@ export default {
         language: 'nl',
         units: 'imperial'
       },
-      status: 'active',
+      status: 'active'
     },
     {
       email: 'admin@freesewing.org',
@@ -21,9 +21,7 @@ export default {
         language: 'en',
         units: 'metric'
       },
-      status: 'active',
-    },
-  ],
+      status: 'active'
+    }
+  ]
 }
-
-

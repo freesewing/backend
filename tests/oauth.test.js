@@ -2,7 +2,6 @@ module.exports = function tests(store, config, chai) {
   const should = chai.should()
 
   describe('Oauth via Github', () => {
-
     it('should trigger Oauth via Github', done => {
       chai
         .request(config.backend)
@@ -14,7 +13,7 @@ module.exports = function tests(store, config, chai) {
         .end((err, res) => {
           res.should.have.status(200)
           let data = JSON.parse(res.text)
-          data.state.should.be.a('string');
+          data.state.should.be.a('string')
           config.oauth.github.state = data.state
           done()
         })
@@ -31,7 +30,7 @@ module.exports = function tests(store, config, chai) {
         .end((err, res) => {
           res.should.have.status(200)
           let data = JSON.parse(res.text)
-          data.state.should.be.a('string');
+          data.state.should.be.a('string')
           config.oauth.google.state = data.state
           done()
         })

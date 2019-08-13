@@ -1,6 +1,5 @@
 module.exports = function tests(store, config, chai) {
   describe('Admin routes', () => {
-
     it('should login ad admin', done => {
       chai
         .request(config.backend)
@@ -10,7 +9,7 @@ module.exports = function tests(store, config, chai) {
           password: 'admin'
         })
         .end((err, res) => {
-          console.log(res);
+          console.log(res)
           res.should.have.status(200)
           done()
         })
@@ -28,6 +27,5 @@ module.exports = function tests(store, config, chai) {
           done()
         })
     })
-
   })
 }
