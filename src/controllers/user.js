@@ -1,14 +1,10 @@
 import { User, Confirmation, Model, Recipe } from '../models'
-import crypto from 'crypto'
 import {
   log,
   email,
-  randomAvatar,
   ehash,
   newHandle,
   uniqueHandle,
-  clean,
-  userStoragePath,
   createAvatar
 } from '../utils'
 import jwt from 'jsonwebtoken'

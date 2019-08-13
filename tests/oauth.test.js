@@ -1,5 +1,4 @@
 module.exports = function tests(store, config, chai) {
-  const should = chai.should()
 
   describe('Oauth via Github', () => {
     it('should trigger Oauth via Github', done => {
