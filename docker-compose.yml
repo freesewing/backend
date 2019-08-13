@@ -6,7 +6,7 @@ services:
     env_file:
       - .env
     ports:
-      - "3000:3000"
+      - '3000:3000'
     depends_on:
       - mongo
     networks:
@@ -18,7 +18,7 @@ services:
       - fs-backend-mongo:/data/db
     dns_search: .
 
-### External Services
+  ### External Services
 
   mongo:
     image: mongo:3.4

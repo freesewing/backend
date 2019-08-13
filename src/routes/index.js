@@ -1,9 +1,7 @@
-import confirmation from "./confirmation";
-import recipe from "./recipe";
-import model from "./model";
-import referral from "./referral";
-import user from "./user";
-import auth from "./auth";
-import github from "./github";
+import recipe from './recipe'
+import model from './model'
+import user from './user'
+import auth from './auth'
+import admin from './admin'
 
-export default { user, recipe, model, referral, confirmation, auth, github }
+export default { user, recipe, model, auth, admin }

@@ -1,20 +1,28 @@
-import admin from "../controllers/admin";
+import Controller from '../controllers/admin'
 
-export default (app) => {
+const Admin = new Controller()
 
-  // Impersonate user
-  app.get('/admin/impersonate/:handle', admin.impersonate);
-
-  /* User cRUD endpoints */
-  app.get('/admin/user/{handle}', admin.readUser); // Read
-  app.put('/admin/user/{handle}', admin.updateUser); // Update
-  app.delete('/admin/user/{handle}', admin.deleteUser); // Delete
-
-  // Find users
-  app.get('/admin/find/users/:filter', admin.findUsers);
+export default (app, passport) => {
+  // Users
+  app.get(
+    '/admin/users/:handle',
+    passport.authenticate('jwt', { session: false }),
+    Admin.readUserAccount
+  )
+  app.put(
+    '/admin/users/:handle',
+    passport.authenticate('jwt', { session: false }),
+    Admin.updateUserAccount
+  )
+  app.delete(
+    '/admin/users/:handle',
+    passport.authenticate('jwt', { session: false }),
+    Admin.removeUserAccount
+  )
+  app.post(
+    '/admin/users',
+    passport.authenticate('jwt', { session: false }),
+    Admin.createUserAccount
+  )
+  app.post('/admin/masquerade', passport.authenticate('jwt', { session: false }), Admin.masquerade)
 }
-
-
-
-
-
