@@ -5,6 +5,13 @@
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "scripts": {
+    "cli": "babel-node --presets '@babel/preset-env' src/cli/index.js --help",
+    "clear:users": "babel-node --presets '@babel/preset-env' src/cli/index.js --clearUsers",
+    "clear:models": "babel-node --presets '@babel/preset-env' src/cli/index.js --clearModels",
+    "clear:recipes": "babel-node --presets '@babel/preset-env' src/cli/index.js --clearRecipes",
+    "clear:confirmations": "babel-node --presets '@babel/preset-env' src/cli/index.js --clearConfirmations",
+    "clear:all": "babel-node --presets '@babel/preset-env' src/cli/index.js --clearAll",
+    "clear:reboot": "babel-node --presets '@babel/preset-env' src/cli/index.js --reboot",
     "precommit": "npm run pretty && lint-staged",
     "patch": "npm version patch -m ':bookmark: v%s' && npm run build",
     "minor": "npm version minor -m ':bookmark: v%s' && npm run build",
@@ -63,10 +70,14 @@
     "sharp": "0.23.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.5.5",
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
     "@freesewing/prettier-config": "2.0.0-beta.37",
     "backpack-core": "0.8.4",
     "chai": "4.2.0",
     "chai-http": "4.3.0",
+    "command-line-args": "^5.1.1",
     "dotenv": "8.0.0",
     "lodash": "^4.17.15",
     "mocha": "6.2.0",

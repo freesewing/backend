@@ -1,4 +1,4 @@
-![FreeSewing: A JavaScript library for made-to-measure sewing patterns](https://en.freesewing.org/banner.jpg)
+![FreeSewing: An open-source framework for made-to-measure sewing patterns](https://en.freesewing.org/banner.jpg)
 
 # FreeSewing / backend
 
@@ -15,6 +15,7 @@ Since this README is kinda long, here's a table of contents:
 - [Authentication](#authentication)
 - [API Cheat sheet](#api-cheat-sheet)
 - [API reference](#api-reference)
+- [CLI](#cli)
 - [Tests](#tests)
 - [Links](#links)
 - [License](#license)
@@ -719,6 +720,26 @@ On failure:
 
 This is the last step of the Oauth process. It logs a user in.
 
+## CLI
+
+Our backend encrypts data at rest using the [mongoose-encryption](https://www.npmjs.com/package/mongoose-encryption) plugin.
+That's a good thing, but can complicate life a bit when you'd like to go and in make some changes to the data without going
+through the application code.
+If you use some sort of administration tools for MongoDB and write data to the DB, that data won't be encrypted.
+And thus reading that data back will fail (since we expect encrypted data).
+
+Because of this, this backend comes with a couple of command-line tools to do basic database tasks:
+
+| Command | Description |
+|---------|-------------|
+|`npm run clear:users`| Remove all users |
+|`npm run clear:models`| Remove all models |
+|`npm run clear:recipes`| Remove all recipes |
+|`npm run clear:confirmations`| Remove all confirmations |
+|`npm run clear:all`| Empty the entire database |
+|`npm run clear:reboot`| Empty database, then load sample data |
+
+> **Tip**: You can use `npm run cli` to see the available options
 
 ## Tests
 

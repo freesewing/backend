@@ -1,6 +1,6 @@
 import { User, Confirmation, Model, Recipe } from '../models'
 import crypto from 'crypto'
-import { log, email, randomAvatar } from '../utils'
+import { log, email, randomAvatar, ehash, newHandle, uniqueHandle, clean, userStoragePath, createAvatar } from '../utils'
 import jwt from 'jsonwebtoken'
 import config from '../config'
 import path from 'path'
@@ -237,19 +237,19 @@ function saveAndReturnAccount(res, user) {
   })
 }
 
-function createAvatar(handle) {
-  let dir = userStoragePath(handle)
-  fs.mkdir(dir, { recursive: true }, err => {
-    if (err) console.log('mkdirFailed', dir, err)
-    fs.writeFile(path.join(dir, handle) + '.svg', randomAvatar(), err => {
-      if (err) console.log('writeFileFailed', dir, err)
-    })
-  })
-}
-
-function userStoragePath(handle) {
-  return path.join(config.storage, 'users', handle.substring(0, 1), handle)
-}
+//function createAvatar(handle) {
+//  let dir = userStoragePath(handle)
+//  fs.mkdir(dir, { recursive: true }, err => {
+//    if (err) console.log('mkdirFailed', dir, err)
+//    fs.writeFile(path.join(dir, handle) + '.svg', randomAvatar(), err => {
+//      if (err) console.log('writeFileFailed', dir, err)
+//    })
+//  })
+//}
+//
+//function userStoragePath(handle) {
+//  return path.join(config.storage, 'users', handle.substring(0, 1), handle)
+//}
 
 function temporaryStoragePath(dir) {
   return path.join(config.storage, 'tmp', dir)
@@ -283,7 +283,6 @@ UserController.prototype.signup = (req, res) => {
       if (err) return res.sendStatus(500)
       if (user !== null) return res.status(400).send('userExists')
       else {
-        console.log(req.body)
         let handle = uniqueHandle()
         let username = 'user-' + handle
         let user = new User({
@@ -502,6 +501,7 @@ const getToken = account => {
     {
       _id: account._id,
       handle: account.handle,
+      role: account.role,
       aud: config.jwt.audience,
       iss: config.jwt.issuer
     },
@@ -509,36 +509,36 @@ const getToken = account => {
   )
 }
 
-const clean = email => email.toLowerCase().trim()
-
-const ehash = email => {
-  let hash = crypto.createHash('sha256')
-  hash.update(clean(email))
-  return hash.digest('hex')
-}
-
-const newHandle = (length = 5) => {
-  let handle = ''
-  let possible = 'abcdefghijklmnopqrstuvwxyz'
-  for (let i = 0; i < length; i++)
-    handle += possible.charAt(Math.floor(Math.random() * possible.length))
-
-  return handle
-}
-
-const uniqueHandle = () => {
-  let handle, exists
-  do {
-    exists = false
-    handle = newHandle()
-    User.findOne({ handle: handle }, (err, user) => {
-      if (user !== null) exists = true
-    })
-  } while (exists !== false)
-
-  return handle
-}
-
+//const clean = email => email.toLowerCase().trim()
+//
+//const ehash = email => {
+//  let hash = crypto.createHash('sha256')
+//  hash.update(clean(email))
+//  return hash.digest('hex')
+//}
+//
+//const newHandle = (length = 5) => {
+//  let handle = ''
+//  let possible = 'abcdefghijklmnopqrstuvwxyz'
+//  for (let i = 0; i < length; i++)
+//    handle += possible.charAt(Math.floor(Math.random() * possible.length))
+//
+//  return handle
+//}
+//
+//const uniqueHandle = () => {
+//  let handle, exists
+//  do {
+//    exists = false
+//    handle = newHandle()
+//    User.findOne({ handle: handle }, (err, user) => {
+//      if (user !== null) exists = true
+//    })
+//  } while (exists !== false)
+//
+//  return handle
+//}
+//
 const createTempDir = () => {
   let path = temporaryStoragePath(newHandle(10))
   fs.mkdir(path, { recursive: true }, err => {

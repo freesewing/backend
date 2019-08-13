@@ -85,10 +85,6 @@ export const saveAvatarFromBase64 = (data, handle, type) => {
   })
 }
 
-export const userStoragePath = handle => {
-  return path.join(config.storage, handle.substring(0, 1), handle)
-}
-
 export const avatarPath = (size, handle, ext, type = 'user') => {
   let dir = userStoragePath(handle)
   if (size === 'l') return path.join(dir, handle + '.' + ext)
@@ -99,3 +95,44 @@ export const randomColor = () => (0x1000000 + Math.random() * 0xffffff).toString
 
 export const randomAvatar = () =>
   avatar.replace('000000', randomColor()).replace('FFFFFF', randomColor())
+
+export const ehash = email => {
+  let hash = crypto.createHash('sha256')
+  hash.update(clean(email))
+  return hash.digest('hex')
+}
+
+export const newHandle = (length = 5) => {
+  let handle = ''
+  let possible = 'abcdefghijklmnopqrstuvwxyz'
+  for (let i = 0; i < length; i++)
+    handle += possible.charAt(Math.floor(Math.random() * possible.length))
+
+  return handle
+}
+
+export const uniqueHandle = () => {
+  let handle, exists
+  do {
+    exists = false
+    handle = newHandle()
+    User.findOne({ handle: handle }, (err, user) => {
+      if (user !== null) exists = true
+    })
+  } while (exists !== false)
+
+  return handle
+}
+
+export const userStoragePath = handle =>  path.join(config.storage, 'users', handle.substring(0, 1), handle)
+
+export const createAvatar = handle => {
+  let dir = userStoragePath(handle)
+  fs.mkdir(dir, { recursive: true }, err => {
+    if (err) console.log('mkdirFailed', dir, err)
+    fs.writeFile(path.join(dir, handle) + '.svg', randomAvatar(), err => {
+      if (err) console.log('writeFileFailed', dir, err)
+    })
+  })
+}
+
