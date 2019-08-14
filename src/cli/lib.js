@@ -1,6 +1,6 @@
 import chalk from 'chalk'
 import { User, Model, Recipe, Confirmation } from '../models'
-import { ehash, uniqueHandle, createAvatar } from '../utils'
+import { ehash, createAvatar } from '../utils'
 import data from './data'
 
 export const showHelp = () => {
@@ -26,38 +26,50 @@ export const showHelp = () => {
 }
 
 export const clearUsers = async () => {
-  await User.deleteMany({})
-  console.log('🔥 Users deleted')
+  await Model.deleteMany().then(result => {
+   if (result.ok) console.log('🔥 Users deleted')
+   else console.log('🚨 Could not remove users', result)
+  })
 }
 export const clearModels = async () => {
-  Model.deleteMany({})
-  console.log('🔥 Models deleted')
+  await Model.deleteMany().then(result => {
+   if (result.ok) console.log('🔥 Models deleted')
+   else console.log('🚨 Could not remove models', result)
+  })
 }
 export const clearRecipes = async () => {
-  Recipe.deleteMany({})
-  console.log('🔥 Recipes deleted')
+  await Recipe.deleteMany().then(result => {
+   if (result.ok) console.log('🔥 Recipes deleted')
+   else console.log('🚨 Could not remove recipes', result)
+  })
 }
 export const clearConfirmations = async () => {
-  Confirmation.deleteMany({})
-  console.log('🔥 Confirmations deleted')
+  await Confirmation.deleteMany().then(result => {
+   if (result.ok) console.log('🔥 Confirmations deleted')
+   else console.log('🚨 Could not remove confirmations', result)
+  })
 }
 
 export const loadSampleData = async () => {
   let promises = []
   for (let sample of data.users) {
-    let handle = uniqueHandle()
     let user = new User({
       ...sample,
       initial: sample.email,
       ehash: ehash(sample.email),
-      handle,
-      picture: handle + '.svg',
+      picture: sample.handle + '.svg',
       time: {
         created: new Date()
       }
     })
-    createAvatar(handle)
+    createAvatar(sample.handle)
     promises.push(user.save())
+  }
+  for (let sample of data.models) {
+    promises.push(new Model(sample).save())
+  }
+  for (let sample of data.recipes) {
+    promises.push(new Recipe(sample).save())
   }
 
   return Promise.all(promises)
