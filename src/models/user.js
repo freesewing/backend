@@ -202,7 +202,7 @@ UserSchema.methods.avatarName = function(size = 'l') {
 }
 
 UserSchema.methods.storagePath = function() {
-  return path.join(config.storage, this.handle.substring(0, 1), this.handle)
+  return path.join(config.storage, 'users', this.handle.substring(0, 1), this.handle)
 }
 
 UserSchema.methods.avatarUri = function(size = 'l') {
