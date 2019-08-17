@@ -26,7 +26,7 @@ export const showHelp = () => {
 }
 
 export const clearUsers = async () => {
-  await Model.deleteMany().then(result => {
+  await User.deleteMany().then(result => {
    if (result.ok) console.log('🔥 Users deleted')
    else console.log('🚨 Could not remove users', result)
   })
