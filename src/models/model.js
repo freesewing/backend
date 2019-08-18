@@ -46,6 +46,7 @@ const ModelSchema = new Schema(
       trim: true
     },
     measurements: {
+      ankleCircumference: Number,
       bicepsCircumference: Number,
       bustSpan: Number,
       centerBackNeckToWaist: Number,
