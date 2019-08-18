@@ -1,6 +1,6 @@
 import chalk from 'chalk'
 import { User, Model, Recipe, Confirmation } from '../models'
-import { ehash, createAvatar } from '../utils'
+import { ehash } from '../utils'
 import data from './data'
 
 export const showHelp = () => {
