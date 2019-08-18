@@ -5,7 +5,6 @@ import {
   ehash,
   newHandle,
   uniqueHandle,
-  createAvatar
 } from '../utils'
 import jwt from 'jsonwebtoken'
 import config from '../config'

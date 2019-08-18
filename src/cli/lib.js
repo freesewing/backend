@@ -62,11 +62,13 @@ export const loadSampleData = async () => {
         created: new Date()
       }
     })
-    createAvatar(sample.handle)
+    user.createAvatar()
     promises.push(user.save())
   }
   for (let sample of data.models) {
-    promises.push(new Model(sample).save())
+    let model = new Model(sample)
+    model.createAvatar()
+    promises.push(model.save())
   }
   for (let sample of data.recipes) {
     promises.push(new Recipe(sample).save())

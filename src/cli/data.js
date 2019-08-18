@@ -10,6 +10,11 @@ export default {
         language: 'nl',
         units: 'imperial'
       },
+      consent: {
+        profile: true,
+        model: true,
+        openData: true
+      },
       status: 'active'
     },
     {
@@ -28,12 +33,18 @@ export default {
         language: 'en',
         units: 'metric'
       },
+      consent: {
+        profile: true,
+        model: true,
+        openData: true
+      },
       status: 'active'
     }
   ],
   models: [
     {
       handle: 'modela',
+      picture: 'modela.svg',
       user: 'tuser',
       name: 'Example model - No breasts',
       breasts: false,
@@ -71,6 +82,7 @@ export default {
     },
     {
       handle: 'modelb',
+      picture: 'modelb.svg',
       user: 'tuser',
       name: 'Example model - With breasts',
       breasts: true,

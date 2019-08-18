@@ -82,7 +82,7 @@ ModelSchema.index({ user: 1, handle: 1 })
 
 ModelSchema.methods.info = function() {
   let model = this.toObject()
-  delete model.picture
+  //delete model.picture
   delete model.__v
   delete model._id
   model.pictureUris = {

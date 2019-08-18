@@ -1,6 +1,6 @@
 import mongoose, { Schema } from 'mongoose'
 import bcrypt from 'mongoose-bcrypt'
-import { email } from '../utils'
+import { email, randomAvatar } from '../utils'
 import encrypt from 'mongoose-encryption'
 import config from '../config'
 import path from 'path'
@@ -206,8 +206,6 @@ UserSchema.methods.storagePath = function() {
 }
 
 UserSchema.methods.avatarUri = function(size = 'l') {
-  if (this.picture === '') return config.static + '/avatar.svg'
-
   return (
     config.static +
     '/users/' +
@@ -236,6 +234,16 @@ UserSchema.methods.saveAvatar = function(picture) {
           if (err) log.error('avatarNotSaved', err)
         })
     }
+  })
+}
+
+UserSchema.methods.createAvatar = function() {
+  let dir = this.storagePath()
+  fs.mkdirSync(dir, { recursive: true }, err => {
+    if (err) console.log('mkdirFailed', dir, err)
+    fs.writeFileSync(path.join(dir, this.handle) + '.svg', randomAvatar(), err => {
+      if (err) console.log('writeFileFailed', dir, err)
+    })
   })
 }
 
