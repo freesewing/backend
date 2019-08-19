@@ -295,7 +295,7 @@ UserController.prototype.signup = (req, res) => {
             return res.sendStatus(500)
           }
           log.info('accountCreated', { handle: user.handle })
-          createAvatar(handle)
+          user.createAvatar(handle)
           let confirmation = new Confirmation({
             type: 'signup',
             data: {
