@@ -20,8 +20,11 @@ ModelController.prototype.create = function(req, res) {
       created: new Date()
     })
     model.createAvatar()
-    log.info('modelCreated', { handle: model.handle })
-    return saveAndReturnModel(res, model)
+    model.save(function(err) {
+      if (err) return res.sendStatus(400)
+      log.info('modelCreated', { handle: handle })
+      return res.send({ model: model.info() })
+    })
   })
 }
 

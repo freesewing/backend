@@ -28,7 +28,7 @@ mongoose
     runTasks(options).then(() => {
       if (options.reboot) {
         loadSampleData().then(() => {
-          console.log('⚡ Users loaded')
+          console.log('⚡ Data loaded')
           process.exit()
         })
       } else {
