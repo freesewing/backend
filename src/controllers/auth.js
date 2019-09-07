@@ -200,7 +200,7 @@ AuthController.prototype.providerCallback = function(req, res) {
       code: req.query.code,
       accept: 'json',
       grant_type: 'authorization_code',
-      redirect_uri: config.api + '/callback/from/' + provider
+      redirect_uri: config.api + '/oauth/callback/from/' + provider
     })
       .then(result => {
         if (result.status !== 200) return res.sendStatus(401)
