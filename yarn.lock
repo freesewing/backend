@@ -734,10 +734,10 @@
   resolved "https://registry.yarnpkg.com/@freesewing/pattern-info/-/pattern-info-2.0.2.tgz#c63fc518a92aa2edfa48fc5fb685948bf591f0ee"
   integrity sha512-IkcgS5kuBG2kaKzhaC7wjHCwe9N4cDSzT/5b0znXfQVcTtzuYZMYRTtC+xivlgUnGohllFZmAFP4EGwo1FY4Tg==
 
-"@freesewing/prettier-config@2.0.0-beta.37":
-  version "2.0.0-beta.37"
-  resolved "https://registry.yarnpkg.com/@freesewing/prettier-config/-/prettier-config-2.0.0-beta.37.tgz#55deebca519f668e16df3bda4ffecfd499542f6e"
-  integrity sha512-JISpjXqT/EkSDSzd1asQkBDQPbrVuqPEsy8aafICLoP0WV4R2YcTYCX9YuoE+87lKsFP3X7oKW27nkJ/84P2Aw==
+"@freesewing/prettier-config@2.0.3":
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/@freesewing/prettier-config/-/prettier-config-2.0.3.tgz#d65de09c150db72b21a2feda1fcd943edd5113eb"
+  integrity sha512-/3g3ZvxPl8mPCME/gAd1kDZ5L4646QE66Qs39aT7xA65YbjGPUn6+P9l1U6kyy0oOcmCoZqBo6+DJ/8AmUsM8w==
 
 "@types/chai@4":
   version "4.2.0"
