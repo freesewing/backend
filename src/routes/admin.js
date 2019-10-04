@@ -4,25 +4,21 @@ const Admin = new Controller()
 
 export default (app, passport) => {
   // Users
-  app.get(
-    '/admin/users/:handle',
+  app.post(
+    '/admin/search',
     passport.authenticate('jwt', { session: false }),
-    Admin.readUserAccount
+    Admin.search
   )
   app.put(
-    '/admin/users/:handle',
+    '/admin/patron',
     passport.authenticate('jwt', { session: false }),
-    Admin.updateUserAccount
+    Admin.setPatronStatus
   )
-  app.delete(
-    '/admin/users/:handle',
+  app.put(
+    '/admin/role',
     passport.authenticate('jwt', { session: false }),
-    Admin.removeUserAccount
+    Admin.setRole
   )
-  app.post(
-    '/admin/users',
-    passport.authenticate('jwt', { session: false }),
-    Admin.createUserAccount
-  )
-  app.post('/admin/masquerade', passport.authenticate('jwt', { session: false }), Admin.masquerade)
+  app.post('/admin/impersonate', passport.authenticate('jwt', { session: false }), Admin.impersonate)
+  app.put('/admin/unfreeze', passport.authenticate('jwt', { session: false }), Admin.unfreeze)
 }

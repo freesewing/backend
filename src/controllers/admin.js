@@ -1,37 +1,118 @@
-import { User } from '../models'
+import { User, Model, Recipe } from '../models'
+import jwt from 'jsonwebtoken'
+import config from '../config'
 
 function AdminController() {}
 
-AdminController.prototype.createUserAccount = function(req, res) {
+
+AdminController.prototype.search = function(req, res) {
   if (!req.user._id) return res.sendStatus(400)
   User.findById(req.user._id, (err, admin) => {
     if (err || admin === null) return res.sendStatus(400)
     if (admin.role !== 'admin') return res.sendStatus(403)
-    User.findOne({ username: req.params.username }, (err, user) => {
-      if (err) return res.sendStatus(400)
-      if (user === null) return res.sendStatus(404)
-      return res.send(user)
+    User.find({
+      $or: [
+        { handle: { $regex: `.*${req.body.query}.*` } },
+        { username: { $regex: `.*${req.body.query}.*` } },
+      ]
+    })
+      .sort('username')
+      .exec((err, users) => {
+        if (err) return res.sendStatus(400)
+        if (users === null) return res.sendStatus(404)
+        return res.send(users.map(user => user.adminProfile()))
     })
   })
 }
 
-AdminController.prototype.readUserAccount = function(req, res) {
+AdminController.prototype.setPatronStatus = function(req, res) {
   if (!req.user._id) return res.sendStatus(400)
   User.findById(req.user._id, (err, admin) => {
     if (err || admin === null) return res.sendStatus(400)
     if (admin.role !== 'admin') return res.sendStatus(403)
-    User.findOne({ username: req.params.username }, (err, user) => {
+    User.findOne({ handle: req.body.handle }, (err, user) => {
       if (err) return res.sendStatus(400)
       if (user === null) return res.sendStatus(404)
-      return res.send(user)
+      user.patron = req.body.patron
+      return saveAndReturnAccount(res, user)
     })
   })
 }
 
-AdminController.prototype.updateUserAccount = function(req, res) {}
+AdminController.prototype.setRole = function(req, res) {
+  if (!req.user._id) return res.sendStatus(400)
+  User.findById(req.user._id, (err, admin) => {
+    if (err || admin === null) return res.sendStatus(400)
+    if (admin.role !== 'admin') return res.sendStatus(403)
+    User.findOne({ handle: req.body.handle }, (err, user) => {
+      if (err) return res.sendStatus(400)
+      if (user === null) return res.sendStatus(404)
+      user.role = req.body.role
+      return saveAndReturnAccount(res, user)
+    })
+  })
+}
 
-AdminController.prototype.removeUserAccount = function(req, res) {}
+AdminController.prototype.unfreeze = function(req, res) {
+  if (!req.user._id) return res.sendStatus(400)
+  User.findById(req.user._id, (err, admin) => {
+    if (err || admin === null) return res.sendStatus(400)
+    if (admin.role !== 'admin') return res.sendStatus(403)
+    User.findOne({ handle: req.body.handle }, (err, user) => {
+      if (err) return res.sendStatus(400)
+      if (user === null) return res.sendStatus(404)
+      user.status = 'active'
+      return saveAndReturnAccount(res, user)
+    })
+  })
+}
 
-AdminController.prototype.masquerade = function(req, res) {}
+AdminController.prototype.impersonate = function(req, res) {
+  if (!req.user._id) return res.sendStatus(400)
+  User.findById(req.user._id, (err, admin) => {
+    if (err || admin === null) return res.sendStatus(400)
+    if (admin.role !== 'admin') return res.sendStatus(403)
+    User.findOne({ handle: req.body.handle }, (err, user) => {
+      if (err) return res.sendStatus(400)
+      if (user === null) return res.sendStatus(404)
+      let account = user.account()
+      let token = getToken(account)
+      let models = {}
+      Model.find({ user: user.handle }, (err, modelList) => {
+        if (err) return res.sendStatus(400)
+        for (let model of modelList) models[model.handle] = model.info()
+        let recipes = {}
+        Recipe.find({ user: user.handle }, (err, recipeList) => {
+          if (err) return res.sendStatus(400)
+          for (let recipe of recipeList) recipes[recipe.handle] = recipe
+          return user.updateLoginTime(() =>
+            res.send({ account, models, recipes: recipes, token })
+          )
+        })
+      })
+    })
+  })
+}
+
+function saveAndReturnAccount(res, user) {
+  user.save(function(err, updatedUser) {
+    if (err) {
+      return res.sendStatus(500)
+    } else return res.send({ account: updatedUser.account() })
+  })
+}
+
+const getToken = account => {
+  return jwt.sign(
+    {
+      _id: account._id,
+      handle: account.handle,
+      role: account.role,
+      aud: config.jwt.audience,
+      iss: config.jwt.issuer
+    },
+    config.jwt.secretOrKey
+  )
+}
 
 export default AdminController
