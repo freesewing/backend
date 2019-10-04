@@ -1,6 +1,7 @@
 import { User, Model, Recipe } from '../models'
 import jwt from 'jsonwebtoken'
 import config from '../config'
+import { ehash } from '../utils'
 
 function AdminController() {}
 
@@ -14,6 +15,7 @@ AdminController.prototype.search = function(req, res) {
       $or: [
         { handle: { $regex: `.*${req.body.query}.*` } },
         { username: { $regex: `.*${req.body.query}.*` } },
+        { ehash: ehash(req.body.query) },
       ]
     })
       .sort('username')
