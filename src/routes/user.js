@@ -19,6 +19,7 @@ export default (app, passport) => {
 
   // Sign up & log in
   app.post('/signup', User.signup)
+  app.post('/resend', User.resend)
   app.post('/login', User.login)
   app.post('/confirm/login', User.confirmationLogin)
 
