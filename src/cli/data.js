@@ -1,3 +1,5 @@
+import { withBreasts, withoutBreasts } from '@freesewing/models';
+
 export default {
   users: [
     {
@@ -50,35 +52,7 @@ export default {
       breasts: false,
       units: 'metric',
       notes: 'This is an example model',
-      measurements: {
-        bicepsCircumference: 335,
-        bustSpan: null,
-        centerBackNeckToWaist: 520,
-        chestCircumference: 1080,
-        headCircumference: 590,
-        highBust: null,
-        highPointShoulderToBust: null,
-        hipsCircumference: 990,
-        hipsToUpperLeg: 220,
-        inseam: 910,
-        kneeCircumference: 420,
-        naturalWaist: 925,
-        naturalWaistToFloor: 1310,
-        naturalWaistToHip: 145,
-        naturalWaistToKnee: null,
-        naturalWaistToSeat: 280,
-        naturalWaistToUnderbust: null,
-        neckCircumference: 420,
-        seatCircumference: 1080,
-        seatDepth: 200,
-        shoulderSlope: 55,
-        shoulderToElbow: 410,
-        shoulderToShoulder: 465,
-        shoulderToWrist: 680,
-        underbust: null,
-        upperLegCircumference: 630,
-        wristCircumference: 190,
-      }
+      measurements: withoutBreasts.size42
     },
     {
       handle: 'modelb',
@@ -88,35 +62,7 @@ export default {
       breasts: true,
       units: 'metric',
       notes: 'This is an example model',
-      measurements: {
-        bicepsCircumference: 270,
-        bustSpan: 170,
-        centerBackNeckToWaist: 390,
-        chestCircumference: 920,
-        headCircumference: null,
-        highBust: 850,
-        highPointShoulderToBust: 285,
-        hipsCircumference: 880,
-        hipsToUpperLeg: null,
-        inseam: null,
-        kneeCircumference: null,
-        naturalWaist: 700,
-        naturalWaistToFloor: 1060,
-        naturalWaistToHip: 130,
-        naturalWaistToKnee: null,
-        naturalWaistToSeat: 230,
-        naturalWaistToUnderbust: 80,
-        neckCircumference: 360,
-        seatCircumference: 950,
-        seatDepth: null,
-        shoulderSlope: 40,
-        shoulderToElbow: 340,
-        shoulderToShoulder: 420,
-        shoulderToWrist: 580,
-        underbust: 870,
-        upperLegCircumference: null,
-        wristCircumference: 170
-      }
+      measurements: withBreasts.size36
     },
   ],
   recipes: [

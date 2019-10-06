@@ -317,6 +317,38 @@ UserController.prototype.signup = (req, res) => {
   )
 }
 
+// // Re-send activation email
+UserController.prototype.resend = (req, res) => {
+  if (!req.body) return res.sendStatus(400)
+  if (!req.body.email) return res.status(400).send('emailMissing')
+  if (!req.body.language) return res.status(400).send('languageMissing')
+  User.findOne(
+    {
+      ehash: ehash(req.body.email)
+    },
+    (err, user) => {
+      if (err) return res.sendStatus(500)
+      if (user === null) return res.status(400).send('noSuchUser')
+      else {
+        let confirmation = new Confirmation({
+          type: 'signup',
+          data: {
+            language: req.body.language,
+            email: user.email,
+            handle: user.handle
+          }
+        })
+        confirmation.save(function(err) {
+          if (err) return res.sendStatus(500)
+          log.info('resendActivationRequest', { email: req.body.email, confirmation: confirmation._id })
+          email.signup(req.body.email, req.body.language, confirmation._id)
+          return res.sendStatus(200)
+        })
+      }
+    }
+  )
+}
+
 UserController.prototype.resetPassword = (req, res) => {
   if (!req.body) return res.sendStatus(400)
   User.findOne(
