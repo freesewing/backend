@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@babel/cli@7.6.2":
-  version "7.6.2"
-  resolved "https://registry.yarnpkg.com/@babel/cli/-/cli-7.6.2.tgz#4ce8b5b4b2e4b4c1b7bd841cec62085e2dfc4465"
-  integrity sha512-JDZ+T/br9pPfT2lmAMJypJDTTTHM9ePD/ED10TRjRzJVdEVy+JB3iRlhzYmTt5YkNgHvxWGlUVnLtdv6ruiDrQ==
+"@babel/cli@7.6.3":
+  version "7.6.3"
+  resolved "https://registry.yarnpkg.com/@babel/cli/-/cli-7.6.3.tgz#1b0c62098c8a5e01e4a4a59a52cba9682e7e0906"
+  integrity sha512-kWKOEeuylpa781yCeA5//eEx1u3WtLZqbi2VWXLKmb3QDPb5T2f7Yk311MK7bvvjR70dluAeiu4VXXsG1WwJsw==
   dependencies:
     commander "^2.8.1"
     convert-source-map "^1.1.0"
@@ -15,7 +15,7 @@
     mkdirp "^0.5.1"
     output-file-sync "^2.0.0"
     slash "^2.0.0"
-    source-map "^0.5.0"
+    source-map "^0.6.1"
   optionalDependencies:
     chokidar "^2.1.8"
 
@@ -715,20 +715,30 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@freesewing/i18n@latest":
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/@freesewing/i18n/-/i18n-2.0.2.tgz#e75023f6804ae454215e802f24bcfea3ca282038"
-  integrity sha512-z3104Utj6xxv7+dyBhzHfVShkBXnmmeMZrGFmDkffMQxyvfqJ4IDy/yNsooAgEifaWBd69dCkWBMgz8u4PqrPQ==
+"@freesewing/i18n@next":
+  version "2.1.0-beta.1"
+  resolved "https://registry.yarnpkg.com/@freesewing/i18n/-/i18n-2.1.0-beta.1.tgz#2096e13ad737a8c6592af25ecd21727a967b1fd2"
+  integrity sha512-6G8H7rGr7vl7TRsw1fRs1ageZnamjQc4ttYMAoTrT7Ql2XTM1kb1oIsdVQ2GzchwD2A4cVVtxoMILPKmUHgH7g==
 
-"@freesewing/pattern-info@latest":
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/@freesewing/pattern-info/-/pattern-info-2.0.4.tgz#6d64ea356a778d0a75256a9bbb7be3f3e7536b2b"
-  integrity sha512-vUxBBbFOS2OK+goJ53fuXz/ynnIrSClZU1vXiOcDQ0d8syUkeJfhVyHB6cPiJWMVXNa/Gbx/tfL1uXz/Ffx9Nw==
+"@freesewing/models@next":
+  version "2.1.0-beta.1"
+  resolved "https://registry.yarnpkg.com/@freesewing/models/-/models-2.1.0-beta.1.tgz#170dd741bedbf2d700a612af5ffdfc04aa2b367d"
+  integrity sha512-VhtCSSCnxWwVxZImd8mV1Hq0hhXN4eJi66s6rs4pu9yEqO1gZwNwnnS6gLpx90rDe9l5Zw3j8PTtrZVXND1ZSg==
 
-"@freesewing/prettier-config@2.0.4":
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/@freesewing/prettier-config/-/prettier-config-2.0.4.tgz#d9025d519699d549ffcb584b1ca43e79d6dc4aa3"
-  integrity sha512-jtibmAV1et5HhLtMGKtroetDIU7i0wBV4snpBlI7IJGn3DxVu0fx9NX2UefmAcBb7pugWOBDtjWKqmpf2RNvew==
+"@freesewing/pattern-info@next":
+  version "2.1.0-beta.1"
+  resolved "https://registry.yarnpkg.com/@freesewing/pattern-info/-/pattern-info-2.1.0-beta.1.tgz#348de9abe6d849d303496ccc20f03fad57bdf007"
+  integrity sha512-qiFTbx/Ypuj14P6s2IyikwOPXyA0fZFOdIZZ7Zu/JDoAupqR6dDfnQ26BVHmP1nks1jMUXFetM92DlKukstDdA==
+
+"@freesewing/prettier-config@next":
+  version "2.1.0-beta.1"
+  resolved "https://registry.yarnpkg.com/@freesewing/prettier-config/-/prettier-config-2.1.0-beta.1.tgz#c6a0f7d04badb4ee7022c774838b02d2d8fd9385"
+  integrity sha512-t9Dy4LFQIJSrd+L+CJ7WDB09mO0/Mtc7hfeJaHndOqwVPSH4xxQx5tiG1NOdA9qBTcwXVcQ4Y48H8GYG0+h/mw==
+
+"@freesewing/utils@next":
+  version "2.1.0-beta.1"
+  resolved "https://registry.yarnpkg.com/@freesewing/utils/-/utils-2.1.0-beta.1.tgz#9b35c94e51a966b73a70ebe3b744ed08d35d3f4f"
+  integrity sha512-s1se1A0Gf0TQyazvdYvgWsc3UZ6bBRGsfg4p1BP2fy1ehpgL6VoNurj39ZZLk5yerjXUivaHN6PT+3HlIYu7UQ==
 
 "@types/chai@4":
   version "4.2.0"
