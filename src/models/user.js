@@ -226,6 +226,7 @@ UserSchema.methods.storagePath = function() {
 }
 
 UserSchema.methods.avatarUri = function(size = 'l') {
+  if (!this.picture || this.picture.length < 5) return "https://freesewing.org/avatar.svg"
   return (
     config.static +
     '/users/' +
