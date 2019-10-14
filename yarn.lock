@@ -715,20 +715,30 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@freesewing/i18n@latest":
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/@freesewing/i18n/-/i18n-2.0.2.tgz#e75023f6804ae454215e802f24bcfea3ca282038"
-  integrity sha512-z3104Utj6xxv7+dyBhzHfVShkBXnmmeMZrGFmDkffMQxyvfqJ4IDy/yNsooAgEifaWBd69dCkWBMgz8u4PqrPQ==
+"@freesewing/i18n@next":
+  version "2.1.1-beta.1"
+  resolved "https://registry.yarnpkg.com/@freesewing/i18n/-/i18n-2.1.1-beta.1.tgz#be0f1b10d805ad5d639b929043ebf8f180e969e6"
+  integrity sha512-EH1ynSIC6ueFiZHUciorx666ii5MIX4DH3goLSgzV+c/kkI/zQ8T3Ircru5l+/uicMRl9TxpF18jxR73OdYD5A==
 
-"@freesewing/pattern-info@latest":
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/@freesewing/pattern-info/-/pattern-info-2.0.4.tgz#6d64ea356a778d0a75256a9bbb7be3f3e7536b2b"
-  integrity sha512-vUxBBbFOS2OK+goJ53fuXz/ynnIrSClZU1vXiOcDQ0d8syUkeJfhVyHB6cPiJWMVXNa/Gbx/tfL1uXz/Ffx9Nw==
+"@freesewing/models@next":
+  version "2.1.1-beta.1"
+  resolved "https://registry.yarnpkg.com/@freesewing/models/-/models-2.1.1-beta.1.tgz#e69d49a8803e6001dc1673fd56a94027b7717964"
+  integrity sha512-JH8CFGPdKZrC/tc8sTV7o2v0Jyq/JrQmx+PeVF7fgMFRpnGkKkyF9Rr+Cm0QdHK1QH86eLBTv2vPDrRHsXfNig==
 
-"@freesewing/prettier-config@2.0.4":
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/@freesewing/prettier-config/-/prettier-config-2.0.4.tgz#d9025d519699d549ffcb584b1ca43e79d6dc4aa3"
-  integrity sha512-jtibmAV1et5HhLtMGKtroetDIU7i0wBV4snpBlI7IJGn3DxVu0fx9NX2UefmAcBb7pugWOBDtjWKqmpf2RNvew==
+"@freesewing/pattern-info@next":
+  version "2.1.1-beta.1"
+  resolved "https://registry.yarnpkg.com/@freesewing/pattern-info/-/pattern-info-2.1.1-beta.1.tgz#19612816ddfeb90989652ca8f1179c7adb619480"
+  integrity sha512-PUVd186SQhgTNk48H0LODJ33b51fUU2fEzz+fKKAz26WYguJQRGHQJdNR5XCZ7fGAKJkfU/UMl/9TMDgNA9jew==
+
+"@freesewing/prettier-config@next":
+  version "2.1.1-beta.1"
+  resolved "https://registry.yarnpkg.com/@freesewing/prettier-config/-/prettier-config-2.1.1-beta.1.tgz#f5bdcc8f99d3f49cac76d9e2607a71faf1cf51c3"
+  integrity sha512-DDr9oXgV6P4H8a/FswANDyxDVX79riFMpVHXQ6WJi7rzYg7yshy/35LZdH80JVGEnQQOGWifBhmuX8SsXBIfdg==
+
+"@freesewing/utils@next":
+  version "2.1.1-beta.1"
+  resolved "https://registry.yarnpkg.com/@freesewing/utils/-/utils-2.1.1-beta.1.tgz#ef07bc26f2d1e66aadce9f43b2bc30a88ceff8ef"
+  integrity sha512-+/ZJWBdvxDwg77pEZVQyQ3zsi3V4UD8s9RtKznZJraEyAwV3Ig+CradiOhho/vsfHgbCqo+ibiwAF89/BLhPZA==
 
 "@types/chai@4":
   version "4.2.0"
