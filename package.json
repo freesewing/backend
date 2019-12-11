@@ -62,7 +62,7 @@
     "mongoose-bcrypt": "1.6.0",
     "mongoose-encryption": "2.0.2",
     "nodemailer": "6.3.0",
-    "passport": "0.4.0",
+    "passport": "0.4.1",
     "passport-jwt": "4.0.0",
     "prettier": "1.19.1",
     "query-string": "6.8.2",
