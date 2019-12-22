@@ -1,4 +1,4 @@
-import { User, Model, Recipe } from '../models'
+import { User, Model, Pattern } from '../models'
 import jwt from 'jsonwebtoken'
 import config from '../config'
 import { ehash } from '../utils'
@@ -83,12 +83,12 @@ AdminController.prototype.impersonate = function(req, res) {
       Model.find({ user: user.handle }, (err, modelList) => {
         if (err) return res.sendStatus(400)
         for (let model of modelList) models[model.handle] = model.info()
-        let recipes = {}
-        Recipe.find({ user: user.handle }, (err, recipeList) => {
+        let patterns = {}
+        Pattern.find({ user: user.handle }, (err, patternList) => {
           if (err) return res.sendStatus(400)
-          for (let recipe of recipeList) recipes[recipe.handle] = recipe
+          for (let pattern of patternList) patterns[pattern.handle] = pattern
           return user.updateLoginTime(() =>
-            res.send({ account, models, recipes: recipes, token })
+            res.send({ account, models, patterns, token })
           )
         })
       })

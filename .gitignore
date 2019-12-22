@@ -3,6 +3,8 @@ build
 dist
 tests/dist
 
+mongo.sh
+
 # Logs
 logs
 *.log

@@ -65,12 +65,12 @@ export default {
       measurements: withBreasts.size36
     },
   ],
-  recipes: [
+  patterns: [
     {
       handle: "recip",
-      name: "Example recipe",
-      notes: "These are the recipe notes",
-      recipe: {
+      name: "Example pattern",
+      notes: "These are the pattern notes",
+      data: {
         settings: {
           sa: 10,
           complete: true,
@@ -87,11 +87,11 @@ export default {
             hipsCircumference: 990
           }
         },
-        pattern: "aaron",
-        model:"modela"
+        design: "aaron",
       },
       created: "2019-08-14T09:47:27.163Z",
-      user: 'tuser'
+      user: 'tuser',
+      model:"modela"
     }
   ]
 }

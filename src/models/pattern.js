@@ -1,6 +1,6 @@
 import mongoose, { Schema } from 'mongoose'
 
-const RecipeSchema = new Schema(
+const PatternSchema = new Schema(
   {
     handle: {
       type: String,
@@ -17,6 +17,13 @@ const RecipeSchema = new Schema(
       trim: true,
       index: true
     },
+    model: {
+      type: String,
+      required: true,
+      lowercase: true,
+      trim: true,
+      index: true
+    },
     name: {
       type: String,
       required: true,
@@ -27,22 +34,22 @@ const RecipeSchema = new Schema(
       type: String,
       trim: true
     },
-    recipe: {}
+    data: {}
   },
   { timestamps: true }
 )
 
-RecipeSchema.index({ user: 1, handle: 1 })
+PatternSchema.index({ user: 1, handle: 1 })
 
-RecipeSchema.methods.info = function() {
+PatternSchema.methods.info = function() {
   return this.toObject()
 }
 
-RecipeSchema.methods.asRecipe = function() {
-  let recipe = this.toObject()
-  for (let field of ['__v', '_id', 'user', 'createdAt', 'updatedAt', '_v']) delete recipe[field]
+PatternSchema.methods.anonymize = function() {
+  let pattern = this.toObject()
+  for (let field of ['__v', '_id', 'user', 'model', 'createdAt', 'updatedAt', '_v']) delete pattern[field]
 
-  return recipe
+  return pattern
 }
 
-export default mongoose.model('Recipe', RecipeSchema)
+export default mongoose.model('Pattern', PatternSchema)

@@ -1,5 +1,5 @@
 import chalk from 'chalk'
-import { User, Model, Recipe, Confirmation } from '../models'
+import { User, Model, Pattern, Confirmation } from '../models'
 import { ehash } from '../utils'
 import data from './data'
 
@@ -9,7 +9,7 @@ export const showHelp = () => {
   console.log()
   console.log('  ', chalk.bold.blue('npm run clear:users'), '👉 Truncate the users collection')
   console.log('  ', chalk.bold.blue('npm run clear:models'), '👉 Truncate the models collection')
-  console.log('  ', chalk.bold.blue('npm run clear:recipes'), '👉 Truncate the recipes collection')
+  console.log('  ', chalk.bold.blue('npm run clear:patterns'), '👉 Truncate the patterns collection')
   console.log(
     '  ',
     chalk.bold.blue('npm run clear:confirmations'),
@@ -37,10 +37,10 @@ export const clearModels = async () => {
    else console.log('🚨 Could not remove models', result)
   })
 }
-export const clearRecipes = async () => {
-  await Recipe.deleteMany().then(result => {
-   if (result.ok) console.log('🔥 Recipes deleted')
-   else console.log('🚨 Could not remove recipes', result)
+export const clearPatterns = async () => {
+  await Pattern.deleteMany().then(result => {
+   if (result.ok) console.log('🔥 Patterns deleted')
+   else console.log('🚨 Could not remove patterns', result)
   })
 }
 export const clearConfirmations = async () => {
@@ -70,8 +70,8 @@ export const loadSampleData = async () => {
     model.createAvatar()
     promises.push(model.save())
   }
-  for (let sample of data.recipes) {
-    promises.push(new Recipe(sample).save())
+  for (let sample of data.patterns) {
+    promises.push(new Pattern(sample).save())
   }
 
   return Promise.all(promises)
@@ -81,7 +81,7 @@ export const runTasks = options => {
   let promises = []
   if (options.clearAll || options.reboot || options.clearUsers) promises.push(clearUsers())
   if (options.clearAll || options.reboot || options.clearModels) promises.push(clearModels())
-  if (options.clearAll || options.reboot || options.clearRecipes) promises.push(clearRecipes())
+  if (options.clearAll || options.reboot || options.clearPatterns) promises.push(clearPatterns())
   if (options.clearAll || options.reboot || options.clearConfirmations)
     promises.push(clearConfirmations())
 

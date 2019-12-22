@@ -8,7 +8,7 @@
     "cli": "babel-node --presets '@babel/preset-env' src/cli/index.js --help",
     "clear:users": "babel-node --presets '@babel/preset-env' src/cli/index.js --clearUsers",
     "clear:models": "babel-node --presets '@babel/preset-env' src/cli/index.js --clearModels",
-    "clear:recipes": "babel-node --presets '@babel/preset-env' src/cli/index.js --clearRecipes",
+    "clear:patterns": "babel-node --presets '@babel/preset-env' src/cli/index.js --clearPatterns",
     "clear:confirmations": "babel-node --presets '@babel/preset-env' src/cli/index.js --clearConfirmations",
     "clear:all": "babel-node --presets '@babel/preset-env' src/cli/index.js --clearAll",
     "clear:reboot": "babel-node --presets '@babel/preset-env' src/cli/index.js --reboot",

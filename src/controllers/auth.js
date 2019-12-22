@@ -1,4 +1,4 @@
-import { User, Model, Recipe, Confirmation } from '../models'
+import { User, Model, Pattern, Confirmation } from '../models'
 import {
   createUrl,
   getHash,
@@ -54,10 +54,10 @@ AuthController.prototype.loginOauth = function(req, res) {
       Model.find({ user: user.handle }, (err, modelList) => {
         if (err) return res.sendStatus(400)
         for (let model of modelList) models[model.handle] = model
-        let recipes = {}
-        Recipe.find({ user: user.handle }, (err, recipeList) => {
+        let patterns = {}
+        Pattern.find({ user: user.handle }, (err, patternList) => {
           if (err) return res.sendStatus(400)
-          for (let recipe of recipeList) recipes[recipe.handle] = recipe
+          for (let pattern of patternList) patterns[pattern.handle] = pattern
           confirmation.remove(err => {
             if (err !== null) return res.sendStatus(500)
             user.updateLoginTime(() => res.send({ account, models, token, signup }))
