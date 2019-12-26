@@ -8,12 +8,12 @@ PatternController.prototype.create = (req, res) => {
   if (!req.body) return res.sendStatus(400)
   if (!req.user._id) return res.sendStatus(400)
   User.findById(req.user._id, (err, user) => {
-    if (err || user === null) return res.sendStatus(400)
+    if (err || user === null) return res.sendStatus(403)
     let handle = uniqueHandle()
     let pattern = new Pattern({
       handle,
       user: user.handle,
-      user: req.body.model,
+      model: req.body.model,
       name: req.body.name,
       notes: req.body.notes,
       data: req.body.data,
@@ -26,7 +26,7 @@ PatternController.prototype.create = (req, res) => {
         return res.sendStatus(500)
       }
       log.info('patternCreated', { handle: pattern.handle })
-      return res.send(pattern.dataOnly())
+      return res.send(pattern.anonymize())
     })
   })
 }

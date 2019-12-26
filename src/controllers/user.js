@@ -135,7 +135,7 @@ UserController.prototype.readAccount = (req, res) => {
         const patterns = {}
         Pattern.find({ user: user.handle }, (err, patternList) => {
           if (err) return res.sendStatus(400)
-          for (let pattern of patternList) patterns[pattern.handle] = pattern.anonymize()
+          for (let pattern of patternList) patterns[pattern.handle] = pattern.export()
           return res.send({ account: user.account(), models, patterns })
         })
       })

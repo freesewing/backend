@@ -45,6 +45,13 @@ PatternSchema.methods.info = function() {
   return this.toObject()
 }
 
+PatternSchema.methods.export = function() {
+  let pattern = this.toObject()
+  for (let field of ['__v', '_id', '_v', 'created']) delete pattern[field]
+
+  return pattern
+}
+
 PatternSchema.methods.anonymize = function() {
   let pattern = this.toObject()
   for (let field of ['__v', '_id', 'user', 'model', 'createdAt', 'updatedAt', '_v']) delete pattern[field]
