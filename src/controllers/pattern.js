@@ -13,7 +13,7 @@ PatternController.prototype.create = (req, res) => {
     let pattern = new Pattern({
       handle,
       user: user.handle,
-      model: req.body.model,
+      person: req.body.person,
       name: req.body.name,
       notes: req.body.notes,
       data: req.body.data,

@@ -14,7 +14,7 @@ export default {
       },
       consent: {
         profile: true,
-        model: true,
+        measurements: true,
         openData: true
       },
       status: 'active'
@@ -37,13 +37,13 @@ export default {
       },
       consent: {
         profile: true,
-        model: true,
+        measurements: true,
         openData: true
       },
       status: 'active'
     }
   ],
-  models: [
+  people: [
     {
       handle: 'modela',
       picture: 'modela.svg',

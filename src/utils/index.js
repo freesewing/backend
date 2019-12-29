@@ -1,4 +1,4 @@
-import { User, Model, Pattern } from '../models'
+import { User, Person, Pattern } from '../models'
 import crypto from 'crypto'
 import jwt from 'jsonwebtoken'
 import mailer from './email'
@@ -40,7 +40,7 @@ export const getToken = account => {
 
 export const getHandle = type => {
   let go, handle, exists
-  if (type === 'model') go = Model
+  if (type === 'person') go = Person
   else if (type === 'pattern') go = Pattern
   else go = User
   do {

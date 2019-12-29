@@ -94,7 +94,7 @@ module.exports = function tests(store, config, chai) {
           data.account.username.should.equal(config.user.username)
           // Enable this once cleanup is implemented
           //Object.keys(data.recipes).length.should.equal(0)
-          //Object.keys(data.models).length.should.equal(0)
+          //Object.keys(data.people).length.should.equal(0)
           done()
         })
     })

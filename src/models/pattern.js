@@ -17,7 +17,7 @@ const PatternSchema = new Schema(
       trim: true,
       index: true
     },
-    model: {
+    person: {
       type: String,
       required: true,
       lowercase: true,
@@ -54,7 +54,7 @@ PatternSchema.methods.export = function() {
 
 PatternSchema.methods.anonymize = function() {
   let pattern = this.toObject()
-  for (let field of ['__v', '_id', 'user', 'model', 'createdAt', 'updatedAt', '_v']) delete pattern[field]
+  for (let field of ['__v', '_id', 'user', 'person', 'createdAt', 'updatedAt', '_v']) delete pattern[field]
 
   return pattern
 }
