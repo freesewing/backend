@@ -1,5 +1,5 @@
 import chalk from 'chalk'
-import { User, Model, Pattern, Confirmation } from '../models'
+import { User, Person, Pattern, Confirmation } from '../models'
 import { ehash } from '../utils'
 import data from './data'
 
@@ -8,7 +8,7 @@ export const showHelp = () => {
   console.log(chalk.yellow('Use one of the following:'))
   console.log()
   console.log('  ', chalk.bold.blue('npm run clear:users'), '👉 Truncate the users collection')
-  console.log('  ', chalk.bold.blue('npm run clear:models'), '👉 Truncate the models collection')
+  console.log('  ', chalk.bold.blue('npm run clear:people'), '👉 Truncate the people collection')
   console.log('  ', chalk.bold.blue('npm run clear:patterns'), '👉 Truncate the patterns collection')
   console.log(
     '  ',
@@ -31,10 +31,10 @@ export const clearUsers = async () => {
    else console.log('🚨 Could not remove users', result)
   })
 }
-export const clearModels = async () => {
-  await Model.deleteMany().then(result => {
-   if (result.ok) console.log('🔥 Models deleted')
-   else console.log('🚨 Could not remove models', result)
+export const clearPeople = async () => {
+  await Person.deleteMany().then(result => {
+   if (result.ok) console.log('🔥 People removed')
+   else console.log('🚨 Could not remove people', result)
   })
 }
 export const clearPatterns = async () => {
@@ -65,10 +65,10 @@ export const loadSampleData = async () => {
     user.createAvatar()
     promises.push(user.save())
   }
-  for (let sample of data.models) {
-    let model = new Model(sample)
-    model.createAvatar()
-    promises.push(model.save())
+  for (let sample of data.people) {
+    let person = new Person(sample)
+    person.createAvatar()
+    promises.push(person.save())
   }
   for (let sample of data.patterns) {
     promises.push(new Pattern(sample).save())
@@ -80,7 +80,7 @@ export const loadSampleData = async () => {
 export const runTasks = options => {
   let promises = []
   if (options.clearAll || options.reboot || options.clearUsers) promises.push(clearUsers())
-  if (options.clearAll || options.reboot || options.clearModels) promises.push(clearModels())
+  if (options.clearAll || options.reboot || options.clearPeople) promises.push(clearPeople())
   if (options.clearAll || options.reboot || options.clearPatterns) promises.push(clearPatterns())
   if (options.clearAll || options.reboot || options.clearConfirmations)
     promises.push(clearConfirmations())
