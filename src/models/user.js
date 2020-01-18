@@ -86,7 +86,7 @@ const UserSchema = new Schema(
         type: Boolean,
         default: false
       },
-      model: {
+      measurements: {
         type: Boolean,
         default: false
       },
