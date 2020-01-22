@@ -84,7 +84,7 @@
     "command-line-args": "^5.1.1",
     "dotenv": "8.2.0",
     "lodash": "^4.17.15",
-    "mocha": "6.2.2",
+    "mocha": "7.0.0",
     "nodemon": "1.19.1"
   }
 }
