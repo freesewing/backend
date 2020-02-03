@@ -785,9 +785,9 @@
   integrity sha512-JH8CFGPdKZrC/tc8sTV7o2v0Jyq/JrQmx+PeVF7fgMFRpnGkKkyF9Rr+Cm0QdHK1QH86eLBTv2vPDrRHsXfNig==
 
 "@freesewing/pattern-info@next":
-  version "2.1.1-beta.1"
-  resolved "https://registry.yarnpkg.com/@freesewing/pattern-info/-/pattern-info-2.1.1-beta.1.tgz#19612816ddfeb90989652ca8f1179c7adb619480"
-  integrity sha512-PUVd186SQhgTNk48H0LODJ33b51fUU2fEzz+fKKAz26WYguJQRGHQJdNR5XCZ7fGAKJkfU/UMl/9TMDgNA9jew==
+  version "2.2.0-beta.4"
+  resolved "https://registry.yarnpkg.com/@freesewing/pattern-info/-/pattern-info-2.2.0-beta.4.tgz#1e246ebab0ea083b2afa70fc4f670b525520c9a1"
+  integrity sha512-HMddcQ30ZZcwF48g7lfUHcurl9fLzHQ2CsYalVSjS1ehwRWvEmuTTnUKwx7sOsluJfp2OREXfmiq7mwm+ii+Xg==
 
 "@freesewing/prettier-config@next":
   version "2.1.1-beta.1"
