@@ -328,7 +328,7 @@ UserController.prototype.resend = (req, res) => {
     },
     (err, user) => {
       if (err) return res.sendStatus(500)
-      if (user === null) return res.status(400).send('noSuchUser')
+      if (user === null) return res.status(404).send('noSuchUser')
       else {
         let confirmation = new Confirmation({
           type: 'signup',
