@@ -790,9 +790,9 @@
   integrity sha512-PUVd186SQhgTNk48H0LODJ33b51fUU2fEzz+fKKAz26WYguJQRGHQJdNR5XCZ7fGAKJkfU/UMl/9TMDgNA9jew==
 
 "@freesewing/prettier-config@next":
-  version "2.1.1-beta.1"
-  resolved "https://registry.yarnpkg.com/@freesewing/prettier-config/-/prettier-config-2.1.1-beta.1.tgz#f5bdcc8f99d3f49cac76d9e2607a71faf1cf51c3"
-  integrity sha512-DDr9oXgV6P4H8a/FswANDyxDVX79riFMpVHXQ6WJi7rzYg7yshy/35LZdH80JVGEnQQOGWifBhmuX8SsXBIfdg==
+  version "2.2.0-beta.8"
+  resolved "https://registry.yarnpkg.com/@freesewing/prettier-config/-/prettier-config-2.2.0-beta.8.tgz#c1291883468c8388321d55a610ef9c116329ea77"
+  integrity sha512-RkFnXsC6pTGEqfWNvU2aHClWRbjLgR7GkTtkJY5FLMnwlt+kc3nKNRbc+XZD9DZ7yy/W+08+dhcQ+17/pfm/vw==
 
 "@freesewing/utils@next":
   version "2.2.0-beta.1"
