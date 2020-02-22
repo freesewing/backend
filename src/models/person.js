@@ -5,7 +5,7 @@ import { log, randomAvatar } from '../utils'
 import path from 'path'
 import sharp from 'sharp'
 
-const ModelSchema = new Schema(
+const PersonSchema = new Schema(
   {
     handle: {
       type: String,
@@ -48,12 +48,15 @@ const ModelSchema = new Schema(
     measurements: {
       ankleCircumference: Number,
       bicepsCircumference: Number,
+      bustFront: Number,
       bustSpan: Number,
-      centerBackNeckToWaist: Number,
       chestCircumference: Number,
       headCircumference: Number,
       highBust: Number,
-      highPointShoulderToBust: Number,
+      highBustFront: Number,
+      hpsToBust: Number,
+      hpsToHipsBack: Number,
+      hpsToHipsFront: Number,
       hipsCircumference: Number,
       hipsToUpperLeg: Number,
       inseam: Number,
@@ -79,58 +82,57 @@ const ModelSchema = new Schema(
   { timestamps: true }
 )
 
-ModelSchema.index({ user: 1, handle: 1 })
+PersonSchema.index({ user: 1, handle: 1 })
 
-ModelSchema.methods.info = function() {
-  let model = this.toObject()
-  //delete model.picture
-  delete model.__v
-  delete model._id
-  model.pictureUris = {
+PersonSchema.methods.info = function() {
+  let person = this.toObject()
+  delete person.__v
+  delete person._id
+  person.pictureUris = {
     l: this.avatarUri(),
     m: this.avatarUri('m'),
     s: this.avatarUri('s'),
     xs: this.avatarUri('xs')
   }
 
-  return model
+  return person
 }
 
-ModelSchema.methods.avatarName = function(size = 'l') {
+PersonSchema.methods.avatarName = function(size = 'l') {
   let prefix = size === 'l' ? '' : size + '-'
   if (this.picture.slice(-4).toLowerCase() === '.svg') prefix = ''
 
   return prefix + this.picture
 }
 
-ModelSchema.methods.avatarUri = function(size = 'l') {
+PersonSchema.methods.avatarUri = function(size = 'l') {
   return (
     config.static +
     '/users/' +
     this.user.substring(0, 1) +
     '/' +
     this.user +
-    '/models/' +
+    '/people/' +
     this.handle +
     '/' +
     this.avatarName(size)
   )
 }
 
-ModelSchema.methods.storagePath = function() {
+PersonSchema.methods.storagePath = function() {
   return (
     config.storage +
     '/users/' +
     this.user.substring(0, 1) +
     '/' +
     this.user +
-    '/models/' +
+    '/people/' +
     this.handle +
     '/'
   )
 }
 
-ModelSchema.methods.createAvatar = function() {
+PersonSchema.methods.createAvatar = function() {
   let dir = this.storagePath()
   fs.mkdir(dir, { recursive: true }, err => {
     if (err) console.log('mkdirFailed', dir, err)
@@ -140,7 +142,7 @@ ModelSchema.methods.createAvatar = function() {
   })
 }
 
-ModelSchema.methods.saveAvatar = function(picture) {
+PersonSchema.methods.saveAvatar = function(picture) {
   let type = picture.split(';').shift()
   type = type.split('/').pop()
   this.picture = this.handle + '.' + type
@@ -160,4 +162,4 @@ ModelSchema.methods.saveAvatar = function(picture) {
   })
 }
 
-export default mongoose.model('Model', ModelSchema)
+export default mongoose.model('Person', PersonSchema)

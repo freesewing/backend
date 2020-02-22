@@ -1,32 +1,33 @@
 module.exports = function tests(store, config, chai) {
-  describe('Recipe endpoints', () => {
-    it('should create a recipe', done => {
+  describe('Pattern endpoints', () => {
+    it('should create a pattern', done => {
       chai
         .request(config.backend)
-        .post('/recipes')
+        .post('/patterns')
         .set('Authorization', 'Bearer ' + config.user.token)
         .send({
-          name: 'Test recipe',
+          name: 'Test pattern',
+          person: 'Someone',
           notes: 'Some notes',
-          recipe: {
+          data: {
             test: 'value'
           }
         })
         .end((err, res) => {
           res.should.have.status(200)
           let data = JSON.parse(res.text)
-          data.name.should.equal('Test recipe')
+          data.name.should.equal('Test pattern')
           data.notes.should.equal('Some notes')
-          data.recipe.test.should.equal('value')
-          config.user.recipe = data.handle
+          data.data.test.should.equal('value')
+          config.user.pattern = data.handle
           done()
         })
     })
 
-    it('should update the recipe name', done => {
+    it('should update the pattern name', done => {
       chai
         .request(config.backend)
-        .put('/recipes/' + config.user.recipe)
+        .put('/patterns/' + config.user.pattern)
         .set('Authorization', 'Bearer ' + config.user.token)
         .send({
           name: 'New name'
@@ -35,15 +36,15 @@ module.exports = function tests(store, config, chai) {
           res.should.have.status(200)
           let data = JSON.parse(res.text)
           data.name.should.equal('New name')
-          data.handle.should.equal(config.user.recipe)
+          data.handle.should.equal(config.user.pattern)
           done()
         })
     })
 
-    it('should update the recipe notes', done => {
+    it('should update the pattern notes', done => {
       chai
         .request(config.backend)
-        .put('/recipes/' + config.user.recipe)
+        .put('/patterns/' + config.user.pattern)
         .set('Authorization', 'Bearer ' + config.user.token)
         .send({
           notes: 'These are the notes'
@@ -52,28 +53,28 @@ module.exports = function tests(store, config, chai) {
           res.should.have.status(200)
           let data = JSON.parse(res.text)
           data.notes.should.equal('These are the notes')
-          data.handle.should.equal(config.user.recipe)
+          data.handle.should.equal(config.user.pattern)
           done()
         })
     })
 
-    it('should load the recipe data without authentication', done => {
+    it('should load the pattern data without authentication', done => {
       chai
         .request(config.backend)
-        .get('/recipes/' + config.user.recipe)
+        .get('/patterns/' + config.user.pattern)
         .end((err, res) => {
           res.should.have.status(200)
           let data = JSON.parse(res.text)
           data.notes.should.equal('These are the notes')
-          data.handle.should.equal(config.user.recipe)
+          data.handle.should.equal(config.user.pattern)
           done()
         })
     })
 
-    it('should delete the recipe', done => {
+    it('should delete the pattern', done => {
       chai
         .request(config.backend)
-        .delete('/recipes/' + config.user.recipe)
+        .delete('/patterns/' + config.user.pattern)
         .set('Authorization', 'Bearer ' + config.user.token)
         .end((err, res) => {
           res.should.have.status(204)
@@ -81,10 +82,10 @@ module.exports = function tests(store, config, chai) {
         })
     })
 
-    it('should no longer have this recipe', done => {
+    it('should no longer have this pattern', done => {
       chai
         .request(config.backend)
-        .get('/recipes/' + config.user.recipe)
+        .get('/patterns/' + config.user.pattern)
         .set('Authorization', 'Bearer ' + config.user.token)
         .end((err, res) => {
           res.should.have.status(404)

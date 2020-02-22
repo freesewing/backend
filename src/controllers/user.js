@@ -1,4 +1,4 @@
-import { User, Confirmation, Model, Recipe } from '../models'
+import { User, Confirmation, Person, Pattern } from '../models'
 import {
   log,
   email,
@@ -35,16 +35,16 @@ UserController.prototype.login = function(req, res) {
             log.info('login', { user, req })
             let account = user.account()
             let token = getToken(account)
-            let models = {}
-            Model.find({ user: user.handle }, (err, modelList) => {
+            let people = {}
+            Person.find({ user: user.handle }, (err, personList) => {
               if (err) return res.sendStatus(400)
-              for (let model of modelList) models[model.handle] = model.info()
-              let recipes = {}
-              Recipe.find({ user: user.handle }, (err, recipeList) => {
+              for (let person of personList) people[person.handle] = person.info()
+              let patterns = {}
+              Pattern.find({ user: user.handle }, (err, patternList) => {
                 if (err) return res.sendStatus(400)
-                for (let recipe of recipeList) recipes[recipe.handle] = recipe
+                for (let pattern of patternList) patterns[pattern.handle] = pattern
                 return user.updateLoginTime(() =>
-                  res.send({ account, models, recipes: recipes, token })
+                  res.send({ account, people, patterns, token })
                 )
               })
             })
@@ -75,16 +75,16 @@ UserController.prototype.confirmationLogin = function(req, res) {
         log.info('confirmationLogin', { user, req })
         let account = user.account()
         let token = getToken(account)
-        let models = {}
-        Model.find({ user: user.handle }, (err, modelList) => {
+        let people = {}
+        Person.find({ user: user.handle }, (err, personList) => {
           if (err) return res.sendStatus(400)
-          for (let model of modelList) models[model.handle] = model.info()
-          let recipes = {}
-          Recipe.find({ user: user.handle }, (err, recipeList) => {
+          for (let person of personList) people[person.handle] = person.info()
+          let patterns = {}
+          Pattern.find({ user: user.handle }, (err, patternList) => {
             if (err) return res.sendStatus(400)
-            for (let recipe of recipeList) recipes[recipe.handle] = recipe
+            for (let pattern of patternList) patterns[pattern.handle] = pattern
             return user.updateLoginTime(() =>
-              res.send({ account, models, recipes: recipes, token })
+              res.send({ account, people, patterns, token })
             )
           })
         })
@@ -115,7 +115,7 @@ UserController.prototype.create = (req, res) => {
       user.save(function(err) {
         if (err) return res.sendStatus(400)
         Confirmation.findByIdAndDelete(req.body.id, (err, confirmation) => {
-          return res.send({ account, models: {}, recipes: {}, token })
+          return res.send({ account, people: {}, patterns: {}, token })
         })
       })
     })
@@ -128,15 +128,15 @@ UserController.prototype.readAccount = (req, res) => {
   User.findById(req.user._id, (err, user) => {
     if (user !== null) {
       log.info('ping', { user, req })
-      const models = {}
-      Model.find({ user: user.handle }, (err, modelList) => {
+      const people = {}
+      Person.find({ user: user.handle }, (err, personList) => {
         if (err) return res.sendStatus(400)
-        for (let model of modelList) models[model.handle] = model.info()
-        const recipes = {}
-        Recipe.find({ user: user.handle }, (err, recipeList) => {
+        for (let person of personList) people[person.handle] = person.info()
+        const patterns = {}
+        Pattern.find({ user: user.handle }, (err, patternList) => {
           if (err) return res.sendStatus(400)
-          for (let recipe of recipeList) recipes[recipe.handle] = recipe.asRecipe()
-          return res.send({ account: user.account(), models, recipes })
+          for (let pattern of patternList) patterns[pattern.handle] = pattern.export()
+          return res.send({ account: user.account(), people, patterns })
         })
       })
     } else {
@@ -328,7 +328,7 @@ UserController.prototype.resend = (req, res) => {
     },
     (err, user) => {
       if (err) return res.sendStatus(500)
-      if (user === null) return res.status(400).send('noSuchUser')
+      if (user === null) return res.status(404).send('noSuchUser')
       else {
         let confirmation = new Confirmation({
           type: 'signup',

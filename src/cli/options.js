@@ -8,7 +8,7 @@ export default [
     type: Boolean
   },
   {
-    name: 'clearRecipes',
+    name: 'clearPatterns',
     type: Boolean
   },
   {

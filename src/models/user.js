@@ -86,7 +86,7 @@ const UserSchema = new Schema(
         type: Boolean,
         default: false
       },
-      model: {
+      measurements: {
         type: Boolean,
         default: false
       },
@@ -226,6 +226,7 @@ UserSchema.methods.storagePath = function() {
 }
 
 UserSchema.methods.avatarUri = function(size = 'l') {
+  if (!this.picture || this.picture.length < 5) return "https://freesewing.org/avatar.svg"
   return (
     config.static +
     '/users/' +
