@@ -834,9 +834,9 @@
     to-fast-properties "^2.0.0"
 
 "@freesewing/i18n@next":
-  version "2.1.1-beta.1"
-  resolved "https://registry.yarnpkg.com/@freesewing/i18n/-/i18n-2.1.1-beta.1.tgz#be0f1b10d805ad5d639b929043ebf8f180e969e6"
-  integrity sha512-EH1ynSIC6ueFiZHUciorx666ii5MIX4DH3goLSgzV+c/kkI/zQ8T3Ircru5l+/uicMRl9TxpF18jxR73OdYD5A==
+  version "2.3.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@freesewing/i18n/-/i18n-2.3.0-beta.2.tgz#9912ba8f14a18bb4620422016f0fe5c7a6710e5b"
+  integrity sha512-N2TVvoRGIUejYTwdSykgkoDDzES3dOJfe95wwGstbA59h/1X719EE7bLmceSLeGWRQMbq/xXe+O2G0WOv1uy7w==
 
 "@freesewing/models@next":
   version "2.1.1-beta.1"
