@@ -30,6 +30,7 @@ AuthController.prototype.initOauth = function(req, res) {
   })
   confirmation.save(function(err) {
     if (err) return res.sendStatus(500)
+    console.log(confirmation)
     return res.send({ state: confirmation._id })
   })
 }
@@ -47,7 +48,7 @@ AuthController.prototype.loginOauth = function(req, res) {
       if (err) return res.sendStatus(400)
       if (user === null) return res.sendStatus(401)
 
-      if (user.status !== 'active') res.sendStatus(403)
+      if (user.status !== 'active') return res.sendStatus(403)
       let account = user.account()
       let token = getToken(account)
       let people = {}
