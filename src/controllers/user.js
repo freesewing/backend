@@ -103,7 +103,6 @@ UserController.prototype.create = (req, res) => {
   Confirmation.findById(req.body.id, (err, confirmation) => {
     if (err) return res.sendStatus(400)
     if (confirmation === null) return res.sendStatus(401)
-    console.log(confirmation)
     User.findOne({ handle: confirmation.data.handle }, (err, user) => {
       if (err) return res.sendStatus(400)
       if (user === null) return res.sendStatus(401)
@@ -124,7 +123,6 @@ UserController.prototype.create = (req, res) => {
 }
 
 UserController.prototype.readAccount = (req, res) => {
-  console.log('user', req.user)
   if (!req.user._id) return res.sendStatus(400)
   User.findById(req.user._id, (err, user) => {
     if (user !== null) {
