@@ -1,6 +1,6 @@
 {
   "name": "@freesewing/backend",
-  "version": "0.1.0",
+  "version": "2.0.0",
   "description": "The freesewing.org backend",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -48,8 +48,8 @@
     ]
   },
   "dependencies": {
-    "@freesewing/i18n": "next",
-    "@freesewing/pattern-info": "next",
+    "@freesewing/i18n": "latest",
+    "@freesewing/pattern-info": "latest",
     "axios": "0.19.0",
     "body-parser": "1.19.0",
     "chalk": "2.4.2",
@@ -67,16 +67,16 @@
     "prettier": "1.19.1",
     "query-string": "6.8.2",
     "rimraf": "2.6.3",
-    "sharp": "0.23.0"
+    "sharp": "^0.25.2"
   },
   "devDependencies": {
     "@babel/cli": "7.8.4",
-    "@babel/core": "^7.7.2",
-    "@babel/node": "^7.7.0",
-    "@babel/preset-env": "^7.7.1",
-    "@freesewing/models": "next",
-    "@freesewing/prettier-config": "next",
-    "@freesewing/utils": "next",
+    "@babel/core": "^7.9.0",
+    "@babel/node": "^7.8.7",
+    "@babel/preset-env": "^7.9.0",
+    "@freesewing/models": "latest",
+    "@freesewing/prettier-config": "latest",
+    "@freesewing/utils": "latest",
     "babel-node": "^0.0.1-security",
     "backpack-core": "0.8.4",
     "chai": "4.2.0",
