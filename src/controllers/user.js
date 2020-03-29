@@ -103,6 +103,7 @@ UserController.prototype.create = (req, res) => {
   Confirmation.findById(req.body.id, (err, confirmation) => {
     if (err) return res.sendStatus(400)
     if (confirmation === null) return res.sendStatus(401)
+    console.log(confirmation)
     User.findOne({ handle: confirmation.data.handle }, (err, user) => {
       if (err) return res.sendStatus(400)
       if (user === null) return res.sendStatus(401)
@@ -179,8 +180,9 @@ UserController.prototype.update = (req, res) => {
         ...data.consent
       }
       return saveAndReturnAccount(res, user)
-    } else if (typeof data.avatar !== 'undefined' && data.avatar) {
-      user.saveAvatar(data.avatar)
+    } else if (typeof data.avatar !== 'undefined') {
+      // Catch people submitting without uploading an avatar
+      if (data.avatar) user.saveAvatar(data.avatar)
       return saveAndReturnAccount(res, user)
     } else if (typeof data.password === 'string') {
       user.password = data.password

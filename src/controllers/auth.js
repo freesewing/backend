@@ -30,7 +30,6 @@ AuthController.prototype.initOauth = function(req, res) {
   })
   confirmation.save(function(err) {
     if (err) return res.sendStatus(500)
-    console.log(confirmation)
     return res.send({ state: confirmation._id })
   })
 }
@@ -40,7 +39,6 @@ AuthController.prototype.loginOauth = function(req, res) {
   Confirmation.findById(req.body.confirmation, (err, confirmation) => {
     if (err) return res.sendStatus(400)
     if (confirmation === null) return res.sendStatus(401)
-    if (String(confirmation._id) !== String(req.body.confirmation)) return res.sendStatus(401)
     if (String(confirmation.data.validation) !== String(req.body.validation))
       return res.sendStatus(401)
     let signup = confirmation.data.signup
@@ -73,6 +71,7 @@ AuthController.prototype.providerCallback = function(req, res) {
   let language, token, email, avatarUri, username
   let provider = req.params.provider
   let conf = config.oauth[provider]
+  let signup = false
 
   // Verify state
   Confirmation.findById(req.query.state, (err, confirmation) => {
@@ -99,9 +98,9 @@ AuthController.prototype.providerCallback = function(req, res) {
         // Contact API for user info
         const headers = token => ({ headers: { Authorization: 'Bearer ' + token } })
         go.get(conf.dataUri, headers(token))
-          .then(result => {
+          .then(async result => {
             if (provider === 'github') {
-              email = result.data.email
+              email = await getGithubEmail(result.data.email, go, conf.emailUri, headers(token)),
               avatarUri = result.data.avatar_url
               username = result.data.login
             } else if (provider === 'google') {
@@ -119,6 +118,7 @@ AuthController.prototype.providerCallback = function(req, res) {
               if (err) return res.sendStatus(400)
               if (user === null) {
                 // New user: signup
+                signup = true
                 let handle = getHandle()
                 go.get(avatarUri, { responseType: 'arraybuffer' }).then(avatar => {
                   let type = imageType(avatar.headers['content-type'])
@@ -135,16 +135,20 @@ AuthController.prototype.providerCallback = function(req, res) {
                     handle,
                     username: username,
                     settings: { language: language },
+                    social: {
+                      github: '',
+                      twitter: '',
+                      instagram: '',
+                    },
                     time: {
                       created: new Date(),
                       login: new Date()
                     }
                   }
                   if (provider === 'github') {
-                    userData.ocial = { github: result.data.login }
+                    userData.social.github = result.data.login
                     userData.bio = result.data.bio
                   }
-                  console.log('user data is', userData)
                   let user = new User(userData)
                   user.save(function(err) {
                     if (err) return res.sendStatus(500)
@@ -157,7 +161,9 @@ AuthController.prototype.providerCallback = function(req, res) {
                       return res.redirect(
                         createUrl(
                           language,
-                          '/login/callback/' + confirmation._id + '/' + validation
+                          signup
+                            ? '/confirm/signup/' + req.query.state + '/'
+                            : '/login/callback/' + confirmation._id + '/' + validation
                         )
                       )
                     })
@@ -165,7 +171,6 @@ AuthController.prototype.providerCallback = function(req, res) {
                 })
               } else {
                 // Existing user
-                if (user.status !== 'active') res.sendStatus(403)
                 if (provider === 'github') {
                   if (user.bio === '') user.bio = result.data.bio
                   user.social.github = result.data.login
@@ -178,7 +183,11 @@ AuthController.prototype.providerCallback = function(req, res) {
                   confirmation.save(function(err) {
                     if (err) return res.sendStatus(500)
                     return res.redirect(
-                      createUrl(language, '/login/callback/' + confirmation._id + '/' + validation)
+                      // Watch out for pending users
+                      createUrl(language, (user.status === 'pending')
+                        ? '/confirm/signup/' + req.query.state + '/'
+                        : '/login/callback/' + confirmation._id + '/' + validation
+                      )
                     )
                   })
                 })
@@ -196,5 +205,22 @@ AuthController.prototype.providerCallback = function(req, res) {
       })
   })
 }
+
+/*
+* Github does not always return the email address
+* See https://github.com/freesewing/backend/issues/162
+*/
+const getGithubEmail = async (email, client, uri, headers) => {
+  if (email === null) {
+    return client.get(uri, headers)
+      .then(result => {
+        for (let e of result.data) {
+          if (e.primary) return e.email
+        }
+      })
+  }
+  else return email
+}
+
 
 export default AuthController
