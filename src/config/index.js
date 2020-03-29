@@ -43,7 +43,8 @@ module.exports = {
       clientId: process.env.FS_GITHUB_CLIENT_ID,
       clientSecret: process.env.FS_GITHUB_CLIENT_SECRET,
       tokenUri: 'https://github.com/login/oauth/access_token',
-      dataUri: 'https://api.github.com/user'
+      dataUri: 'https://api.github.com/user',
+      emailUri: 'https://api.github.com/user/emails'
     },
     google: {
       clientId: process.env.FS_GOOGLE_CLIENT_ID,

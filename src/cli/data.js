@@ -14,7 +14,7 @@ export default {
       },
       consent: {
         profile: true,
-        model: true,
+        measurements: true,
         openData: true
       },
       status: 'active'
@@ -37,40 +37,40 @@ export default {
       },
       consent: {
         profile: true,
-        model: true,
+        measurements: true,
         openData: true
       },
       status: 'active'
     }
   ],
-  models: [
+  people: [
     {
-      handle: 'modela',
-      picture: 'modela.svg',
+      handle: 'persa',
+      picture: 'persa.svg',
       user: 'tuser',
-      name: 'Example model - No breasts',
+      name: 'Example person - No breasts',
       breasts: false,
       units: 'metric',
-      notes: 'This is an example model',
+      notes: 'This is an example person',
       measurements: withoutBreasts.size42
     },
     {
-      handle: 'modelb',
-      picture: 'modelb.svg',
+      handle: 'persb',
+      picture: 'persb.svg',
       user: 'tuser',
-      name: 'Example model - With breasts',
+      name: 'Example person - With breasts',
       breasts: true,
       units: 'metric',
-      notes: 'This is an example model',
+      notes: 'This is an example person',
       measurements: withBreasts.size36
     },
   ],
-  recipes: [
+  patterns: [
     {
       handle: "recip",
-      name: "Example recipe",
-      notes: "These are the recipe notes",
-      recipe: {
+      name: "Example pattern",
+      notes: "These are the pattern notes",
+      data: {
         settings: {
           sa: 10,
           complete: true,
@@ -87,11 +87,11 @@ export default {
             hipsCircumference: 990
           }
         },
-        pattern: "aaron",
-        model:"modela"
+        design: "aaron",
       },
       created: "2019-08-14T09:47:27.163Z",
-      user: 'tuser'
+      user: 'tuser',
+      person:"persa"
     }
   ]
 }

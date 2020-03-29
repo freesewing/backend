@@ -1,4 +1,4 @@
-import { User, Model, Recipe, Confirmation } from '../models'
+import { User, Person, Pattern, Confirmation } from '../models'
 import {
   createUrl,
   getHash,
@@ -39,7 +39,6 @@ AuthController.prototype.loginOauth = function(req, res) {
   Confirmation.findById(req.body.confirmation, (err, confirmation) => {
     if (err) return res.sendStatus(400)
     if (confirmation === null) return res.sendStatus(401)
-    if (String(confirmation._id) !== String(req.body.confirmation)) return res.sendStatus(401)
     if (String(confirmation.data.validation) !== String(req.body.validation))
       return res.sendStatus(401)
     let signup = confirmation.data.signup
@@ -47,135 +46,24 @@ AuthController.prototype.loginOauth = function(req, res) {
       if (err) return res.sendStatus(400)
       if (user === null) return res.sendStatus(401)
 
-      if (user.status !== 'active') res.sendStatus(403)
+      if (user.status !== 'active') return res.sendStatus(403)
       let account = user.account()
       let token = getToken(account)
-      let models = {}
-      Model.find({ user: user.handle }, (err, modelList) => {
+      let people = {}
+      Person.find({ user: user.handle }, (err, personList) => {
         if (err) return res.sendStatus(400)
-        for (let model of modelList) models[model.handle] = model
-        let recipes = {}
-        Recipe.find({ user: user.handle }, (err, recipeList) => {
+        for (let person of personList) people[person.handle] = person
+        let patterns = {}
+        Pattern.find({ user: user.handle }, (err, patternList) => {
           if (err) return res.sendStatus(400)
-          for (let recipe of recipeList) recipes[recipe.handle] = recipe
+          for (let pattern of patternList) patterns[pattern.handle] = pattern
           confirmation.remove(err => {
             if (err !== null) return res.sendStatus(500)
-            user.updateLoginTime(() => res.send({ account, models, token, signup }))
+            user.updateLoginTime(() => res.send({ account, people, token, signup }))
           })
         })
       })
     })
-  })
-}
-
-AuthController.prototype.callbackFromGithub = function(req, res) {
-  let language
-  let conf = config.oauth
-
-  // Is this a follow-up on an Oauth init?
-  Confirmation.findById(req.query.state, (err, confirmation) => {
-    if (err) return res.sendStatus(400)
-    if (confirmation === null) return res.sendStatus(401)
-    if (String(confirmation._id) !== String(req.query.state)) return res.sendStatus(401)
-    if (confirmation.data.provider !== 'github') return res.sendStatus(401)
-
-    language = confirmation.data.language
-    // Fetch access token from Github
-    // Fetch user info from Github
-    const github = axios.create({
-      baseURL: 'https://github.com',
-      timeout: 5000
-    })
-
-    github
-      .post('/login/oauth/access_token', {
-        client_id: conf.clientId,
-        client_secret: conf.clientSecret,
-        code: req.query.code,
-        accent: 'json'
-      })
-      .then(result => {
-        if (result.status !== 200) return res.sendStatus(401)
-        let token = queryString.parse(result.data).access_token
-        const api = axios.create({
-          baseURL: '',
-          timeout: 5000
-        })
-        const headers = token => ({
-          headers: {
-            Authorization: 'Bearer ' + token
-          }
-        })
-        api
-          .get('https://api.github.com/user', headers(token))
-          .then(result => {
-            User.findOne({ ehash: getHash(result.data.email) }, (err, user) => {
-              if (err) return res.sendStatus(400)
-              if (user === null) {
-                // New user: signup
-                let handle = getHandle()
-                api.get(result.data.avatar_url, { responseType: 'arraybuffer' }).then(avatar => {
-                  let type = imageType(avatar.headers['content-type'])
-                  saveAvatarFromBase64(
-                    new Buffer(avatar.data, 'binary').toString('base64'),
-                    handle,
-                    type
-                  )
-                  let user = new User({
-                    picture: handle + '.' + type,
-                    email: result.data.email,
-                    initial: result.data.email,
-                    ehash: getHash(result.data.email),
-                    handle,
-                    username: result.data.login,
-                    settings: { language: language },
-                    social: { github: result.data.login },
-                    bio: result.data.bio,
-                    time: {
-                      created: new Date(),
-                      login: new Date()
-                    }
-                  })
-                  user.save(function(err) {
-                    if (err) return res.sendStatus(500)
-                    let validation = createHandle(20)
-                    confirmation.data.handle = user.handle
-                    confirmation.data.validation = validation
-                    confirmation.data.signup = true
-                    confirmation.save(function(err) {
-                      if (err) return res.sendStatus(500)
-                      return res.redirect(
-                        createUrl(
-                          language,
-                          '/login/callback/' + confirmation._id + '/' + validation
-                        )
-                      )
-                    })
-                  })
-                })
-              } else {
-                // Existing user
-                if (user.status !== 'active') res.sendStatus(403)
-                if (user.bio === '') user.bio = result.data.bio
-                user.social.github = result.data.login
-                user.save(function(err) {
-                  let validation = createHandle(20)
-                  confirmation.data.handle = user.handle
-                  confirmation.data.validation = validation
-                  confirmation.data.signup = false
-                  confirmation.save(function(err) {
-                    if (err) return res.sendStatus(500)
-                    return res.redirect(
-                      createUrl(language, '/login/callback/' + confirmation._id + '/' + validation)
-                    )
-                  })
-                })
-              }
-            })
-          })
-          .catch(err => res.sendStatus(401))
-      })
-      .catch(err => res.sendStatus(401))
   })
 }
 
@@ -183,6 +71,7 @@ AuthController.prototype.providerCallback = function(req, res) {
   let language, token, email, avatarUri, username
   let provider = req.params.provider
   let conf = config.oauth[provider]
+  let signup = false
 
   // Verify state
   Confirmation.findById(req.query.state, (err, confirmation) => {
@@ -209,9 +98,9 @@ AuthController.prototype.providerCallback = function(req, res) {
         // Contact API for user info
         const headers = token => ({ headers: { Authorization: 'Bearer ' + token } })
         go.get(conf.dataUri, headers(token))
-          .then(result => {
+          .then(async result => {
             if (provider === 'github') {
-              email = result.data.email
+              email = await getGithubEmail(result.data.email, go, conf.emailUri, headers(token)),
               avatarUri = result.data.avatar_url
               username = result.data.login
             } else if (provider === 'google') {
@@ -229,6 +118,7 @@ AuthController.prototype.providerCallback = function(req, res) {
               if (err) return res.sendStatus(400)
               if (user === null) {
                 // New user: signup
+                signup = true
                 let handle = getHandle()
                 go.get(avatarUri, { responseType: 'arraybuffer' }).then(avatar => {
                   let type = imageType(avatar.headers['content-type'])
@@ -245,16 +135,20 @@ AuthController.prototype.providerCallback = function(req, res) {
                     handle,
                     username: username,
                     settings: { language: language },
+                    social: {
+                      github: '',
+                      twitter: '',
+                      instagram: '',
+                    },
                     time: {
                       created: new Date(),
                       login: new Date()
                     }
                   }
                   if (provider === 'github') {
-                    userData.ocial = { github: result.data.login }
+                    userData.social.github = result.data.login
                     userData.bio = result.data.bio
                   }
-                  console.log('user data is', userData)
                   let user = new User(userData)
                   user.save(function(err) {
                     if (err) return res.sendStatus(500)
@@ -267,7 +161,9 @@ AuthController.prototype.providerCallback = function(req, res) {
                       return res.redirect(
                         createUrl(
                           language,
-                          '/login/callback/' + confirmation._id + '/' + validation
+                          signup
+                            ? '/confirm/signup/' + req.query.state + '/'
+                            : '/login/callback/' + confirmation._id + '/' + validation
                         )
                       )
                     })
@@ -275,7 +171,6 @@ AuthController.prototype.providerCallback = function(req, res) {
                 })
               } else {
                 // Existing user
-                if (user.status !== 'active') res.sendStatus(403)
                 if (provider === 'github') {
                   if (user.bio === '') user.bio = result.data.bio
                   user.social.github = result.data.login
@@ -288,7 +183,11 @@ AuthController.prototype.providerCallback = function(req, res) {
                   confirmation.save(function(err) {
                     if (err) return res.sendStatus(500)
                     return res.redirect(
-                      createUrl(language, '/login/callback/' + confirmation._id + '/' + validation)
+                      // Watch out for pending users
+                      createUrl(language, (user.status === 'pending')
+                        ? '/confirm/signup/' + req.query.state + '/'
+                        : '/login/callback/' + confirmation._id + '/' + validation
+                      )
                     )
                   })
                 })
@@ -306,5 +205,22 @@ AuthController.prototype.providerCallback = function(req, res) {
       })
   })
 }
+
+/*
+* Github does not always return the email address
+* See https://github.com/freesewing/backend/issues/162
+*/
+const getGithubEmail = async (email, client, uri, headers) => {
+  if (email === null) {
+    return client.get(uri, headers)
+      .then(result => {
+        for (let e of result.data) {
+          if (e.primary) return e.email
+        }
+      })
+  }
+  else return email
+}
+
 
 export default AuthController

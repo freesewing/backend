@@ -11,8 +11,8 @@ const store = {}
 
 const userTests = require('./user.test.js')
 const userTestsEmail = require('./user.all.test.js')
-const modelTests = require('./model.test.js')
-const recipeTests = require('./recipe.test.js')
+const personTests = require('./person.test.js')
+const patternTests = require('./pattern.test.js')
 const oauthTests = require('./oauth.test.js')
 
 if (!EMAIL) {
@@ -26,6 +26,6 @@ if (!EMAIL) {
 
 if (EMAIL) userTestsEmail(store, config, chai)
 userTests(store, config, chai)
-modelTests(store, config, chai)
-recipeTests(store, config, chai)
+personTests(store, config, chai)
+patternTests(store, config, chai)
 oauthTests(store, config, chai)
