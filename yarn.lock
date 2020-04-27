@@ -1186,9 +1186,9 @@
   integrity sha512-YoTNgspvaGH87u1/KtkFg7ldNAKf5GFFhLWRzdU85CgOyrjqPwH3yBRnkJO7PjFnYBgnxE3/WgLlsgImTfndEQ==
 
 "@freesewing/utils@latest":
-  version "2.4.6"
-  resolved "https://registry.yarnpkg.com/@freesewing/utils/-/utils-2.4.6.tgz#a62eb8a4543d76c8081f9642ff257701079e07fc"
-  integrity sha512-l7Cq2U0R1t9P2QsmI43T0qaqeoRr835dK81+DR19ItVZ0ox8IU4MsUUh/s1hkVVXE7LUwWQLy+jAhsAGLh5TlA==
+  version "2.6.0-rc.0"
+  resolved "https://registry.yarnpkg.com/@freesewing/utils/-/utils-2.6.0-rc.0.tgz#c09f8e1a2a8252209f7845e5fde26d58a22a1b7f"
+  integrity sha512-oWIMXz4mQYrl28dQgxYvtBOMBgbVvIq28Fj5v0JD6+CIKZiJjsJL7c0iEWz67oGch1tKj5L1VkdJt5lYNxs2sg==
 
 "@types/chai@4":
   version "4.2.0"
