@@ -48,8 +48,8 @@
     ]
   },
   "dependencies": {
-    "@freesewing/i18n": "latest",
-    "@freesewing/pattern-info": "latest",
+    "@freesewing/i18n": "next",
+    "@freesewing/pattern-info": "next",
     "axios": "0.19.0",
     "body-parser": "1.19.0",
     "chalk": "2.4.2",
@@ -74,9 +74,9 @@
     "@babel/core": "^7.9.0",
     "@babel/node": "^7.8.7",
     "@babel/preset-env": "^7.9.0",
-    "@freesewing/models": "latest",
-    "@freesewing/prettier-config": "latest",
-    "@freesewing/utils": "latest",
+    "@freesewing/models": "next",
+    "@freesewing/prettier-config": "next",
+    "@freesewing/utils": "next",
     "babel-node": "^0.0.1-security",
     "backpack-core": "0.8.4",
     "chai": "4.2.0",
