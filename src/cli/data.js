@@ -77,14 +77,14 @@ export default {
           paperless: false,
           units: "imperial",
           measurements: {
-            bicepsCircumference: 335,
-            centerBackNeckToWaist: 520,
-            chestCircumference: 1080,
-            naturalWaistToHip: 145,
-            neckCircumference: 420,
-            shoulderSlope:  55,
+            biceps: 335,
+            hpsToWaist: 520,
+            chest: 1080,
+            waistToHips: 145,
+            neck: 420,
+            shoulderSlope:  13,
             shoulderToShoulder: 465,
-            hipsCircumference: 990
+            hips: 990
           }
         },
         design: "aaron",
