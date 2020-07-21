@@ -53,13 +53,11 @@ module.exports = {
       dataUri: 'https://people.googleapis.com/v1/people/me?personFields=emailAddresses,names,photos'
     }
   },
-  editor: {
-    token: process.env.EDITOR_TOKEN,
-    repos: ['website', 'i18n'],
-    owner: 'freesewing-bot',
-    branch: 'develop',
-    branchPrefix: 'editor_',
+  github: {
+    token: process.env.FS_GITHUB_TOKEN,
+    api: 'https://api.github.com',
     bot: {
+      user: 'freesewing-robot',
       name: 'Freesewing bot',
       email: 'bot@freesewing.org'
     }
