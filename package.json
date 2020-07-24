@@ -23,7 +23,10 @@
     "lint": "eslint --fix \"src/*.js\"",
     "develop": "backpack",
     "build": "backpack build",
-    "start": "backpack build && pm2 start build/main.js --name freesewing-backend"
+    "start:prod": "backpack build && pm2 start build/main.js --name freesewing-backend",
+    "start:next": "backpack build && pm2 start build/main.js --name freesewing-backend",
+    "upgrade:prod": "git checkout master && npm run build && pm2 stop freesewing-backend && pm2 delete freesewing-backend && pm2 start build/main.js --name freesewing-backend",
+    "upgrade:next": "git checkout develop && npm run build && pm2 stop freesewing-next && pm2 delete freesewing-next && pm2 start build/main.js --name freesewing-next"
   },
   "repository": {
     "type": "git",
