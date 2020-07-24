@@ -30,6 +30,7 @@ GithubController.prototype.createIssue = function(req, res) {
     files: {
       'pattern.yaml': { content: req.body.data },
       'debug.yaml': { content: req.body.patternProps },
+      'errors.md': { content: req.body.traces },
     }
   })
   .then(gist => {
