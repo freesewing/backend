@@ -1,6 +1,6 @@
 {
   "name": "@freesewing/backend",
-  "version": "2.7.0",
+  "version": "2.7.1",
   "description": "The freesewing.org backend",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -25,8 +25,8 @@
     "build": "backpack build",
     "start:prod": "backpack build && pm2 start build/main.js --name freesewing-backend",
     "start:next": "backpack build && pm2 start build/main.js --name freesewing-backend",
-    "upgrade:prod": "git checkout master && npm run build && pm2 stop freesewing-backend && pm2 delete freesewing-backend && pm2 start build/main.js --name freesewing-backend",
-    "upgrade:next": "git checkout develop && npm run build && pm2 stop freesewing-next && pm2 delete freesewing-next && pm2 start build/main.js --name freesewing-next"
+    "upgrade:freesewing": "git checkout master && npm run build && pm2 stop freesewing.backend && pm2 delete freesewing.backend && pm2 start build/main.js --name freesewing.backend",
+    "upgrade:next": "git checkout develop && npm run build && pm2 stop next.backend && pm2 delete next.backend && pm2 start build/main.js --name next.backend"
   },
   "repository": {
     "type": "git",
