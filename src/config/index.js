@@ -60,11 +60,17 @@ module.exports = {
       user: 'freesewing-robot',
       name: 'Freesewing bot',
       email: 'bot@freesewing.org'
+    },
+    notify: {
+      specific: {
+        benjamin: [ 'woutervdub' ],
+        penelope: [ 'woutervdub' ],
+        waralee: [ 'woutervdub' ],
+        diana: [ 'alfalyr' ],
+        holmes: [ 'alfalyr' ],
+        sandy: [ 'alfalyr' ],
+      },
+      dflt: [ 'joostdecock' ]
     }
-  },
-  notify: {
-    benjamin: [ 'woutervdub' ],
-    penelope: [ 'woutervdub' ],
-    waralee: [ 'woutervdub' ],
   }
 }
