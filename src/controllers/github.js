@@ -16,7 +16,14 @@ GithubController.prototype.createGist = function(req, res) {
       'pattern.yaml': { content: req.body.data }
     }
   })
-  .then(result => res.send({id: result.data.id}))
+  .then(result => {
+    let id = result.data.id
+    client.post(`/gists/${id}/comments`, {
+      body: `👉 https://freesewing.org/recreate/gist/${id} 👀`
+    })
+    .then(result => res.send({id}))
+    .catch(err => res.sendStatus(500))
+  })
   .catch(err => res.sendStatus(500))
 }
 
@@ -42,7 +49,18 @@ GithubController.prototype.createIssue = function(req, res) {
         'robot'
       ]
     })
-    .then(issue => res.send({id: issue.data.number}))
+    .then(issue => {
+      let notify = (typeof config.github.notify.specific[req.body.design] === 'undefined')
+        ? config.github.notify.dflt
+        : config.github.notify.specific[req.body.design]
+      let id = issue.data.number
+      let body = 'Ping '
+      for (const user of notify) body += `@${user}`
+      body += " 👋   \n" + `Recreate this 👉 https://freesewing.org/recreate/gist/${gist.data.id}`
+      client.post(`/repos/freesewing/freesewing.org/issues/${id}/comments`, { body })
+      .then(result => res.send({id}))
+      .catch(err => res.sendStatus(500))
+    })
     .catch(err => res.sendStatus(500))
   })
   .catch(err => res.sendStatus(500))
