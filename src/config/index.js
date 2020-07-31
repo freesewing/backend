@@ -61,5 +61,10 @@ module.exports = {
       name: 'Freesewing bot',
       email: 'bot@freesewing.org'
     }
+  },
+  notify: {
+    benjamin: [ 'woutervdub' ],
+    penelope: [ 'woutervdub' ],
+    waralee: [ 'woutervdub' ],
   }
 }
