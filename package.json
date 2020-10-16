@@ -74,7 +74,7 @@
     "tlds": "^1.207.0"
   },
   "devDependencies": {
-    "@babel/cli": "7.11.5",
+    "@babel/cli": "7.12.1",
     "@babel/core": "^7.9.0",
     "@babel/node": "^7.8.7",
     "@babel/preset-env": "^7.9.0",
