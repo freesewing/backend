@@ -41,7 +41,7 @@ GithubController.prototype.createIssue = function(req, res) {
     }
   })
   .then(gist => {
-    client.post('/repos/freesewing/freesewing.org/issues', {
+    client.post('/repos/freesewing/freesewing/issues', {
       title: `Error while drafting ${req.body.design}`,
       body: `An error occured while drafting ${req.body.design} and a [crash report](https://gist.github.com/${gist.data.id}) was generated.`,
       labels: [
@@ -57,7 +57,7 @@ GithubController.prototype.createIssue = function(req, res) {
       let body = 'Ping '
       for (const user of notify) body += `@${user}`
       body += " 👋   \n" + `Recreate this 👉 https://freesewing.org/recreate/gist/${gist.data.id}`
-      client.post(`/repos/freesewing/freesewing.org/issues/${id}/comments`, { body })
+      client.post(`/repos/freesewing/freesewing/issues/${id}/comments`, { body })
       .then(result => res.send({id}))
       .catch(err => res.sendStatus(500))
     })
