@@ -45,8 +45,8 @@ GithubController.prototype.createIssue = function(req, res) {
       title: `Error while drafting ${req.body.design}`,
       body: `An error occured while drafting ${req.body.design} and a [crash report](https://gist.github.com/${gist.data.id}) was generated.`,
       labels: [
-        `pkg:${req.body.design}`,
-        'robot'
+        `:package: ${req.body.design}`,
+        ':robot: robot'
       ]
     })
     .then(issue => {
@@ -55,8 +55,10 @@ GithubController.prototype.createIssue = function(req, res) {
         : config.github.notify.specific[req.body.design]
       let id = issue.data.number
       let body = 'Ping '
-      for (const user of notify) body += `@${user}`
-      body += " 👋   \n" + `Recreate this 👉 https://freesewing.org/recreate/gist/${gist.data.id}`
+      for (const user of notify) body += `@${user} `
+      body += " 👋   \nRecreate this:\n\n "
+      body += `- In production 👉 https://freesewing.org/recreate/gist/${gist.data.id}`
+      body += `- On next 👉 https://next.freesewing.org/recreate/gist/${gist.data.id}`
       client.post(`/repos/freesewing/freesewing/issues/${id}/comments`, { body })
       .then(result => res.send({id}))
       .catch(err => res.sendStatus(500))
