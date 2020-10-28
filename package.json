@@ -61,7 +61,7 @@
     "express": "4.17.1",
     "jsonwebtoken": "^8.5.1",
     "jszip": "3.2.2",
-    "mongoose": "5.10.2",
+    "mongoose": "5.10.11",
     "mongoose-bcrypt": "1.8.1",
     "mongoose-encryption": "2.0.2",
     "nodemailer": "6.3.0",
