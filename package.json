@@ -70,7 +70,7 @@
     "prettier": "2.2.1",
     "query-string": "6.8.2",
     "rimraf": "2.6.3",
-    "sharp": "^0.25.2",
+    "sharp": "^0.26.3",
     "tlds": "^1.207.0"
   },
   "devDependencies": {
