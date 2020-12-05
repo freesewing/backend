@@ -56,9 +56,12 @@ GithubController.prototype.createIssue = function(req, res) {
       let id = issue.data.number
       let body = 'Ping '
       for (const user of notify) body += `@${user} `
-      body += " 👋   \nRecreate this:\n\n "
-      body += `- In production 👉 https://freesewing.org/recreate/gist/${gist.data.id}`
-      body += `- On next 👉 https://next.freesewing.org/recreate/gist/${gist.data.id}`
+      body += " 👋   \nRecreate this:\n\n"
+      body += `- Development: 👉 https://${req.body.design}.freesewing.dev/gist/${gist.data.id}`
+      body += `- Production: 👉 https://freesewing.org/recreate/gist/${gist.data.id}`
+      body += "\n"
+      body += `- HEAD: 👉 https://next.freesewing.org/recreate/gist/${gist.data.id}`
+      body += "\n"
       client.post(`/repos/freesewing/freesewing/issues/${id}/comments`, { body })
       .then(result => res.send({id}))
       .catch(err => res.sendStatus(500))

@@ -62,7 +62,10 @@ export default {
       breasts: true,
       units: 'metric',
       notes: 'This is an example person',
-      measurements: withBreasts.size36
+      measurements: {
+        ...withBreasts.size36,
+        doesNotExist: 234
+      }
     },
   ],
   patterns: [

@@ -96,6 +96,39 @@ AdminController.prototype.impersonate = function(req, res) {
   })
 }
 
+AdminController.prototype.patronList = function(req, res) {
+  if (!req.user._id) return res.sendStatus(400)
+  User.findById(req.user._id, (err, admin) => {
+    if (err || admin === null) return res.sendStatus(400)
+    if (admin.role !== 'admin') return res.sendStatus(403)
+    User.find({ patron: { $gt: 0 } }, (err, patronList) => {
+      if (err) return res.sendStatus(500)
+      return res.send(patronList)
+    })
+  })
+}
+
+AdminController.prototype.stats = function(req, res) {
+  if (!req.user._id) return res.sendStatus(400)
+  User.findById(req.user._id, (err, admin) => {
+    if (err || admin === null) return res.sendStatus(400)
+    if (admin.role !== 'admin') return res.sendStatus(403)
+    User.find({ "consent.profile": true }, (err, users) => {
+      if (err) return res.sendStatus(500)
+      Person.find({}, (err, people) => {
+        if (err) return res.sendStatus(500)
+        Pattern.find({}, (err, patterns) => {
+          return res.send({
+            users: users.length,
+            people: people.length,
+            patterns: patterns.length,
+          })
+        })
+      })
+    })
+  })
+}
+
 function saveAndReturnAccount(res, user) {
   user.save(function(err, updatedUser) {
     if (err) {
