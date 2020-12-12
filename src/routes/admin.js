@@ -21,4 +21,6 @@ export default (app, passport) => {
   )
   app.post('/admin/impersonate', passport.authenticate('jwt', { session: false }), Admin.impersonate)
   app.put('/admin/unfreeze', passport.authenticate('jwt', { session: false }), Admin.unfreeze)
+  app.get('/admin/patrons', passport.authenticate('jwt', { session: false }), Admin.patronList)
+  app.get('/admin/stats', passport.authenticate('jwt', { session: false }), Admin.stats)
 }
