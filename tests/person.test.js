@@ -103,14 +103,14 @@ module.exports = function tests(store, config, chai) {
         .send({
           measurements: {
             shoulderToShoulder: 456,
-            neckCircumference: 345
+            neck: 345
           }
         })
         .end((err, res) => {
           res.should.have.status(200)
           let data = JSON.parse(res.text)
           data.person.measurements.shoulderToShoulder.should.equal(456)
-          data.person.measurements.neckCircumference.should.equal(345)
+          data.person.measurements.neck.should.equal(345)
           data.person.handle.should.equal(config.user.person)
           done()
         })
@@ -131,7 +131,7 @@ module.exports = function tests(store, config, chai) {
           let data = JSON.parse(res.text)
           should.not.exist(data.person.measurements.hairLength)
           data.person.measurements.shoulderToShoulder.should.equal(456)
-          data.person.measurements.neckCircumference.should.equal(345)
+          data.person.measurements.neck.should.equal(345)
           data.person.handle.should.equal(config.user.person)
           done()
         })
@@ -149,7 +149,7 @@ module.exports = function tests(store, config, chai) {
           res.should.have.status(200)
           let data = JSON.parse(res.text)
           data.person.measurements.shoulderToShoulder.should.equal(456)
-          data.person.measurements.neckCircumference.should.equal(345)
+          data.person.measurements.neck.should.equal(345)
           data.person.handle.should.equal(config.user.person)
           done()
         })
@@ -164,7 +164,7 @@ module.exports = function tests(store, config, chai) {
           res.should.have.status(200)
           let data = JSON.parse(res.text)
           data.person.measurements.shoulderToShoulder.should.equal(456)
-          data.person.measurements.neckCircumference.should.equal(345)
+          data.person.measurements.neck.should.equal(345)
           data.person.handle.should.equal(config.user.person)
           done()
         })
