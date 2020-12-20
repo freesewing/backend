@@ -36,8 +36,10 @@ GithubController.prototype.createIssue = function(req, res) {
     description: `A FreeSewing crash report`,
     files: {
       'pattern.yaml': { content: req.body.data },
-      'debug.yaml': { content: req.body.patternProps },
+      'settings.yaml': { content: req.body.patternProps.settings },
+      'events.yaml': { content: req.body.patternProps.events },
       'errors.md': { content: req.body.traces },
+      'parts.json': { content: req.body.patternProps.parts },
     }
   })
   .then(gist => {
@@ -66,11 +68,20 @@ GithubController.prototype.createIssue = function(req, res) {
       body += "\n"
       client.post(`/repos/freesewing/freesewing/issues/${id}/comments`, { body })
       .then(result => res.send({id}))
-      .catch(err => res.sendStatus(500))
+      .catch(err => {
+        console.log(err)
+        res.sendStatus(500)
+      })
     })
-    .catch(err => res.sendStatus(500))
+    .catch(err => {
+        console.log(err)
+      res.sendStatus(500)
+    })
   })
-  .catch(err => res.sendStatus(500))
+  .catch(err => {
+    console.log(err)
+    res.sendStatus(500)
+  })
 }
 
 const GithubClient = () => axios.create({
