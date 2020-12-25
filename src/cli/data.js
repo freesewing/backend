@@ -3,6 +3,24 @@ import { withBreasts, withoutBreasts } from '@freesewing/models';
 export default {
   users: [
     {
+      email: 'test1@freesewing.org',
+      username: 'test1_user',
+      handle: 'tusr1',
+      password: 'test1',
+      role: 'user',
+      settings: {
+        language: 'nl',
+        units: 'imperial'
+      },
+      patron: 2,
+      consent: {
+        profile: true,
+        measurements: true,
+        openData: true
+      },
+      status: 'active'
+    },
+    {
       email: 'test@freesewing.org',
       username: 'test_user',
       handle: 'tuser',
@@ -12,6 +30,7 @@ export default {
         language: 'nl',
         units: 'imperial'
       },
+      patron: 4,
       consent: {
         profile: true,
         measurements: true,
@@ -40,6 +59,7 @@ export default {
         measurements: true,
         openData: true
       },
+      newsletter: true,
       status: 'active'
     }
   ],

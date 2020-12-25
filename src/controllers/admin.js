@@ -1,4 +1,4 @@
-import { User, Person, Pattern } from '../models'
+import { User, Person, Pattern, Newsletter } from '../models'
 import jwt from 'jsonwebtoken'
 import config from '../config'
 import { ehash } from '../utils'
@@ -104,6 +104,18 @@ AdminController.prototype.patronList = function(req, res) {
     User.find({ patron: { $gt: 0 } }, (err, patronList) => {
       if (err) return res.sendStatus(500)
       return res.send(patronList)
+    })
+  })
+}
+
+AdminController.prototype.subscriberList = function(req, res) {
+  if (!req.user._id) return res.sendStatus(400)
+  User.findById(req.user._id, (err, admin) => {
+    if (err || admin === null) return res.sendStatus(400)
+    if (admin.role !== 'admin') return res.sendStatus(403)
+    Newsletter.find({}, (err, subscribers) => {
+      if (err) return res.sendStatus(500)
+      return res.send(subscribers)
     })
   })
 }

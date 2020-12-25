@@ -1,5 +1,5 @@
 import chalk from 'chalk'
-import { User, Person, Pattern, Confirmation } from '../models'
+import { User, Person, Pattern, Confirmation, Newsletter } from '../models'
 import { ehash } from '../utils'
 import data from './data'
 
@@ -49,6 +49,12 @@ export const clearConfirmations = async () => {
    else console.log('🚨 Could not remove confirmations', result)
   })
 }
+export const clearNewsletterSubscribers = async () => {
+  await Newsletter.deleteMany().then(result => {
+   if (result.ok) console.log('🔥 Newsletter subscriptions deleted')
+   else console.log('🚨 Could not remove newsletter subscriptions', result)
+  })
+}
 
 export const loadSampleData = async () => {
   let promises = []
@@ -84,6 +90,8 @@ export const runTasks = options => {
   if (options.clearAll || options.reboot || options.clearPatterns) promises.push(clearPatterns())
   if (options.clearAll || options.reboot || options.clearConfirmations)
     promises.push(clearConfirmations())
+  if (options.clearAll || options.reboot || options.clearNewsletterSubscriptions)
+    promises.push(clearNewsletterSubscribers())
 
   return Promise.all(promises)
 }

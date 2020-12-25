@@ -7,7 +7,7 @@ import sendEmailWith from './relays'
 const deliver = sendEmailWith(config.sendEmailWith)
 const email = {}
 
-const loadTemplate = (type, format, language) => {
+const loadTemplate = (type, format, language='en') => {
   let template = templates.header[format] + templates[type][format] + templates.footer[format]
   let toTranslate = templates[type].i18n.concat(templates.footer.i18n)
   let from = []
@@ -141,6 +141,31 @@ email.goodbye = async (recipient, language) => {
     from: `"${i18n[language]['email.joostFromFreesewing']}" <info@freesewing.org>`,
     to: recipient,
     subject: i18n[language]['email.goodbyeSubject'],
+    text,
+    html
+  }
+  deliver(options, (error, info) => {
+    if (error) return console.log(error)
+    console.log('Message sent', info)
+  })
+}
+
+email.subscribe = async (recipient, token) => {
+  let html = loadTemplate('subscribe', 'html', 'en')
+  let text = loadTemplate('subscribe', 'text', 'en')
+  let from = ['__headerOpeningLine__', '__token__', '__footerWhy__']
+  let to = [
+    'Please confirm it was you who requested this',
+    token,
+    `You received this email because somebody tried to subscribe ${recipient} to the FreeSewing newsletter`
+  ]
+  html = replace(html, from, to)
+  text = replace(text, from, to)
+
+  let options = {
+    from: `"FreeSewing" <newsletter@freesewing.org>`,
+    to: recipient,
+    subject: 'Confirm your subscription to the FreeSewing newsletter',
     text,
     html
   }

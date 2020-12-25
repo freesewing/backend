@@ -156,13 +156,20 @@ UserController.prototype.update = (req, res) => {
   var async = 0
   if (!req.user._id) return res.sendStatus(400)
   User.findById(req.user._id, async (err, user) => {
-    if (err || user === null) return res.sendStatus(400)
+    if (err || user === null) {
+      return res.sendStatus(400)
+    }
     let data = req.body
+      console.log(data)
+
     if (typeof data.settings !== 'undefined') {
       user.settings = {
         ...user.settings,
         ...data.settings
       }
+      return saveAndReturnAccount(res, user)
+    } else if (data.newsletter === true || data.newsletter === false) {
+      user.newsletter = data.newsletter
       return saveAndReturnAccount(res, user)
     } else if (typeof data.bio === 'string') {
       user.bio = data.bio

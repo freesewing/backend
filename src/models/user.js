@@ -104,7 +104,11 @@ const UserSchema = new Schema(
       twitter: String,
       instagram: String,
       github: String
-    }
+    },
+    newsletter: {
+      type: Boolean,
+      default: false
+    },
   },
   { timestamps: true }
 )

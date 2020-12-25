@@ -16,6 +16,10 @@ export default [
     type: Boolean
   },
   {
+    name: 'clearNewsletterSubscribers',
+    type: Boolean
+  },
+  {
     name: 'clearAll',
     type: Boolean
   },
