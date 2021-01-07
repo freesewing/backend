@@ -53,10 +53,28 @@ NewsletterController.prototype.confirm = function(req, res, subscribe=true) {
             log.error('newsletterSubscriptionFailed', sub)
             console.log(err)
             return res.sendStatus(500)
+          } else {
+            console.log(`Subscribed ${reader.email} to the newsletter`)
+            return bail(res, 'subscribe')
           }
-          return bail(res, 'subscribe')
         })
       })
+  })
+}
+
+NewsletterController.prototype.unsubscribe = function(req, res) {
+  if (!req.params.ehash) return bail(res, 'invalid')
+
+  Newsletter.findOne({ ehash: req.params.ehash }, (err, reader) => {
+    if (reader) {
+      Newsletter.deleteOne({id: reader.id}, (err, result) => {
+        if (!err) {
+          console.log(`Unsubscribed ${reader.email} from the newsletter`)
+          return bail(res, 'unsubscribe')
+        }
+        else return bail(res, 'oops')
+      })
+    } else return bail(res, 'oops')
   })
 }
 

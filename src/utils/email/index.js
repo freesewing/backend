@@ -153,10 +153,10 @@ email.goodbye = async (recipient, language) => {
 email.subscribe = async (recipient, token) => {
   let html = loadTemplate('subscribe', 'html', 'en')
   let text = loadTemplate('subscribe', 'text', 'en')
-  let from = ['__headerOpeningLine__', '__token__', '__footerWhy__']
+  let from = ['__headerOpeningLine__', '__newsletterSubscriptionLink__', '__footerWhy__']
   let to = [
     'Please confirm it was you who requested this',
-    token,
+    `https://backend.freesewing.org/newsletter/subscribe/${token}`,
     `You received this email because somebody tried to subscribe ${recipient} to the FreeSewing newsletter`
   ]
   html = replace(html, from, to)

@@ -26,7 +26,7 @@ const subscribe = {
                             <td bgcolor="#ffffff" align="center" style="padding: 30px 30px 30px 30px;">
                               <table border="0" cellspacing="0" cellpadding="0">
                                 <tr>
-                                  <td align="center" style="border-radius: 3px;" bgcolor="#212121"><a href="http://localhost:3000/newsletter/confirm/__token__" target="_blank" style="font-size: 20px; font-family: -apple-system,'BlinkMacSystemFont','Segoe UI','Roboto','Oxygen','Ubuntu','Cantarell','Fira Sans','Droid Sans','Helvetica Neue',sans-serif; color: #ffffff; text-decoration: none; color: #ffffff; text-decoration: none; padding: 15px 25px; border-radius: 2px; border: 1px solid #111111; display: inline-block;">Confirm your newsletter subscription</a></td>
+                                  <td align="center" style="border-radius: 3px;" bgcolor="#212121"><a href="__newsletterConfirmationLink__" target="_blank" style="font-size: 20px; font-family: -apple-system,'BlinkMacSystemFont','Segoe UI','Roboto','Oxygen','Ubuntu','Cantarell','Fira Sans','Droid Sans','Helvetica Neue',sans-serif; color: #ffffff; text-decoration: none; color: #ffffff; text-decoration: none; padding: 15px 25px; border-radius: 2px; border: 1px solid #111111; display: inline-block;">Confirm your newsletter subscription</a></td>
                                 </tr>
                               </table>
                             </td>
@@ -54,7 +54,7 @@ const subscribe = {
 Somebody asked to subscribe this email address to the FreeSewing newsletter.
 If it was you, please click below to confirm your subscription:
 
-http://localhost:3000/newsletter/confirm/__token__
+__newsletterConfirmationLink__
 
 `
 }
