@@ -8,4 +8,5 @@ export default (app, passport) => {
   // Email unsubscribe
   app.post('/newsletter/unsubscribe', (req, res) => Nws.subscribe(req, res, false))
   app.get('/newsletter/confirm/:token', (req, res) => Nws.confirm(req, res))
+  app.get('/newsletter/unsubscribe/:ehash', (req, res) => Nws.unsubscribe(req, res))
 }
