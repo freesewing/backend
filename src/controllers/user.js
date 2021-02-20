@@ -21,6 +21,7 @@ UserController.prototype.login = function(req, res) {
     {
       $or: [
         { username: req.body.username.toLowerCase().trim() },
+        { username: req.body.username.trim() },
         { ehash: ehash(req.body.username) }
       ]
     },
@@ -160,7 +161,6 @@ UserController.prototype.update = (req, res) => {
       return res.sendStatus(400)
     }
     let data = req.body
-      console.log(data)
 
     if (typeof data.settings !== 'undefined') {
       user.settings = {
