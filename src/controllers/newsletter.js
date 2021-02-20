@@ -4,7 +4,6 @@ import {
   email,
   ehash,
 } from '../utils'
-import config from '../config'
 import path from 'path'
 
 const bail = (res, page='index') => res.sendFile(path.resolve(__dirname, '..', 'landing', `${page}.html`))
