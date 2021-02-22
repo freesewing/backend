@@ -1072,9 +1072,9 @@
   integrity sha512-ZTC5TjxnrP4khCB3jFpmH0WbneJO7ufMFFE60SPd34wBSaeInrMscda7fU7sui64wzIriIjSDnzpBT3Jq4GP1Q==
 
 "@freesewing/utils@^2.10.8-rc.0":
-  version "2.10.8-rc.0"
-  resolved "https://registry.yarnpkg.com/@freesewing/utils/-/utils-2.10.8-rc.0.tgz#76614a4c726aeb0438ec566263a3138933eb3a76"
-  integrity sha512-kkh7hmmdkSeIQX4lwADauX9phjEY6bWcv24bBVGHLdbqVhfKfSADTFjKXxbu6pT/v+dyIGrG1hC6PYF2x9+fJg==
+  version "2.13.2"
+  resolved "https://registry.yarnpkg.com/@freesewing/utils/-/utils-2.13.2.tgz#fd09df52c344001826c583272bff3ed0a0d8ee66"
+  integrity sha512-ioIDpl5v9/7w842AIiLNeNUvUChE0pJcNWB0RTXXvmaoHKcH02RuJCEKJtIS64DjRo8ZtqirlK0Lq9hAaIwtJw==
 
 "@nicolo-ribaudo/chokidar-2@2.1.8-no-fsevents":
   version "2.1.8-no-fsevents"
