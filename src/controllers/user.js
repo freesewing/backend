@@ -21,6 +21,7 @@ UserController.prototype.login = function(req, res) {
     {
       $or: [
         { username: req.body.username.toLowerCase().trim() },
+        { username: req.body.username.trim() },
         { ehash: ehash(req.body.username) }
       ]
     },
@@ -67,7 +68,6 @@ UserController.prototype.confirmationLogin = function(req, res) {
     User.findOne({ handle: confirmation.data.handle }, (err, user) => {
       if (err) return res.sendStatus(400)
       if (user === null) {
-        console.log('user null', confirmation)
         return res.sendStatus(401)
       }
       if (user.status !== 'active') return res.sendStatus(403)
@@ -160,7 +160,6 @@ UserController.prototype.update = (req, res) => {
       return res.sendStatus(400)
     }
     let data = req.body
-      console.log(data)
 
     if (typeof data.settings !== 'undefined') {
       user.settings = {
