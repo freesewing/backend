@@ -113,9 +113,16 @@ AdminController.prototype.subscriberList = function(req, res) {
   User.findById(req.user._id, (err, admin) => {
     if (err || admin === null) return res.sendStatus(400)
     if (admin.role !== 'admin') return res.sendStatus(403)
-    Newsletter.find({}, (err, subscribers) => {
+    User.find({newsletter: true}, (err, subscribedUsers) => {
       if (err) return res.sendStatus(500)
-      return res.send(subscribers)
+      let subscribers = subscribedUsers.map(user => ({
+        ehash: user.ehash,
+        email: user.email
+      }))
+      Newsletter.find({}, (err, subs) => {
+        if (err) return res.sendStatus(500)
+        return res.send(subscribers.concat(subs))
+      })
     })
   })
 }
