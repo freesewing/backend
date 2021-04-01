@@ -1,8 +1,6 @@
 import axios from 'axios'
 import config from '../config'
 
-import { log } from '../utils'
-
 function GithubController() {}
 
 // Create a gist
