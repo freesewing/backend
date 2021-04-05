@@ -1,6 +1,6 @@
 {
   "name": "@freesewing/backend",
-  "version": "2.10.0",
+  "version": "0.0.0",
   "description": "The freesewing.org backend",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
