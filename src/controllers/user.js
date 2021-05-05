@@ -68,7 +68,6 @@ UserController.prototype.confirmationLogin = function(req, res) {
     User.findOne({ handle: confirmation.data.handle }, (err, user) => {
       if (err) return res.sendStatus(400)
       if (user === null) {
-        console.log('user null', confirmation)
         return res.sendStatus(401)
       }
       if (user.status !== 'active') return res.sendStatus(403)
