@@ -55,6 +55,7 @@ const PersonSchema = new Schema(
       crossSeamFront: Number,
       crotchDepth: Number,
       head: Number,
+      heel: Number,
       highBust: Number,
       highBustFront: Number,
       hips: Number,
