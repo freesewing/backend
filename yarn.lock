@@ -1649,10 +1649,10 @@
   resolved "https://registry.yarnpkg.com/@freesewing/models/-/models-2.15.3.tgz#367f71e116437a28ce7288c0f6483fd820ee4500"
   integrity sha512-2NidM8YN2ENU5xf3Xx9BmF35fMOrO5xtz1JUjqVKqtBTSCteyTnh7dFTHZblYD4PgtyDf+Y28JB3IbaTKWPENA==
 
-"@freesewing/pattern-info@2.15.3":
-  version "2.15.3"
-  resolved "https://registry.yarnpkg.com/@freesewing/pattern-info/-/pattern-info-2.15.3.tgz#1666cfdbb6f43ea8dd53f234462734701c3a7e1b"
-  integrity sha512-bgawSdQO97LdXACQL3gbS/wl56KWkPtbOGWqpcZ1CGCOoAoQ5gDobXeXsEqLmQom/sZ5Ei9BHpCHCF30TEXgcg==
+"@freesewing/pattern-info@2.16.0":
+  version "2.16.0"
+  resolved "https://registry.yarnpkg.com/@freesewing/pattern-info/-/pattern-info-2.16.0.tgz#8884f1b1e38ba669233877fe0ecd6d35d784120a"
+  integrity sha512-qsLf7F4Cieqg10Tic7uC8799rOGaJ++XiPPiL2/LW7cCPL0sGoU8nRT8Xh8/EI6VZmrmPvQFPpz3/y8vVwNSqQ==
 
 "@freesewing/prettier-config@^2.15.3":
   version "2.15.3"
