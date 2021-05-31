@@ -61,15 +61,25 @@ email.emailchange = (newAddress, currentAddress, language, id) => {
   let text = loadTemplate('emailchange', 'text', language)
   let from = [
     '__emailchangeActionLink__',
+    '__emailchangeActionText',
+    '__emailchangeTitle__',
+    '__emailchangeCopy1',
     '__headerOpeningLine__',
     '__hiddenIntro__',
-    '__footerWhy__'
+    '__footerWhy__',
+    '__questionsJustReply__',
+    '__signature__'
   ]
   let to = [
     createUrl(language, `/confirm/email/${id}`),
+    i18n[language]['email.emailchangeActionText'],
+    i18n[language]['email.emailchangeTitle'],
+    i18n[language]['email.emailchangeCopy1'],
     i18n[language]['email.emailchangeHeaderOpeningLine'],
     i18n[language]['email.emailchangeHiddenIntro'],
-    i18n[language]['email.emailchangeWhy']
+    i18n[language]['email.emailchangeWhy'],
+    i18n[language]['email.questionsJustReply'],
+    i18n[language]['email.signature'],
   ]
   html = replace(html, from, to)
   text = replace(text, from, to)
