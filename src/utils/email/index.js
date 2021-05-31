@@ -61,9 +61,9 @@ email.emailchange = (newAddress, currentAddress, language, id) => {
   let text = loadTemplate('emailchange', 'text', language)
   let from = [
     '__emailchangeActionLink__',
-    '__emailchangeActionText',
+    '__emailchangeActionText__',
     '__emailchangeTitle__',
-    '__emailchangeCopy1',
+    '__emailchangeCopy1__',
     '__headerOpeningLine__',
     '__hiddenIntro__',
     '__footerWhy__',
