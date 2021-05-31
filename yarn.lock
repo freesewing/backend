@@ -1535,9 +1535,9 @@
   integrity sha512-3sAGRwP8dDoZ/UXwbVrSzdvCuIaTstXaxuLnCMx1NTOdltJDT6dHAmkrOQ7oH9sTmYO6gO5qYzgaI95EwmveCA==
 
 "@freesewing/models@^2.15.3":
-  version "2.15.3"
-  resolved "https://registry.yarnpkg.com/@freesewing/models/-/models-2.15.3.tgz#367f71e116437a28ce7288c0f6483fd820ee4500"
-  integrity sha512-2NidM8YN2ENU5xf3Xx9BmF35fMOrO5xtz1JUjqVKqtBTSCteyTnh7dFTHZblYD4PgtyDf+Y28JB3IbaTKWPENA==
+  version "2.16.0"
+  resolved "https://registry.yarnpkg.com/@freesewing/models/-/models-2.16.0.tgz#3d2aaeb3aa8cb4e3a33c3c9f0eee492ff82c32cf"
+  integrity sha512-nnq29cT7lC2RcvtrXuKZYhmCFpx53Dlqr2buHQMy1zlWZlMAOFkfp5PhgUNU2gX2e1tZuZ5xp7Cn4HEmzB9iaQ==
 
 "@freesewing/pattern-info@2.16.0":
   version "2.16.0"
