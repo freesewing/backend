@@ -1529,10 +1529,10 @@
     "@babel/helper-validator-identifier" "^7.14.0"
     to-fast-properties "^2.0.0"
 
-"@freesewing/i18n@2.15.3":
-  version "2.15.3"
-  resolved "https://registry.yarnpkg.com/@freesewing/i18n/-/i18n-2.15.3.tgz#bef24569fb5ea2b9fa85b7db8a00ca5a33346567"
-  integrity sha512-3sAGRwP8dDoZ/UXwbVrSzdvCuIaTstXaxuLnCMx1NTOdltJDT6dHAmkrOQ7oH9sTmYO6gO5qYzgaI95EwmveCA==
+"@freesewing/i18n@2.16.0":
+  version "2.16.0"
+  resolved "https://registry.yarnpkg.com/@freesewing/i18n/-/i18n-2.16.0.tgz#433ce345998c97493ea9f7692c080454d9cb5e83"
+  integrity sha512-2ql/yUSLPykGx1H8lP8D0s1EJiB96VFkv9hUpalCkWQ7tHbXCqxwk7OazaYy9GVoW5IFJUe6rEA58RmGnUEhEQ==
 
 "@freesewing/models@^2.15.3":
   version "2.15.3"
