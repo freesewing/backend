@@ -1,4 +1,4 @@
-![FreeSewing: An open-source framework for made-to-measure sewing patterns](https://en.freesewing.org/banner.jpg)
+![FreeSewing: An open-source framework for made-to-measure sewing patterns](https://freesewing.org/banner.jpg)
 
 # FreeSewing / backend
 
