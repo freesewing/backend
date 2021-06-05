@@ -187,8 +187,8 @@ email.subscribe = async (recipient, token) => {
 }
 
 email.newsletterWelcome = async (recipient, ehash) => {
-  let html = loadTemplate('newsletter-welcome', 'html', 'en')
-  let text = loadTemplate('newsletter-welcome', 'text', 'en')
+  let html = loadTemplate('newsletterWelcome', 'html', 'en')
+  let text = loadTemplate('newsletterWelcome', 'text', 'en')
   let from = ['__hiddenIntro__', '__headerOpeningLine__', '__newsletterUnsubscribeLink__', '__footerWhy__']
   let to = [
     'No action required; This is just an FYI',
