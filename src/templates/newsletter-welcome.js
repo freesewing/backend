@@ -15,14 +15,10 @@ const welcome = {
                     </tr>
                     <tr>
                       <td align="left" style="padding: 20px 0 0 0; font-size: 16px; line-height: 25px; font-family: -apple-system,'BlinkMacSystemFont','Segoe UI','Roboto','Oxygen','Ubuntu','Cantarell','Fira Sans','Droid Sans','Helvetica Neue',sans-serif; color: #292B2C;" class="padding-copy">
-                        <b>What to expect</b>
+                        If you'd like to catch up, we keep an online archive of previous editions at:
+                        <a href="https://freesewing.org/newsletter/">https://freesewing.org/newsletter/</a>
                         <br><br>
-                        We sent out our newsletter 4 times a year. No more, no less.
-                        <br><br>
-                        If you'd like to catch up, we keep an online archive of previous editions at: https://freesewing.org/newsletter/
-                        <br><br>
-                        <b>I want out</b>
-                        You can unsubscribe at any time by visiting this link: __newsletterUnsubscribeLink__
+                        You can <a href="__newsletterUnsubscribeLink__">unsubscribe</a> at any time by visiting this link: <a href="__newsletterUnsubscribeLink__>__newsletterUnsubscribeLink__</a>
                         <br><br>
                       </td>
                     </tr>
@@ -38,15 +34,7 @@ const welcome = {
 </table>`,
   text: `You are now subscribed to the FreeSewing newsletter
 
-What to expect
---------------
-
-We sent out our newsletter 4 times a year. No more, no less.
-
 If you'd like to catch up, we keep an online archive of previous editions at: https://freesewing.org/newsletter/
-
-I want out
-----------
 
 You can unsubscribe at any time by visiting this link: __newsletterUnsubscribeLink__
 
