@@ -1,4 +1,4 @@
-import { Newsletter, Confirmation } from '../models'
+import { Newsletter, Confirmation, User } from '../models'
 import {
   log,
   email,
@@ -77,7 +77,20 @@ NewsletterController.prototype.unsubscribe = function(req, res) {
         }
         else return bail(res, 'oops')
       })
-    } else return bail(res, 'oops')
+    } else {
+      User.findOne({ ehash: req.params.ehash }, (err, user) => {
+        if (user) {
+          user.newsletter = false
+          user.save(function(err, updatedUser) {
+            if (err) {
+              log.error('accountUpdateFailed', err)
+              return res.sendStatus(500)
+            } else return bail(res, 'unsubscribe')
+          })
+        }
+        else return bail(res, 'oops')
+      })
+    }
   })
 }
 
