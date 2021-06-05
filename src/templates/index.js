@@ -4,7 +4,8 @@ import signup from './signup'
 import emailchange from './emailchange'
 import passwordreset from './passwordreset'
 import goodbye from './goodbye'
-import subscribe from './subscribe'
+import newsletterSubscribe from './newsletter-subscribe'
+import newsletterWelcome from './newsletter-welcome'
 
 export default {
   header,
@@ -13,5 +14,6 @@ export default {
   emailchange,
   passwordreset,
   goodbye,
-  subscribe
+  newsletterSubscribe,
+  newsletterWelcome,
 }

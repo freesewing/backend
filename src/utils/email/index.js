@@ -22,7 +22,7 @@ const loadTemplate = (type, format, language='en') => {
 }
 
 const replace = (text, from, to) => {
-  for (let id in from) text = text.replace(from[id], to[id] || from[id])
+  for (let id in from) text = text.split(from[id]).join(to[id] || from[id])
 
   return text
 }
@@ -161,10 +161,11 @@ email.goodbye = async (recipient, language) => {
 }
 
 email.subscribe = async (recipient, token) => {
-  let html = loadTemplate('subscribe', 'html', 'en')
-  let text = loadTemplate('subscribe', 'text', 'en')
-  let from = ['__headerOpeningLine__', '__newsletterConfirmationLink__', '__footerWhy__']
+  let html = loadTemplate('newsletterSubscribe', 'html', 'en')
+  let text = loadTemplate('newsletterSubscribe', 'text', 'en')
+  let from = ['__hiddenIntro__', '__headerOpeningLine__', '__newsletterConfirmationLink__', '__footerWhy__']
   let to = [
+    'Confirm your subscription to the FreeSewing newsletter',
     'Please confirm it was you who requested this',
     `https://backend.freesewing.org/newsletter/confirm/${token}`,
     `You received this email because somebody tried to subscribe ${recipient} to the FreeSewing newsletter`
@@ -176,6 +177,32 @@ email.subscribe = async (recipient, token) => {
     from: `"FreeSewing" <newsletter@freesewing.org>`,
     to: recipient,
     subject: 'Confirm your subscription to the FreeSewing newsletter',
+    text,
+    html
+  }
+  deliver(options, (error, info) => {
+    if (error) return console.log(error)
+    console.log('Message sent', info)
+  })
+}
+
+email.newsletterWelcome = async (recipient, ehash) => {
+  let html = loadTemplate('newsletterWelcome', 'html', 'en')
+  let text = loadTemplate('newsletterWelcome', 'text', 'en')
+  let from = ['__hiddenIntro__', '__headerOpeningLine__', '__newsletterUnsubscribeLink__', '__footerWhy__']
+  let to = [
+    'No action required; This is just an FYI',
+    "You're in. Now what?",
+    `https://backend.freesewing.org/newsletter/unsubscribe/${ehash}`,
+    `You received this email because you subscribed to the FreeSewing newsletter`
+  ]
+  html = replace(html, from, to)
+  text = replace(text, from, to)
+
+  let options = {
+    from: `"FreeSewing" <newsletter@freesewing.org>`,
+    to: recipient,
+    subject: 'Welcome to the FreeSewing newsletter',
     text,
     html
   }

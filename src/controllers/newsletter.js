@@ -1,4 +1,4 @@
-import { Newsletter, Confirmation } from '../models'
+import { Newsletter, Confirmation, User } from '../models'
 import {
   log,
   email,
@@ -40,9 +40,11 @@ NewsletterController.prototype.confirm = function(req, res, subscribe=true) {
         if (err) return bail(res)
         // Already exists?
         if (reader !== null) return bail(res, 'already-subscribed')
+        let hash = ehash(confirmation.data.email)
+
         let sub = new Newsletter({
           email: confirmation.data.email,
-          ehash: ehash(confirmation.data.email),
+          ehash: hash,
           time: {
             created: new Date()
           }
@@ -54,6 +56,8 @@ NewsletterController.prototype.confirm = function(req, res, subscribe=true) {
             return res.sendStatus(500)
           } else {
             console.log(`Subscribed ${reader.email} to the newsletter`)
+            email.newsletterWelcome(confirmation.data.email, hash)
+
             return bail(res, 'subscribe')
           }
         })
@@ -73,7 +77,20 @@ NewsletterController.prototype.unsubscribe = function(req, res) {
         }
         else return bail(res, 'oops')
       })
-    } else return bail(res, 'oops')
+    } else {
+      User.findOne({ ehash: req.params.ehash }, (err, user) => {
+        if (user) {
+          user.newsletter = false
+          user.save(function(err, updatedUser) {
+            if (err) {
+              log.error('accountUpdateFailed', err)
+              return res.sendStatus(500)
+            } else return bail(res, 'unsubscribe')
+          })
+        }
+        else return bail(res, 'oops')
+      })
+    }
   })
 }
 
