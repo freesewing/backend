@@ -18,7 +18,7 @@ const welcome = {
                         If you'd like to catch up, we keep an online archive of previous editions at:
                         <a href="https://freesewing.org/newsletter/">https://freesewing.org/newsletter/</a>
                         <br><br>
-                        You can <a href="__newsletterUnsubscribeLink__">unsubscribe</a> at any time by visiting this link: <a href="__newsletterUnsubscribeLink__>__newsletterUnsubscribeLink__</a>
+                        You can <a href="__newsletterUnsubscribeLink__">unsubscribe</a> at any time by visiting this link: <a href="__newsletterUnsubscribeLink__">__newsletterUnsubscribeLink__</a>
                         <br><br>
                       </td>
                     </tr>
