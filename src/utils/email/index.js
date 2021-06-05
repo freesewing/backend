@@ -61,21 +61,25 @@ email.emailchange = (newAddress, currentAddress, language, id) => {
   let text = loadTemplate('emailchange', 'text', language)
   let from = [
     '__emailchangeActionLink__',
-<<<<<<< Updated upstream
-=======
     '__emailchangeActionText__',
     '__emailchangeTitle__',
     '__emailchangeCopy1__',
->>>>>>> Stashed changes
     '__headerOpeningLine__',
     '__hiddenIntro__',
-    '__footerWhy__'
+    '__footerWhy__',
+    '__questionsJustReply__',
+    '__signature__'
   ]
   let to = [
     createUrl(language, `/confirm/email/${id}`),
+    i18n[language]['email.emailchangeActionText'],
+    i18n[language]['email.emailchangeTitle'],
+    i18n[language]['email.emailchangeCopy1'],
     i18n[language]['email.emailchangeHeaderOpeningLine'],
     i18n[language]['email.emailchangeHiddenIntro'],
-    i18n[language]['email.emailchangeWhy']
+    i18n[language]['email.emailchangeWhy'],
+    i18n[language]['email.questionsJustReply'],
+    i18n[language]['email.signature'],
   ]
   html = replace(html, from, to)
   text = replace(text, from, to)
@@ -172,6 +176,31 @@ email.subscribe = async (recipient, token) => {
     from: `"FreeSewing" <newsletter@freesewing.org>`,
     to: recipient,
     subject: 'Confirm your subscription to the FreeSewing newsletter',
+    text,
+    html
+  }
+  deliver(options, (error, info) => {
+    if (error) return console.log(error)
+    console.log('Message sent', info)
+  })
+}
+
+email.newsletterWelcome = async (recipient, ehash) => {
+  let html = loadTemplate('newsletter-welcome', 'html', 'en')
+  let text = loadTemplate('newsletter-welcome', 'text', 'en')
+  let from = ['__headerOpeningLine__', '__newsletterUnsubscribeLink__', '__footerWhy__']
+  let to = [
+    "You're in. Now what?",
+    `https://backend.freesewing.org/newsletter/unsubscribe/${ehash}`,
+    `You received this email because you subscribed to the FreeSewing newsletter`
+  ]
+  html = replace(html, from, to)
+  text = replace(text, from, to)
+
+  let options = {
+    from: `"FreeSewing" <newsletter@freesewing.org>`,
+    to: recipient,
+    subject: 'Welcome to the FreeSewing newsletter',
     text,
     html
   }

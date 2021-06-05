@@ -170,6 +170,8 @@ UserController.prototype.update = (req, res) => {
       return saveAndReturnAccount(res, user)
     } else if (data.newsletter === true || data.newsletter === false) {
       user.newsletter = data.newsletter
+      if (data.newsletter === true) email.newsletterWelcome(user.email, user.ehash)
+
       return saveAndReturnAccount(res, user)
     } else if (typeof data.bio === 'string') {
       user.bio = data.bio
