@@ -18,11 +18,19 @@ AdminController.prototype.search = function(req, res) {
         { ehash: ehash(req.body.query) },
       ]
     })
-      .sort('username')
-      .exec((err, users) => {
+    .sort('username')
+    .exec((err, users) => {
+      if (err) return res.sendStatus(400)
+      Person.find({ handle: { $regex: `.*${req.body.query}.*` } })
+      .sort('handle')
+      .exec((err, people) => {
         if (err) return res.sendStatus(400)
-        if (users === null) return res.sendStatus(404)
-        return res.send(users.map(user => user.adminProfile()))
+        if (users === null && people === null) return res.sendStatus(404)
+        return res.send({
+          users: users.map(user => user.adminProfile()),
+          users: people.map(person => person.info()),
+        })
+      })
     })
   })
 }
