@@ -5,5 +5,6 @@ import auth from './auth'
 import github from './github'
 import admin from './admin'
 import newsletter from './newsletter'
+import strapi from './strapi'
 
-export default { user, pattern, person, auth, github, admin, newsletter }
+export default { user, pattern, person, auth, github, admin, newsletter, strapi }

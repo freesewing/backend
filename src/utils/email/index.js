@@ -122,7 +122,7 @@ email.passwordreset = (recipient, language, id) => {
   let options = {
     from: `"${i18n[language]['email.joostFromFreesewing']}" <info@freesewing.org>`,
     to: recipient,
-    subject: i18n[language].emailpasswordresetSubject,
+    subject: i18n[language]['email.passwordresetSubject'],
     headers: {
       'X-Freesewing-Confirmation-ID': '' + id
     },
