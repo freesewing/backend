@@ -25,7 +25,6 @@ const getToken = async () => {
   }
   catch(err) {
     console.log('ERROR: Failed to load strapi token')
-    console.log(err.response)
     return false
   }
 
@@ -47,60 +46,100 @@ const ext = type => {
     case 'image/png':
       return 'png'
       break
+    case 'image/webp':
+      return 'webp'
+      break
     default:
       return false
   }
 }
 
-function StrapiController() {}
+const api = path => `${config.strapi.protocol}://${config.strapi.host}:${config.strapi.port}${path}`
 
-StrapiController.prototype.addAuthor = function(req, res) {
-  if (!req.body || !req.body.displayname) return res.sendStatus(400)
-  return res.send(req.body)
-}
 
-StrapiController.prototype.addMaker = async function(req, res) {
-  if (
-    !req.body ||
-    !req.body.displayname ||
-    !req.body.about ||
-    !req.body.picture ||
-    typeof req.body.displayname !== 'string' ||
-    typeof req.body.about !== 'string' ||
-    typeof req.body.picture !== 'string'
-  ) return res.sendStatus(400)
-
-  const token = await getToken()
-  let result
-  // Upload picture
+// Uploads a picture to Strapi
+const uploadPicture = async (img, name, token) => {
   const form = new FormData()
-  const buff = asBuffer(req.body.picture)
+  const buff = asBuffer(img)
   const extention = ext(buff.type)
-  if (!extention) res.status(400).send({error: `Filetype ${buff.type} is not supported`})
+  if (!extention) return [false, {error: `Filetype ${buff.type} is not supported`}]
 
   // I hate you strapi, because this hack is the only way I can get your shitty upload to work
-  const filename = `${config.strapi.tmp}/goSuckABagOfDicksStrapi.${extention}`
-  const onDisk = await fs.promises.writeFile(filename, asBuffer(req.body.picture))
+  const filename = `${config.strapi.tmp}/viaBackend.${extention}`
+  const onDisk = await fs.promises.writeFile(filename, asBuffer(img))
   const file = fs.createReadStream(filename)
   form.append('files', file)
   form.append('fileInfo', JSON.stringify({
-    alternativeText: `Avatar for ${req.body.displayname}`
+    alternativeText: `The picture/avatar for maker ${name}`,
+    caption: `Maker: ${name}`,
   }))
 
+  let result
+  try {
+    result = await axios.post(
+      api('/upload'),
+      form,
+      {
+        headers: {
+          ...form.getHeaders(),
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+  }
+  catch (err) {
+    console.log("ERROR: Failed to upload picture")
+    return [false, {error: 'Upload failed'}]
+  }
 
-  axios.post('http://localhost:1337/upload', form, {
-    headers: {
-    ...(form.getHeaders()),
-    Authorization: `Bearer ${token}`,
-  },
-})
-.then(response => {
-  console.log(response.data)
-})
-.catch(error => console.log(error))
+  return [true, result.data]
+}
 
-    return res.send({})
+const validRequest = body => (
+  body &&
+  body.displayname &&
+  body.about &&
+  body.picture &&
+  typeof body.displayname === 'string' &&
+  typeof body.about === 'string' &&
+  typeof body.picture === 'string'
+)
 
+
+// Creates a maker or author in Strapi
+const createPerson = async (type, data, token) => {
+  let result
+  try {
+    result = await axios.post(
+      api(`/${type}s`),
+      data,
+      withToken(token)
+    )
+  }
+  catch (err) {
+    console.log("ERROR: Failed to create", type)
+    return [false, {error: 'Creation failed'}]
+  }
+
+  return [true, result.data]
+
+}
+function StrapiController() {}
+
+StrapiController.prototype.addPerson = async function(req, res, type) {
+  if (!validRequest(req.body)) return res.sendStatus(400)
+  const token = await getToken()
+  const [upload, picture] = await uploadPicture(req.body.picture, req.body.displayname, token)
+  if (!upload) return res.status(400).send(picture)
+
+  const [create, person] = await createPerson(type, {
+    picture: picture[0].id,
+    displayname: req.body.displayname,
+    about: req.body.about,
+  }, token)
+  if (!create) return res.status(400).send(person)
+
+  return res.send(person)
 }
 
 export default StrapiController

@@ -79,6 +79,6 @@ module.exports = {
     port: process.env.FS_STRAPI_PORT,
     username: process.env.FS_STRAPI_USERNAME,
     password: process.env.FS_STRAPI_PASSWORD,
-    tmp: process.env.FS_STAPI_TMP,
+    tmp: process.env.FS_STRAPI_TMP,
   }
 }
