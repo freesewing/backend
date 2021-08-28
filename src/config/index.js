@@ -72,5 +72,13 @@ module.exports = {
       },
       dflt: [ 'joostdecock' ]
     }
+  },
+  strapi: {
+    protocol: process.env.FS_STRAPI_PROTOCOL,
+    host: process.env.FS_STRAPI_HOST,
+    port: process.env.FS_STRAPI_PORT,
+    username: process.env.FS_STRAPI_USERNAME,
+    password: process.env.FS_STRAPI_PASSWORD,
+    tmp: process.env.FS_STAPI_TMP,
   }
 }
