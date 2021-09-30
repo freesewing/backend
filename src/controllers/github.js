@@ -65,7 +65,7 @@ GithubController.prototype.createIssue = function(req, res) {
       body += "\n"
       body += `- **Production**: 👉 https://freesewing.org${path}`
       body += "\n\n"
-      if (req.body.userHandle) body += `(user handle: ${req.body.userHandle}`
+      if (req.body.userHandle) body += `(user handle: ${req.body.userHandle})`
       client.post(`/repos/freesewing/freesewing/issues/${id}/comments`, { body })
       .then(result => res.send({id}))
       .catch(err => {
