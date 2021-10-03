@@ -1660,10 +1660,10 @@
   resolved "https://registry.yarnpkg.com/@freesewing/models/-/models-2.16.2.tgz#9c107e995e70405223b2d6379480699cfe3fd36a"
   integrity sha512-FVfhmD0OrACqmF7uqe7WTCeDPARDNgt8efT4RBg5cK1FfuC0uPE8FX4g/DwGPp6mb5i65UFhc/re8uzw4kIxXg==
 
-"@freesewing/pattern-info@2.17.3":
-  version "2.17.3"
-  resolved "https://registry.yarnpkg.com/@freesewing/pattern-info/-/pattern-info-2.17.3.tgz#3fe1a152857e5635a9c4ecd0256f7a391b78c563"
-  integrity sha512-Yqy7R5Caak6Yd0XEDVWKqIlnbwUQ3Rtn7xZzEi5fmM7id7PhU3LCLX5rnCUXz7VNQV4MivhjrF44mv5zNf5NoQ==
+"@freesewing/pattern-info@2.18.0":
+  version "2.18.0"
+  resolved "https://registry.yarnpkg.com/@freesewing/pattern-info/-/pattern-info-2.18.0.tgz#9f6a45f69c4a08c6ec797359df381be07a91afd4"
+  integrity sha512-1guHENoP40TjaeYZbECPI/yMOrudjNRp9sZR+YoCaCJiuGqxPZDOo9AyDoHuS97ibvnZgdhFC3LOyoSz+OAfPw==
 
 "@freesewing/prettier-config@^2.16.2":
   version "2.16.2"
@@ -1671,9 +1671,9 @@
   integrity sha512-llt7tCsgfbmIABBHG1ciXqrRagaOH/9M3OX5jtwPJrZDRo7zxscP7KPWT1z0gZto4GIi4rEc/gE2CXf+IaCkeQ==
 
 "@freesewing/utils@^2.16.2":
-  version "2.16.2"
-  resolved "https://registry.yarnpkg.com/@freesewing/utils/-/utils-2.16.2.tgz#1ea20d8a9ddf3d5a17d5fb69c25f2311cd10ba1a"
-  integrity sha512-Bh17rH1n+6sTV2C2kBIbw2WZqRopboVnrXQZQK2fHkhtkO89e0wrRsx1LzeMPNBY8+GUuPuJ2U3Q7ZrYY2dbbQ==
+  version "2.18.0"
+  resolved "https://registry.yarnpkg.com/@freesewing/utils/-/utils-2.18.0.tgz#2bc836004cea18e494a09a32bbe49d2b6f8f885f"
+  integrity sha512-aPkLnyAqYnj9X5HHEkVUpEc4HFhhlbdmFrpAQy0b4F+P+34V5dsrUdE1EEPY0VGejJFNhadyqxyjg1hWupS0QQ==
 
 "@nicolo-ribaudo/chokidar-2@2.1.8-no-fsevents.2":
   version "2.1.8-no-fsevents.2"
@@ -2118,11 +2118,11 @@ atob@^2.1.2:
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
 
 axios@^0.21.0:
-  version "0.21.1"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-0.21.1.tgz#22563481962f4d6bde9a76d516ef0e5d3c09b2b8"
-  integrity sha512-dKQiRHxGD9PPRIUNIWvZhPTPpl1rf/OxTYKsqKUDjBwYylTvV7SjSHJb9ratfyzM6wCdLCOYLzs73qpg5c4iGA==
+  version "0.21.2"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.21.2.tgz#21297d5084b2aeeb422f5d38e7be4fbb82239017"
+  integrity sha512-87otirqUw3e8CzHTMO+/9kh/FSgXt/eVDvipijwDtEuwbkySWZ9SBm6VEubmJ/kLKEoLQV/POhxXFb66bfekfg==
   dependencies:
-    follow-redirects "^1.10.0"
+    follow-redirects "^1.14.0"
 
 babel-loader@^8.0.6:
   version "8.2.2"
@@ -3707,10 +3707,10 @@ flush-write-stream@^1.0.0:
     inherits "^2.0.3"
     readable-stream "^2.3.6"
 
-follow-redirects@^1.10.0:
-  version "1.13.1"
-  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.13.1.tgz#5f69b813376cee4fd0474a3aba835df04ab763b7"
-  integrity sha512-SSG5xmZh1mkPGyKzjZP8zLjltIfpW32Y5QpdNJyjcfGxK3qo3NDDkZOZSFiGn1A6SclQxY9GzEwAHQ3dmYRWpg==
+follow-redirects@^1.14.0:
+  version "1.14.4"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.14.4.tgz#838fdf48a8bbdd79e52ee51fb1c94e3ed98b9379"
+  integrity sha512-zwGkiSXC1MUJG/qmeIFH2HBJx9u0V46QGUe3YR1fXG8bXQxq7fLj0RjLZQ5nubr9qNJUZrH+xUcwXEoXNpfS+g==
 
 for-in@^1.0.2:
   version "1.0.2"
@@ -5235,9 +5235,9 @@ node-releases@^1.1.75:
   integrity sha512-Qe5OUajvqrqDSy6wrWFmMwfJ0jVgwiw4T3KqmbTcZ62qW0gQkheXYhcFM1+lOVcGUoRxcEcfyvFMAnDgaF1VWw==
 
 nodemailer@^6.6.1:
-  version "6.6.1"
-  resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-6.6.1.tgz#2a05fbf205b897d71bf43884167b5d4d3bd01b99"
-  integrity sha512-1xzFN3gqv+/qJ6YRyxBxfTYstLNt0FCtZaFRvf4Sg9wxNGWbwFmGXVpfSi6ThGK6aRxAo+KjHtYSW8NvCsNSAg==
+  version "6.6.5"
+  resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-6.6.5.tgz#f9f6953cee5cfe82cbea152eeddacf7a0442049a"
+  integrity sha512-C/v856DBijUzHcHIgGpQoTrfsH3suKIRAGliIzCstatM2cAa+MYX3LuyCrABiO/cdJTxgBBHXxV1ztiqUwst5A==
 
 nodemon@^1.19.1:
   version "1.19.4"
