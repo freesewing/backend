@@ -1051,9 +1051,9 @@
   integrity sha512-1guHENoP40TjaeYZbECPI/yMOrudjNRp9sZR+YoCaCJiuGqxPZDOo9AyDoHuS97ibvnZgdhFC3LOyoSz+OAfPw==
 
 "@freesewing/prettier-config@^2.16.2":
-  version "2.16.2"
-  resolved "https://registry.yarnpkg.com/@freesewing/prettier-config/-/prettier-config-2.16.2.tgz#137aedd97d4c45bc65fc90cb75923bb49658cd11"
-  integrity sha512-llt7tCsgfbmIABBHG1ciXqrRagaOH/9M3OX5jtwPJrZDRo7zxscP7KPWT1z0gZto4GIi4rEc/gE2CXf+IaCkeQ==
+  version "2.18.0"
+  resolved "https://registry.yarnpkg.com/@freesewing/prettier-config/-/prettier-config-2.18.0.tgz#b6e168f986f6a19e3c114cf741061cb42debc3f0"
+  integrity sha512-7KO+nnZmh3kKpLeU3V6NdQ86AsdWDDtTinrc3Exwxp9wHRS4EkwA8QUUDddKw/YQmxpz3LiaoaG0NQzaCLypHA==
 
 "@freesewing/utils@^2.16.2":
   version "2.18.0"
