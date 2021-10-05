@@ -1650,15 +1650,15 @@
     "@babel/helper-validator-identifier" "^7.14.9"
     to-fast-properties "^2.0.0"
 
-"@freesewing/i18n@2.16.2":
-  version "2.16.2"
-  resolved "https://registry.yarnpkg.com/@freesewing/i18n/-/i18n-2.16.2.tgz#a89ba5ea3ab7233758a3aeac586055d4cdd1281a"
-  integrity sha512-i23e2ZNRH48hveP5aPfvDXMYpApcmpCfUG0kUab6S5hoUSSyhZCwpgCuowSfKcji+qvQqcOOCj/EgkwNCn9tTQ==
+"@freesewing/i18n@2.18.0":
+  version "2.18.0"
+  resolved "https://registry.yarnpkg.com/@freesewing/i18n/-/i18n-2.18.0.tgz#6fad77e1f4d3009a647018e45974eaa8a4f371ac"
+  integrity sha512-qgF0HR9fs4jOky7wTaZuwr3VZy66sYoVDBqgqMf4B6QLthZ2YBvyP/YhrefUDREwNmGVltKve6bc9v2by0KgXA==
 
 "@freesewing/models@^2.16.2":
-  version "2.16.2"
-  resolved "https://registry.yarnpkg.com/@freesewing/models/-/models-2.16.2.tgz#9c107e995e70405223b2d6379480699cfe3fd36a"
-  integrity sha512-FVfhmD0OrACqmF7uqe7WTCeDPARDNgt8efT4RBg5cK1FfuC0uPE8FX4g/DwGPp6mb5i65UFhc/re8uzw4kIxXg==
+  version "2.18.0"
+  resolved "https://registry.yarnpkg.com/@freesewing/models/-/models-2.18.0.tgz#3e7ad4889dc1dafb393a68d4003f0626c28c23cb"
+  integrity sha512-q8vyvCo0aYqc48aHhLaDY+hnbO4MmwsQSSOmBTzOfJDtL1ST5tUixsTXqBNCXG265GEA22oNYwm+FGaJBfcpXw==
 
 "@freesewing/pattern-info@2.18.0":
   version "2.18.0"
@@ -3111,10 +3111,10 @@ data-uri-to-file@^0.1.8:
     mime "^1.3.4"
     through2 "^2.0.1"
 
-dateformat@^4.5.1:
-  version "4.5.1"
-  resolved "https://registry.yarnpkg.com/dateformat/-/dateformat-4.5.1.tgz#c20e7a9ca77d147906b6dc2261a8be0a5bd2173c"
-  integrity sha512-OD0TZ+B7yP7ZgpJf5K2DIbj3FZvFvxgFUuaqA/V5zTjAtAAXZ1E8bktHxmAGs4x5b7PflqA9LeQ84Og7wYtF7Q==
+dateformat@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/dateformat/-/dateformat-5.0.1.tgz#60a27a2deb339f888ba4532f533e25ac73ca3d19"
+  integrity sha512-DrcKxOW2am3mtqoJwBTK3OlWcF0QSk1p8diEWwpu3Mf//VdURD7XVaeOV738JvcaBiFfm9o2fisoMhiJH0aYxg==
 
 debug@2.6.9, debug@^2.2.0, debug@^2.3.3:
   version "2.6.9"
