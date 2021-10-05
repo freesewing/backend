@@ -1650,15 +1650,15 @@
     "@babel/helper-validator-identifier" "^7.14.9"
     to-fast-properties "^2.0.0"
 
-"@freesewing/i18n@2.16.2":
-  version "2.16.2"
-  resolved "https://registry.yarnpkg.com/@freesewing/i18n/-/i18n-2.16.2.tgz#a89ba5ea3ab7233758a3aeac586055d4cdd1281a"
-  integrity sha512-i23e2ZNRH48hveP5aPfvDXMYpApcmpCfUG0kUab6S5hoUSSyhZCwpgCuowSfKcji+qvQqcOOCj/EgkwNCn9tTQ==
+"@freesewing/i18n@2.18.0":
+  version "2.18.0"
+  resolved "https://registry.yarnpkg.com/@freesewing/i18n/-/i18n-2.18.0.tgz#6fad77e1f4d3009a647018e45974eaa8a4f371ac"
+  integrity sha512-qgF0HR9fs4jOky7wTaZuwr3VZy66sYoVDBqgqMf4B6QLthZ2YBvyP/YhrefUDREwNmGVltKve6bc9v2by0KgXA==
 
 "@freesewing/models@^2.16.2":
-  version "2.16.2"
-  resolved "https://registry.yarnpkg.com/@freesewing/models/-/models-2.16.2.tgz#9c107e995e70405223b2d6379480699cfe3fd36a"
-  integrity sha512-FVfhmD0OrACqmF7uqe7WTCeDPARDNgt8efT4RBg5cK1FfuC0uPE8FX4g/DwGPp6mb5i65UFhc/re8uzw4kIxXg==
+  version "2.18.0"
+  resolved "https://registry.yarnpkg.com/@freesewing/models/-/models-2.18.0.tgz#3e7ad4889dc1dafb393a68d4003f0626c28c23cb"
+  integrity sha512-q8vyvCo0aYqc48aHhLaDY+hnbO4MmwsQSSOmBTzOfJDtL1ST5tUixsTXqBNCXG265GEA22oNYwm+FGaJBfcpXw==
 
 "@freesewing/pattern-info@2.18.0":
   version "2.18.0"
@@ -5521,10 +5521,10 @@ passport-strategy@1.x.x, passport-strategy@^1.0.0:
   resolved "https://registry.yarnpkg.com/passport-strategy/-/passport-strategy-1.0.0.tgz#b5539aa8fc225a3d1ad179476ddf236b440f52e4"
   integrity sha1-tVOaqPwiWj0a0XlHbd8ja0QPUuQ=
 
-passport@^0.4.1:
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/passport/-/passport-0.4.1.tgz#941446a21cb92fc688d97a0861c38ce9f738f270"
-  integrity sha512-IxXgZZs8d7uFSt3eqNjM9NQ3g3uQCW5avD8mRNoXV99Yig50vjuaez6dQK2qC0kVWPRTujxY0dWgGfT09adjYg==
+passport@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/passport/-/passport-0.5.0.tgz#7914aaa55844f9dce8c3aa28f7d6b73647ee0169"
+  integrity sha512-ln+ue5YaNDS+fes6O5PCzXKSseY5u8MYhX9H5Co4s+HfYI5oqvnHKoOORLYDUPh+8tHvrxugF2GFcUA1Q1Gqfg==
   dependencies:
     passport-strategy "1.x.x"
     pause "0.0.1"
