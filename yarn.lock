@@ -4437,15 +4437,15 @@ mongoose-bcrypt@^1.8.1:
     semver "^7.3.2"
 
 mongoose-encryption@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/mongoose-encryption/-/mongoose-encryption-2.1.0.tgz#f91e8ce910dd12839e88007a9eafb4cb8f54d5e2"
-  integrity sha512-28AGNm5i8dLLSj18tWQww4Wwoz0u9Iqej5x9bljJ0CIoBGRih+95ecIn2HVZtujvbyY9PhMZjDzw2mbG84kf0A==
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/mongoose-encryption/-/mongoose-encryption-2.1.1.tgz#2e81ee9d0835822180faaa1608414b0b4bac0466"
+  integrity sha512-sHb2pmqxO2o21ibbAZ+NsboLeLcY3rq6+r3fcHBArC85ZimTjggr/bn7SoxNNVSq4mLH2C4N7FjGpTC0+74ScQ==
   dependencies:
     async "^2.6.1"
     buffer-equal-constant-time "^1.0.1"
     dotty "~0.1.0"
     json-stable-stringify "^1.0.0"
-    mpath "^0.5.1"
+    mpath "^0.8.4"
     semver "^5.5.0"
     underscore "^1.5.0"
 
@@ -4490,10 +4490,10 @@ mpath@0.8.3:
   resolved "https://registry.yarnpkg.com/mpath/-/mpath-0.8.3.tgz#828ac0d187f7f42674839d74921970979abbdd8f"
   integrity sha512-eb9rRvhDltXVNL6Fxd2zM9D4vKBxjVVQNLNijlj7uoXUy19zNDsIif5zR+pWmPCWNKwAtqyo4JveQm4nfD5+eA==
 
-mpath@^0.5.1:
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/mpath/-/mpath-0.5.2.tgz#b1eac586dffb5175d2f51ca9aacba35d9940dd41"
-  integrity sha512-NOeCoW6AYc3hLi30npe7uzbD9b4FQZKH40YKABUCCvaKKL5agj6YzvHoNx8jQpDMNPgIa5bvSZQbQpWBAVD0Kw==
+mpath@^0.8.4:
+  version "0.8.4"
+  resolved "https://registry.yarnpkg.com/mpath/-/mpath-0.8.4.tgz#6b566d9581621d9e931dd3b142ed3618e7599313"
+  integrity sha512-DTxNZomBcTWlrMW76jy1wvV37X/cNNxPW1y2Jzd4DZkAaC5ZGsm8bfGfNOthcDuRJujXLqiuS6o3Tpy0JEoh7g==
 
 mquery@3.2.5:
   version "3.2.5"
