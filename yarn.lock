@@ -357,13 +357,13 @@
     js-tokens "^4.0.0"
 
 "@babel/node@^7.13.13":
-  version "7.14.2"
-  resolved "https://registry.yarnpkg.com/@babel/node/-/node-7.14.2.tgz#d860c10306020d18e3fd0327c63bfaf2dbfc7470"
-  integrity sha512-QB/C+Kl6gIYpTjZ/hcZj+chkiAVGcgSHuR849cdNvNJBz4VztO2775/o2ge8imB94EAsLcgkrdWH/3+UIVv1TA==
+  version "7.15.8"
+  resolved "https://registry.yarnpkg.com/@babel/node/-/node-7.15.8.tgz#5d6b815d0232ae4893727971f53deabfe06c4ca7"
+  integrity sha512-JbgTCrnx6IUECznEbQ7e2rbVYtrXKixSbEG2bxxbMkV648WdUf3tdc+ZUW2++dvnnAswcpwc76cRwf0xEQqsrw==
   dependencies:
-    "@babel/register" "^7.13.16"
+    "@babel/register" "^7.15.3"
     commander "^4.0.1"
-    core-js "^3.2.1"
+    core-js "^3.16.0"
     node-environment-flags "^1.0.5"
     regenerator-runtime "^0.13.4"
     v8flags "^3.1.1"
@@ -961,10 +961,10 @@
     "@babel/types" "^7.4.4"
     esutils "^2.0.2"
 
-"@babel/register@^7.13.16":
-  version "7.13.16"
-  resolved "https://registry.yarnpkg.com/@babel/register/-/register-7.13.16.tgz#ae3ab0b55c8ec28763877383c454f01521d9a53d"
-  integrity sha512-dh2t11ysujTwByQjXNgJ48QZ2zcXKQVdV8s0TbeMI0flmtGWCdTwK9tJiACHXPLmncm5+ktNn/diojA45JE4jg==
+"@babel/register@^7.15.3":
+  version "7.15.3"
+  resolved "https://registry.yarnpkg.com/@babel/register/-/register-7.15.3.tgz#6b40a549e06ec06c885b2ec42c3dd711f55fe752"
+  integrity sha512-mj4IY1ZJkorClxKTImccn4T81+UKTo4Ux0+OFSV9hME1ooqS9UV+pJ6BjD0qXPK4T3XW/KNa79XByjeEMZz+fw==
   dependencies:
     clone-deep "^4.0.1"
     find-cache-dir "^2.0.0"
@@ -1051,9 +1051,9 @@
   integrity sha512-1guHENoP40TjaeYZbECPI/yMOrudjNRp9sZR+YoCaCJiuGqxPZDOo9AyDoHuS97ibvnZgdhFC3LOyoSz+OAfPw==
 
 "@freesewing/prettier-config@^2.16.2":
-  version "2.18.0"
-  resolved "https://registry.yarnpkg.com/@freesewing/prettier-config/-/prettier-config-2.18.0.tgz#b6e168f986f6a19e3c114cf741061cb42debc3f0"
-  integrity sha512-7KO+nnZmh3kKpLeU3V6NdQ86AsdWDDtTinrc3Exwxp9wHRS4EkwA8QUUDddKw/YQmxpz3LiaoaG0NQzaCLypHA==
+  version "2.19.0"
+  resolved "https://registry.yarnpkg.com/@freesewing/prettier-config/-/prettier-config-2.19.0.tgz#e4204b6c1e412e13ef2da8af176fd84d437a716c"
+  integrity sha512-aDhOxcSKvNgwz0hm5DaHS0TJUWpfCUmadGoYdCXfllv403AN8EDfpXx/spwIcx90pKIWQdFSiKGWT9lWspy2JQ==
 
 "@freesewing/utils@^2.16.2":
   version "2.18.0"
@@ -2377,10 +2377,10 @@ core-js-compat@^3.14.0, core-js-compat@^3.16.0:
     browserslist "^4.17.0"
     semver "7.0.0"
 
-core-js@^3.2.1:
-  version "3.8.0"
-  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.8.0.tgz#0fc2d4941cadf80538b030648bb64d230b4da0ce"
-  integrity sha512-W2VYNB0nwQQE7tKS7HzXd7r2y/y2SVJl4ga6oH/dnaLFzM0o2lB2P3zCkWj5Wc/zyMYjtgd5Hmhk0ObkQFZOIA==
+core-js@^3.16.0:
+  version "3.18.2"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.18.2.tgz#63a551e8a29f305cd4123754846e65896619ba5b"
+  integrity sha512-zNhPOUoSgoizoSQFdX1MeZO16ORRb9FFQLts8gSYbZU5FcgXhp24iMWMxnOQo5uIaIG7/6FA/IqJPwev1o9ZXQ==
 
 core-util-is@~1.0.0:
   version "1.0.2"
