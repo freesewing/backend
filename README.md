@@ -1,5 +1,7 @@
 ![FreeSewing: An open-source framework for made-to-measure sewing patterns](https://freesewing.org/banner.jpg)
 
+> Checkout our FreeSewing v3 roadmap here: https://github.com/freesewing/freesewing/discussions/1278
+
 # FreeSewing / backend
 
 This is the backend for [FreeSewing.org](https://freesewing.org/), our maker site.
