@@ -49,6 +49,7 @@ const PersonSchema = new Schema(
       ankle: Number,
       biceps: Number,
       bustFront: Number,
+      bustPointToUnderbust: Number,
       bustSpan: Number,
       chest: Number,
       crossSeam: Number,
