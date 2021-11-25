@@ -1071,15 +1071,15 @@
     "@babel/helper-validator-identifier" "^7.15.7"
     to-fast-properties "^2.0.0"
 
-"@freesewing/i18n@2.18.0":
-  version "2.18.0"
-  resolved "https://registry.yarnpkg.com/@freesewing/i18n/-/i18n-2.18.0.tgz#6fad77e1f4d3009a647018e45974eaa8a4f371ac"
-  integrity sha512-qgF0HR9fs4jOky7wTaZuwr3VZy66sYoVDBqgqMf4B6QLthZ2YBvyP/YhrefUDREwNmGVltKve6bc9v2by0KgXA==
+"@freesewing/i18n@2.19.5":
+  version "2.19.5"
+  resolved "https://registry.yarnpkg.com/@freesewing/i18n/-/i18n-2.19.5.tgz#49f19d0b0bc848cfac10fe47790049aa97c2c6ee"
+  integrity sha512-BEPlGrQ4mSl7y9FLld3dExqAaN0f0EtNyEqOHO28/fGjo427YbydiT71FiIdwZckLs197E7I4VGf5ewEeQsgaw==
 
 "@freesewing/models@^2.16.2":
-  version "2.18.0"
-  resolved "https://registry.yarnpkg.com/@freesewing/models/-/models-2.18.0.tgz#3e7ad4889dc1dafb393a68d4003f0626c28c23cb"
-  integrity sha512-q8vyvCo0aYqc48aHhLaDY+hnbO4MmwsQSSOmBTzOfJDtL1ST5tUixsTXqBNCXG265GEA22oNYwm+FGaJBfcpXw==
+  version "2.19.1"
+  resolved "https://registry.yarnpkg.com/@freesewing/models/-/models-2.19.1.tgz#4bb420481367347ce8cdf98e1810067c0f77bc70"
+  integrity sha512-XWkgfLuaNBRdjkDTqaWlgrlDgqOtSYKDR47aDsNhpAqo3K1nJmWQKJ5GAiPW9AGuOelUp6Vy4EiD/FOzd5LJHA==
 
 "@freesewing/pattern-info@2.19.5":
   version "2.19.5"
@@ -1543,12 +1543,12 @@ atob@^2.1.2:
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
 
-axios@^0.21.0:
-  version "0.21.2"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-0.21.2.tgz#21297d5084b2aeeb422f5d38e7be4fbb82239017"
-  integrity sha512-87otirqUw3e8CzHTMO+/9kh/FSgXt/eVDvipijwDtEuwbkySWZ9SBm6VEubmJ/kLKEoLQV/POhxXFb66bfekfg==
+axios@^0.24.0:
+  version "0.24.0"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.24.0.tgz#804e6fa1e4b9c5288501dd9dff56a7a0940d20d6"
+  integrity sha512-Q6cWsys88HoPgAaFAVUb0WpPk0O8iTeisR9IMqy9G8AbO4NlpVknrnQS03zzF9PGAWgO3cgletO3VjV/P7VztA==
   dependencies:
-    follow-redirects "^1.14.0"
+    follow-redirects "^1.14.4"
 
 babel-loader@^8.0.6:
   version "8.2.2"
@@ -3115,10 +3115,10 @@ flush-write-stream@^1.0.0:
     inherits "^2.0.3"
     readable-stream "^2.3.6"
 
-follow-redirects@^1.14.0:
-  version "1.14.4"
-  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.14.4.tgz#838fdf48a8bbdd79e52ee51fb1c94e3ed98b9379"
-  integrity sha512-zwGkiSXC1MUJG/qmeIFH2HBJx9u0V46QGUe3YR1fXG8bXQxq7fLj0RjLZQ5nubr9qNJUZrH+xUcwXEoXNpfS+g==
+follow-redirects@^1.14.4:
+  version "1.14.5"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.14.5.tgz#f09a5848981d3c772b5392309778523f8d85c381"
+  integrity sha512-wtphSXy7d4/OR+MvIFbCVBDzZ5520qV8XfPklSN5QtxuMUJZ+b0Wnst1e1lCDocfzuCkHqj8k0FpZqO+UIaKNA==
 
 for-in@^1.0.2:
   version "1.0.2"
