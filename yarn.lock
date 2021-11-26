@@ -2559,7 +2559,7 @@ dotenv@^10.0.0:
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-10.0.0.tgz#3d4227b8fb95f81096cdd2b66653fb2c7085ba81"
   integrity sha512-rlBi9d8jpv9Sf1klPjNfFAuWDjKLwTIJJ/VxtoTwIR6hnZxcEOQCZg2oIL3MWBYw5GpUDKOEnND7LXTbIpQ03Q==
 
-dotty@~0.1.0:
+dotty@^0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/dotty/-/dotty-0.1.2.tgz#512d44cc4111a724931226259297f235e8484f6f"
   integrity sha512-V0EWmKeH3DEhMwAZ+8ZB2Ao4OK6p++Z0hsDtZq3N0+0ZMVqkzrcEGROvOnZpLnvBg5PTNG23JEDLAm64gPaotQ==
@@ -4313,13 +4313,13 @@ mongoose-bcrypt@^1.8.1:
     semver "^7.3.2"
 
 mongoose-encryption@^2.1.0:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/mongoose-encryption/-/mongoose-encryption-2.1.1.tgz#2e81ee9d0835822180faaa1608414b0b4bac0466"
-  integrity sha512-sHb2pmqxO2o21ibbAZ+NsboLeLcY3rq6+r3fcHBArC85ZimTjggr/bn7SoxNNVSq4mLH2C4N7FjGpTC0+74ScQ==
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/mongoose-encryption/-/mongoose-encryption-2.1.2.tgz#be3b0271f3e85e34165f751bc3592030395077b5"
+  integrity sha512-whc9ZhN8/UjED3qiQKJvQAx/H1Ml3FUpEiyoHLKl4gzhvWorndnRE0sKuQ3fKzuaZDi/rDBN5AI4L/J2Er8Q9Q==
   dependencies:
     async "^2.6.1"
     buffer-equal-constant-time "^1.0.1"
-    dotty "~0.1.0"
+    dotty "^0.1.2"
     json-stable-stringify "^1.0.0"
     mpath "^0.8.4"
     semver "^5.5.0"
