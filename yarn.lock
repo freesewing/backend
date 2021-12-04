@@ -932,10 +932,10 @@
     "@babel/helper-validator-identifier" "^7.15.7"
     to-fast-properties "^2.0.0"
 
-"@freesewing/i18n@2.18.0":
-  version "2.18.0"
-  resolved "https://registry.yarnpkg.com/@freesewing/i18n/-/i18n-2.18.0.tgz#6fad77e1f4d3009a647018e45974eaa8a4f371ac"
-  integrity sha512-qgF0HR9fs4jOky7wTaZuwr3VZy66sYoVDBqgqMf4B6QLthZ2YBvyP/YhrefUDREwNmGVltKve6bc9v2by0KgXA==
+"@freesewing/i18n@2.19.5":
+  version "2.19.5"
+  resolved "https://registry.yarnpkg.com/@freesewing/i18n/-/i18n-2.19.5.tgz#49f19d0b0bc848cfac10fe47790049aa97c2c6ee"
+  integrity sha512-BEPlGrQ4mSl7y9FLld3dExqAaN0f0EtNyEqOHO28/fGjo427YbydiT71FiIdwZckLs197E7I4VGf5ewEeQsgaw==
 
 "@freesewing/models@^2.16.2":
   version "2.19.1"
