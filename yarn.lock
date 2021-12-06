@@ -948,9 +948,9 @@
   integrity sha512-85oG4M8l6TH2HFOA84GCCi+TJ8jNv9iFuvAzqyblfN4BWJ4V4+zedrW4ClJw2NgzcfoL6Wb+IO5E5f49bnrzxQ==
 
 "@freesewing/prettier-config@^2.16.2":
-  version "2.19.1"
-  resolved "https://registry.yarnpkg.com/@freesewing/prettier-config/-/prettier-config-2.19.1.tgz#dc34ee2cc86f9b03ec2481bcf82eefebae5ca125"
-  integrity sha512-e38VJ1ohZGWIn/gxGxsj2x/ybyk7laElZAdDLoW6rVbPQBIfzT3bCbrwvvmWgqOB/T2ir7Kv+Sw8S+0Xa8xw7A==
+  version "2.19.5"
+  resolved "https://registry.yarnpkg.com/@freesewing/prettier-config/-/prettier-config-2.19.5.tgz#934560251c0c92f60c3fefe0c625f221db4e3159"
+  integrity sha512-cV0Zkyt16OhUxTeQwkTiSoOgpwPdRtRsE5xxIVR8vQorxZ/eRPMNZBcKO0lOYpR39/4z6UN/9MGwOMs+yHV32g==
 
 "@freesewing/utils@^2.16.2":
   version "2.19.5"
@@ -4511,9 +4511,9 @@ node-releases@^2.0.1:
   integrity sha512-CqyzN6z7Q6aMeF/ktcMVTzhAHCEpf8SOarwpzpf8pNBY2k5/oM34UHldUwp8VKI7uxct2HxSRdJjBaZeESzcxA==
 
 nodemailer@^6.6.1:
-  version "6.6.5"
-  resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-6.6.5.tgz#f9f6953cee5cfe82cbea152eeddacf7a0442049a"
-  integrity sha512-C/v856DBijUzHcHIgGpQoTrfsH3suKIRAGliIzCstatM2cAa+MYX3LuyCrABiO/cdJTxgBBHXxV1ztiqUwst5A==
+  version "6.7.2"
+  resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-6.7.2.tgz#44b2ad5f7ed71b7067f7a21c4fedabaec62b85e0"
+  integrity sha512-Dz7zVwlef4k5R71fdmxwR8Q39fiboGbu3xgswkzGwczUfjp873rVxt1O46+Fh0j1ORnAC6L9+heI8uUpO6DT7Q==
 
 nodemon@^1.19.1:
   version "1.19.4"
@@ -5966,9 +5966,9 @@ timers-browserify@^2.0.4:
     setimmediate "^1.0.4"
 
 tlds@^1.221.1:
-  version "1.226.0"
-  resolved "https://registry.yarnpkg.com/tlds/-/tlds-1.226.0.tgz#a20d4260141b0f76dccb736103ba1ec1c841afd2"
-  integrity sha512-8zUqBmpXX573ZrvqfL1pDYcnKq/12IROcipqmSSgj5ro/KvyPUnpsXAIAojpgNchVo5LXJwlV0anZGL1l1vr9Q==
+  version "1.227.0"
+  resolved "https://registry.yarnpkg.com/tlds/-/tlds-1.227.0.tgz#6352577d74c4b7f6f80ebdeebafdf28c10aee8c0"
+  integrity sha512-H6KXre7PSkfZyPiGzHvdG/p42LCfPmmyH3MhmZnULiVGEGXKBe8vzyLrw6q0UAtXOL0eNScA9vC4DcfhrcaPlg==
 
 to-arraybuffer@^1.0.0:
   version "1.0.1"
